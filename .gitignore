@@ -1,0 +1,12 @@
+# Global directories
+__pycache__/
+dist/
+
+# Global files
+*.py[cod]
+
+# Environments
+.[v]env
+
+# IDEs
+.idea

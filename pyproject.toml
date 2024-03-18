@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "codeocean"
+version = "0.1.0"
+authors = [
+  { name="Code Ocean", email="dev@codeocean.com" },
+]
+description = "Code Ocean Python SDK"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "dataclasses",
+    "dataclasses_json",
+    "requests",
+    "requests_toolbelt",
+]
+license = "MIT"
+
+[project.optional-dependencies]
+dev = ["flake8"]
+publish = ["hatch"]
+
+[project.urls]
+Homepage = "https://github.com/codeocean/codeocean-sdk-python"
+Issues = "https://github.com/codeocean/codeocean-sdk-python/issues"
+Changelog = "https://github.com/codeocean/codeocean-sdk-python/blob/main/CHANGELOG.md"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/.circleci",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/codeocean"]

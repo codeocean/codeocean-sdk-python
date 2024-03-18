@@ -1,0 +1,26 @@
+version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: cimg/python:3.11
+
+    resource_class: small
+
+jobs:
+
+  build:
+    executor: default
+
+    steps:
+      - checkout
+
+      - run: pip install -e ".[dev]" -U
+
+      - run: flake8 src examples
+
+workflows:
+
+  build:
+    jobs:
+      - build
