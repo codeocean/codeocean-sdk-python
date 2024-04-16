@@ -1,9 +1,13 @@
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
-from enum import StrEnum
 from typing import Optional
 from requests_toolbelt.sessions import BaseUrlSession
-
+import sys
+if sys.version_info >= (3, 11):
+    from enum import StrEnum
+else:
+    from backports.strenum import StrEnum
+    
 from codeocean.computation import Computation
 from codeocean.data_asset import DataAssetAttachParams, DataAssetAttachResults
 

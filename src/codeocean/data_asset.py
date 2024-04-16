@@ -1,10 +1,14 @@
 from dataclasses_json import dataclass_json
 from dataclasses import dataclass
-from enum import StrEnum
 from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep
 from typing import Optional
-
+import sys
+if sys.version_info >= (3, 11):
+    from enum import StrEnum
+else:
+    from backports.strenum import StrEnum
+    
 from codeocean.components import SortOrder, SearchFilter, Permissions
 
 

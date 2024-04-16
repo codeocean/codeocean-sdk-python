@@ -1,10 +1,13 @@
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
-from enum import StrEnum
 from requests_toolbelt.sessions import BaseUrlSession
 from typing import Optional
 from time import sleep
-
+import sys
+if sys.version_info >= (3, 11):
+    from enum import StrEnum
+else:
+    from backports.strenum import StrEnum
 
 class ComputationState(StrEnum):
     Initializing = "initializing"
