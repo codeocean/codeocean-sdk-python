@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses_json import dataclass_json
 from dataclasses import dataclass
 from typing import Optional

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from requests_toolbelt.sessions import BaseUrlSession
