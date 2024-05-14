@@ -1,5 +1,5 @@
-from dataclasses_json import dataclass_json
-from dataclasses import dataclass
+from dataclasses_json import dataclass_json, config
+from dataclasses import dataclass, field
 from enum import StrEnum
 from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep
@@ -181,7 +181,7 @@ class DataAssetSearchOrigin(StrEnum):
 @dataclass(frozen=True)
 class DataAssetSearchParams:
     limit: int
-    from: int
+    from_: int = field(metadata=config(field_name="from"))
     archived: bool
     favorite: bool
     query: Optional[str] = None
