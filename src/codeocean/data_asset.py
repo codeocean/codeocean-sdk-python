@@ -181,7 +181,7 @@ class DataAssetSearchOrigin(StrEnum):
 @dataclass(frozen=True)
 class DataAssetSearchParams:
     limit: int
-    offset: int
+    from: int
     archived: bool
     favorite: bool
     query: Optional[str] = None
