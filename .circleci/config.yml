@@ -19,6 +19,8 @@ jobs:
 
       - run: flake8 src examples
 
+      - run: python -m unittest
+
 workflows:
 
   build:
