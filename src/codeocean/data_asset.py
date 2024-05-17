@@ -47,6 +47,7 @@ class SourceBucket:
     origin: DataAssetOrigin
     bucket: str
     prefix: str
+    external: bool
 
 
 @dataclass_json
