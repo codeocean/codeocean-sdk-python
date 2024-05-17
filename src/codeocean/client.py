@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from requests_toolbelt.sessions import BaseUrlSession
 from dataclasses import dataclass
 

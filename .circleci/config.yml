@@ -2,6 +2,7 @@ version: 2.1
 
 executors:
   default:
+      
     docker:
       - image: cimg/python:3.11
 
@@ -10,8 +11,16 @@ executors:
 jobs:
 
   build:
-    executor: default
+  
+    parameters:
+      python-version:
+        type: string
+        
+    docker:
+      - image: cimg/python:<< parameters.python-version >>
 
+    resource_class: small
+        
     steps:
       - checkout
 
@@ -19,8 +28,13 @@ jobs:
 
       - run: flake8 src examples
 
+      - run: python -m unittest
+
 workflows:
 
   build:
     jobs:
-      - build
+      - build:
+         matrix:
+            parameters:
+              python-version: ["3.9", "3.11"]
