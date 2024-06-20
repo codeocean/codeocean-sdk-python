@@ -39,9 +39,9 @@ class DataAssetOrigin(StrEnum):
 @dataclass(frozen=True)
 class SourceBucket:
     origin: DataAssetOrigin
-    bucket: str
-    prefix: str
-    external: bool
+    bucket: Optional[str] = None
+    prefix: Optional[str] = None
+    external: Optional[bool] = None
 
 
 @dataclass_json
