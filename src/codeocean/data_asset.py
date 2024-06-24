@@ -205,7 +205,6 @@ class DataAssetSearchParams:
     origin: Optional[DataAssetSearchOrigin] = None
     filters: Optional[list[SearchFilter]] = None
     results_info: Optional[ResultsInfo] = None
-    custom_metadata: 
 
 
 @dataclass_json
