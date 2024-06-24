@@ -206,7 +206,6 @@ class DataAssetSearchParams:
     ownership: Optional[DataAssetOwnership] = None
     origin: Optional[DataAssetSearchOrigin] = None
     filters: Optional[list[SearchFilter]] = None
-    results_info: Optional[ResultsInfo] = None
 
 
 @dataclass_json
