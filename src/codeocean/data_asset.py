@@ -8,6 +8,7 @@ from typing import Optional
 from codeocean.components import SortOrder, SearchFilter, Permissions
 from codecoean.computation import PipelineProcessParams, Param
 
+
 class DataAssetType(StrEnum):
     Dataset = "dataset"
     Result = "result"
@@ -49,6 +50,7 @@ class SourceBucket:
 class AppParameter:
     name: str
     value: str
+
 
 @dataclass_json
 @dataclass(frozen=True)
