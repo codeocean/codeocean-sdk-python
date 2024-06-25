@@ -62,13 +62,13 @@ class Capsules:
 
         return [Computation.from_dict(c) for c in res.json()]
 
-    def attach_data_assets(self, capsule_id: str, attach_params: list[DataAssetAttachParams]) -> DataAssetAttachResults:
+    def attach_data_assets(self, capsule_id: str, attach_params: list[DataAssetAttachParams]) -> list[DataAssetAttachResults]:
         res = self.client.post(
             f"capsules/{capsule_id}/data_assets",
             json=[j.to_dict() for j in attach_params],
         )
 
-        return DataAssetAttachResults.from_dict(res.json())
+        return [DataAssetAttachResults.from_dict(c) for c in res.json()]
 
     def detach_data_assets(self, capsule_id: str, data_assets: list[str]):
         self.client.delete(
