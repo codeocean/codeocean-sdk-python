@@ -6,6 +6,7 @@ from time import sleep
 from typing import Optional
 
 from codeocean.components import SortOrder, SearchFilter, Permissions
+from codeocean.computation import PipelineProcess, Param
 
 
 class DataAssetType(StrEnum):
@@ -49,6 +50,19 @@ class SourceBucket:
 class AppParameter:
     name: str
     value: str
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class ResultsInfo:
+    capsule_id: Optional[str] = None
+    pipeline_id: Optional[str] = None
+    version: Optional[int] = None
+    commit: Optional[str] = None
+    run_script: Optional[str] = None
+    data_assets: Optional[list[str]] = None
+    parameters: Optional[list[Param]] = None
+    processes: Optional[list[PipelineProcess]] = None
 
 
 @dataclass_json
@@ -139,6 +153,7 @@ class DataAssetParams:
     target: Optional[Target] = None
     custom_metadata: Optional[dict] = None
     data_asset_ids: Optional[list[str]] = None
+    results_info: Optional[ResultsInfo] = None
 
 
 @dataclass_json
