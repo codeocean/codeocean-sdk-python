@@ -6,7 +6,7 @@ from time import sleep
 from typing import Optional
 
 from codeocean.components import SortOrder, SearchFilter, Permissions
-from codeocean.computation import PipelineProcessParams, Param
+from codeocean.computation import PipelineProcess, Param
 
 
 class DataAssetType(StrEnum):
@@ -62,7 +62,7 @@ class ResultsInfo:
     run_script: Optional[str] = None
     data_assets: Optional[list[str]] = None
     parameters: Optional[list[Param]] = None
-    processes: Optional[list[PipelineProcessParams]] = None
+    processes: Optional[list[PipelineProcess]] = None
 
 
 @dataclass_json
