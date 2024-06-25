@@ -6,7 +6,7 @@ from time import sleep
 from typing import Optional
 
 from codeocean.components import SortOrder, SearchFilter, Permissions
-from codecoean.computation import PipelineProcessParams, Param
+from codeocean.computation import PipelineProcessParams, Param
 
 
 class DataAssetType(StrEnum):
