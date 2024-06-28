@@ -1,4 +1,5 @@
 from requests_toolbelt.sessions import BaseUrlSession
+from requests_toolbelt.adapters.socket_options import TCPKeepAliveAdapter
 from dataclasses import dataclass
 
 from codeocean.capsule import Capsules
@@ -15,6 +16,7 @@ class CodeOcean:
     def __post_init__(self):
         self.session = BaseUrlSession(base_url=f"{self.domain}/api/v1/")
         self.session.auth = (self.token, "")
+        self.session.mount(self.domain, TCPKeepAliveAdapter())
         self.session.headers.update({"Content-Type": "application/json"})
         self.session.hooks["response"] = [
             lambda response, *args, **kwargs: response.raise_for_status()
