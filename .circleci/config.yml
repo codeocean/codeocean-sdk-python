@@ -17,7 +17,9 @@ jobs:
 
       - run: pip install -e ".[dev]" -U
 
-      - run: flake8 src examples
+      - run: hatch run lint
+
+      - run: hatch run test:test
 
 workflows:
 

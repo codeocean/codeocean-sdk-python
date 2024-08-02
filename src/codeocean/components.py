@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 from dataclasses_json import dataclass_json
 from dataclasses import dataclass
-from enum import StrEnum
 from typing import Optional
+
+from codeocean.enum import StrEnum
 
 
 class UserRole(StrEnum):

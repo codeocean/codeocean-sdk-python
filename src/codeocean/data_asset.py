@@ -1,12 +1,14 @@
+from __future__ import annotations
+
 from dataclasses_json import dataclass_json
 from dataclasses import dataclass
-from enum import StrEnum
 from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep
 from typing import Optional
 
 from codeocean.components import SortOrder, SearchFilter, Permissions
 from codeocean.computation import PipelineProcess, Param
+from codeocean.enum import StrEnum
 
 
 class DataAssetType(StrEnum):

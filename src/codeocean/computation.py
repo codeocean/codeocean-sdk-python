@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
-from enum import StrEnum
 from requests_toolbelt.sessions import BaseUrlSession
 from typing import Optional
 from time import sleep
+
+from codeocean.enum import StrEnum
 
 
 class ComputationState(StrEnum):
