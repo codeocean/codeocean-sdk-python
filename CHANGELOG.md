@@ -1,9 +1,13 @@
 CHANGELOG
 =========
 
+## 0.1.5 (2024-08-08)
+
+- [#10](https://github.com/codeocean/codeocean-sdk-python/pull/10) fix: Provenance optional fields
+
 ## 0.1.4 (2024-08-02)
 
-- Add support for Python >= 3.9 
+- Add support for Python >= 3.9
 
 ## 0.1.3 (2024-07-09)
 
