@@ -27,9 +27,9 @@ class DataAssetState(StrEnum):
 class Provenance:
     commit: str
     run_script: str
-    data_assets: str
     docker_image: str
     capsule: str
+    data_assets: Optional[list[str]] = None
 
 
 class DataAssetOrigin(StrEnum):
