@@ -141,17 +141,18 @@ class Computations:
 
         return Computation.from_dict(res.json())
 
-    def wait_until_completed(self, computation: Computation) -> Computation:
+    def wait_until_completed(self, computation: Computation, polling_interval: int = 5) -> Computation:
         """
         Polls the given computation until it reaches the 'Completed' or 'Failed' state.
         """
+        assert polling_interval >= 5, "polling_interval should be greater than or equal to 5"
         while True:
             comp = self.get_computation(computation.id)
 
             if comp.state in [ComputationState.Completed, ComputationState.Failed]:
                 return comp
 
-            sleep(5)
+            sleep(polling_interval)
 
     def list_computation_results(self, computation_id: str, path: str = "") -> Folder:
         data = {
