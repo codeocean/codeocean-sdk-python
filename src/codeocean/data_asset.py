@@ -241,7 +241,10 @@ class DataAssets:
         """
         Polls the given data asset until it reaches the 'Ready' or 'Failed' state.
         """
-        assert polling_interval >= 5, "polling_interval should be greater than or equal to 5"
+        if polling_interval >= 5:
+            raise ValueError(
+                f"Polling interval {polling_interval} should be greater than or equal to 5"
+            )
         while True:
             da = self.get_data_asset(data_asset.id)
 
