@@ -237,17 +237,21 @@ class DataAssets:
 
         return DataAsset.from_dict(res.json())
 
-    def wait_until_ready(self, data_asset: DataAsset) -> DataAsset:
+    def wait_until_ready(self, data_asset: DataAsset, polling_interval: int = 5) -> DataAsset:
         """
         Polls the given data asset until it reaches the 'Ready' or 'Failed' state.
         """
+        if polling_interval < 5:
+            raise ValueError(
+                f"Polling interval {polling_interval} should be greater than or equal to 5"
+            )
         while True:
             da = self.get_data_asset(data_asset.id)
 
             if da.state in [DataAssetState.Ready, DataAssetState.Failed]:
                 return da
 
-            sleep(5)
+            sleep(polling_interval)
 
     def delete_data_asset(self, data_asset_id: str):
         self.client.delete(f"data_assets/{data_asset_id}")
