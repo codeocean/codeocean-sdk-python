@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.1.6 (2024-10-15)
+
+- [#13](https://github.com/codeocean/codeocean-sdk-python/pull/13) feat: makes polling interval configurable
+
 ## 0.1.5 (2024-08-08)
 
 - [#10](https://github.com/codeocean/codeocean-sdk-python/pull/10) fix: Provenance optional fields
