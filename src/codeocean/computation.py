@@ -146,8 +146,8 @@ class Computations:
     ) -> Computation:
         """
         Polls the given computation until it reaches the 'Completed' or 'Failed'
-        state. 
-        
+        state.
+
         - `polling_interval` and `timeout` are in seconds
         """
         if polling_interval < 5:
@@ -171,7 +171,7 @@ class Computations:
 
             if timeout is not None and (time() - t0) > timeout:
                 raise TimeoutError(f"Computation {computation.id} did not complete within {timeout} seconds")
-            
+
             sleep(polling_interval)
 
     def list_computation_results(self, computation_id: str, path: str = "") -> Folder:

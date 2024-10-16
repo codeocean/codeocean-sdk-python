@@ -247,7 +247,7 @@ class DataAssets:
     ) -> DataAsset:
         """
         Polls the given data asset until it reaches the 'Ready' or 'Failed' state.
-        
+
         - `polling_interval` and `timeout` are in seconds
         """
         if polling_interval < 5:
@@ -268,10 +268,10 @@ class DataAssets:
 
             if da.state in [DataAssetState.Ready, DataAssetState.Failed]:
                 return da
-            
+
             if timeout is not None and (time() - t0) > timeout:
                 raise TimeoutError(f"Data asset {data_asset.id} was not ready within {timeout} seconds")
-            
+
             sleep(polling_interval)
 
     def delete_data_asset(self, data_asset_id: str):
