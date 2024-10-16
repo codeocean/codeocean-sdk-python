@@ -243,7 +243,7 @@ class DataAssets:
         return DataAsset.from_dict(res.json())
 
     def wait_until_ready(
-        self, data_asset: DataAsset, polling_interval: int = 5, timeout: int | None = None
+        self, data_asset: DataAsset, polling_interval: float = 5, timeout: float | None = None
     ) -> DataAsset:
         """
         Polls the given data asset until it reaches the 'Ready' or 'Failed' state.

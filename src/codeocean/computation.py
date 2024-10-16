@@ -142,7 +142,7 @@ class Computations:
         return Computation.from_dict(res.json())
 
     def wait_until_completed(
-        self, computation: Computation, polling_interval: int = 5, timeout: int | None = None,
+        self, computation: Computation, polling_interval: float = 5, timeout: float | None = None,
     ) -> Computation:
         """
         Polls the given computation until it reaches the 'Completed' or 'Failed'
