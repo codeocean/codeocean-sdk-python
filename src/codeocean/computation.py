@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from requests_toolbelt.sessions import BaseUrlSession
 from typing import Optional
-from time import sleep
+from time import sleep, time
 
 from codeocean.enum import StrEnum
 
@@ -141,20 +141,37 @@ class Computations:
 
         return Computation.from_dict(res.json())
 
-    def wait_until_completed(self, computation: Computation, polling_interval: int = 5) -> Computation:
+    def wait_until_completed(
+        self, computation: Computation, polling_interval: int = 5, timeout: int | None = None,
+    ) -> Computation:
         """
-        Polls the given computation until it reaches the 'Completed' or 'Failed' state.
+        Polls the given computation until it reaches the 'Completed' or 'Failed'
+        state. 
+        
+        - `polling_interval` and `timeout` are in seconds
         """
         if polling_interval < 5:
             raise ValueError(
                 f"Polling interval {polling_interval} should be greater than or equal to 5"
             )
+        if timeout is not None and timeout < polling_interval:
+            raise ValueError(
+                f"Timeout {timeout} should be greater than or equal to polling interval {polling_interval}"
+            )
+        if timeout is not None and timeout < 0:
+            raise ValueError(
+                f"Timeout {timeout} should be greater than or equal to 0 (seconds), or None"
+            )
+        t0 = time()
         while True:
             comp = self.get_computation(computation.id)
 
             if comp.state in [ComputationState.Completed, ComputationState.Failed]:
                 return comp
 
+            if timeout is not None and (time() - t0) > timeout:
+                raise TimeoutError(f"Computation {computation.id} did not complete within {timeout} seconds")
+            
             sleep(polling_interval)
 
     def list_computation_results(self, computation_id: str, path: str = "") -> Folder:
