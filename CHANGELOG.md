@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.1.7 (2024-10-17)
+
+- [#14](https://github.com/codeocean/codeocean-sdk-python/pull/14) feat: Add an optional timeout parameter to polling while loops
+
 ## 0.1.6 (2024-10-15)
 
 - [#13](https://github.com/codeocean/codeocean-sdk-python/pull/13) feat: makes polling interval configurable
