@@ -227,12 +227,8 @@ class DataAssets:
 
         return DataAsset.from_dict(res.json())
 
-    def update_metadata(
-        self, data_asset_id: str, update_params: DataAssetUpdateParams
-    ) -> DataAsset:
-        res = self.client.put(
-            f"data_assets/{data_asset_id}", json=update_params.to_dict()
-        )
+    def update_metadata(self, data_asset_id: str, update_params: DataAssetUpdateParams) -> DataAsset:
+        res = self.client.put(f"data_assets/{data_asset_id}", json=update_params.to_dict())
 
         return DataAsset.from_dict(res.json())
 
@@ -291,9 +287,7 @@ class DataAssets:
             params={"archive": archive},
         )
 
-    def search_data_assets(
-        self, search_params: DataAssetSearchParams
-    ) -> DataAssetSearchResults:
+    def search_data_assets(self, search_params: DataAssetSearchParams) -> DataAssetSearchResults:
         res = self.client.post("data_assets/search", json=search_params.to_dict())
 
         return DataAssetSearchResults.from_dict(res.json())
