@@ -1,14 +1,13 @@
 from __future__ import annotations
 
+from dataclasses_json import dataclass_json
 from dataclasses import dataclass
+from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep, time
 from typing import Optional
 
-from dataclasses_json import dataclass_json
-from requests_toolbelt.sessions import BaseUrlSession
-
-from codeocean.components import Permissions, SearchFilter, SortOrder
-from codeocean.computation import Param, PipelineProcess
+from codeocean.components import SortOrder, SearchFilter, Permissions
+from codeocean.computation import PipelineProcess, Param
 from codeocean.enum import StrEnum
 
 
