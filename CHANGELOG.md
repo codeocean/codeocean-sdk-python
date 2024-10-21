@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.2.0 (2024-10-21)
+
+- [#15](https://github.com/codeocean/codeocean-sdk-python/pull/15) feat: Add option for custom retries
+
 ## 0.1.7 (2024-10-17)
 
 - [#14](https://github.com/codeocean/codeocean-sdk-python/pull/14) feat: Add an optional timeout parameter to polling while loops
