@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from requests_toolbelt.adapters.socket_options import TCPKeepAliveAdapter
 from requests_toolbelt.sessions import BaseUrlSession
