@@ -14,7 +14,7 @@ class CodeOcean:
 
     domain: str
     token: str
-    retries: Optional[Retry] = None
+    retries: Optional[Retry | int] = 0
 
     def __post_init__(self):
         self.session = BaseUrlSession(base_url=f"{self.domain}/api/v1/")
