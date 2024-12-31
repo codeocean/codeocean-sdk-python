@@ -12,11 +12,8 @@ from codeocean.enum import StrEnum
 
 
 class CapsuleStatus(StrEnum):
-    NonPublished = "non-published"
-    Submitted = "submitted"
-    Publishing = "publishing"
-    Published = "published"
-    Verified = "verified"
+    NonRelease = "non_release"
+    Release = "release"
 
 
 class CapsuleSortBy(StrEnum):
@@ -55,9 +52,9 @@ class Capsule:
     cloned_from_url: Optional[str] = None
     description: Optional[str] = None
     field: Optional[str] = None
-    keywords: Optional[list[str]] = None
+    tags: Optional[list[str]] = None
     original_capsule: Optional[OriginalCapsuleInfo] = None
-    published_capsule: Optional[str] = None
+    release_capsule: Optional[str] = None
     submission: Optional[dict] = None
     versions: Optional[list[dict]] = None
 
