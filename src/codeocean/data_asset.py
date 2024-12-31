@@ -15,6 +15,7 @@ class DataAssetType(StrEnum):
     Dataset = "dataset"
     Result = "result"
     Combined = "combined"
+    Model = "model"
 
 
 class DataAssetState(StrEnum):
