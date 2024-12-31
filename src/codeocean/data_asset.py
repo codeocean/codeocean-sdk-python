@@ -204,6 +204,7 @@ class DataAssetSearchParams:
     archived: bool
     favorite: bool
     query: Optional[str] = None
+    next_token: Optional[str] = None
     sort_field: Optional[DataAssetSortBy] = None
     sort_order: Optional[SortOrder] = None
     type: Optional[DataAssetType] = None
@@ -217,6 +218,7 @@ class DataAssetSearchParams:
 class DataAssetSearchResults:
     has_more: bool
     results: list[DataAsset]
+    next_token: Optional[str] = None
 
 
 @dataclass_json
