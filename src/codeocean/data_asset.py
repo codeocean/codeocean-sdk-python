@@ -199,10 +199,10 @@ class DataAssetSearchOrigin(StrEnum):
 @dataclass_json
 @dataclass(frozen=True)
 class DataAssetSearchParams:
-    limit: int
-    offset: int
-    archived: bool
-    favorite: bool
+    limit: Optional[int] = None
+    offset: Optional[int] = None
+    archived: Optional[bool] = None
+    favorite: Optional[bool] = None
     query: Optional[str] = None
     next_token: Optional[str] = None
     sort_field: Optional[DataAssetSortBy] = None
