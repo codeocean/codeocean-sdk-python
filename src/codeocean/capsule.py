@@ -17,6 +17,10 @@ class CapsuleStatus(StrEnum):
     Published = "published"
     Verified = "verified"
 
+class CapsuleSortBy(StrEnum):
+    Created = "created"
+    LastAccessed = "last_accessed"
+    Name = "name"
 
 @dataclass_json
 @dataclass(frozen=True)
@@ -58,7 +62,7 @@ class CapsuleSearchParams:
     limit: Optional[int] = None
     sort_field: Optional[CapsuleSortBy] = None
     sort_order: Optional[SortOrder] = None
-    ownership: Optional[CapsuleOwnership] = None
+    ownership: Optional[Ownership] = None
     status: Optional[CapsuleStatus] = None
     favorite: Optional[bool] = None
     archived: Optional[bool] = None
