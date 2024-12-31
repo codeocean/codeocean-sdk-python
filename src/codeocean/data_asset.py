@@ -222,8 +222,8 @@ class DataAssetSearchResults:
 @dataclass_json
 @dataclass(frozen=True)
 class ContainedDataAsset:
-    id: Optional[str]
-    mount: Optional[str]
+    id: Optional[str] = None
+    mount: Optional[str] = None
     size: Optional[int] = None
 
 
