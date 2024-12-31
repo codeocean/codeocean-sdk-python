@@ -14,6 +14,7 @@ from codeocean.enum import StrEnum
 class DataAssetType(StrEnum):
     Dataset = "dataset"
     Result = "result"
+    Combined = "combined"
 
 
 class DataAssetState(StrEnum):
@@ -86,6 +87,7 @@ class DataAsset:
     size: Optional[int] = None
     source_bucket: Optional[SourceBucket] = None
     tags: Optional[list[str]] = None
+    contained_data_assets: Optional[list[ContainedDataAsset]] = None
 
 
 @dataclass_json
@@ -215,6 +217,14 @@ class DataAssetSearchParams:
 class DataAssetSearchResults:
     has_more: bool
     results: list[DataAsset]
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class ContainedDataAsset:
+    id: Optional[str] = None
+    mount: Optional[str] = None
+    size: Optional[int] = None
 
 
 @dataclass
