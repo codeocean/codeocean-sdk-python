@@ -49,6 +49,30 @@ class Capsule:
     versions: Optional[list[dict]] = None
 
 
+@dataclass_json
+@dataclass(frozen=True)
+class CapsuleSearchParams:
+    query: Optional[str] = None
+    next_token: Optional[str] = None
+    offset: Optional[int] = None
+    limit: Optional[int] = None
+    sort_field: Optional[CapsuleSortBy] = None
+    sort_order: Optional[SortOrder] = None
+    ownership: Optional[CapsuleOwnership] = None
+    status: Optional[CapsuleStatus] = None
+    favorite: Optional[bool] = None
+    archived: Optional[bool] = None
+    filters: Optional[list[SearchFilter]] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class CapsuleSearchResults:
+    has_more: bool
+    results: list[Capsule]
+    next_token: Optional[str] = None
+
+
 @dataclass
 class Capsules:
 
@@ -80,3 +104,8 @@ class Capsules:
             f"capsules/{capsule_id}/data_assets/",
             json=data_assets,
         )
+    
+    def search_capsules(self, search_params: CapsuleSearchParams) -> CapsuleSearchResults:
+        res = self.client.post("capsules/search", json=search_params.to_dict())
+
+        return CapsuleSearchResults.from_dict(res.json())
