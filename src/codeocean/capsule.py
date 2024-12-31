@@ -114,7 +114,7 @@ class Capsules:
             f"capsules/{capsule_id}/data_assets/",
             json=data_assets,
         )
-    
+
     def search_capsules(self, search_params: CapsuleSearchParams) -> CapsuleSearchResults:
         res = self.client.post("capsules/search", json=search_params.to_dict())
 
