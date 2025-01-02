@@ -194,17 +194,17 @@ class DataAssetSearchOrigin(StrEnum):
 @dataclass_json
 @dataclass(frozen=True)
 class DataAssetSearchParams:
-    limit: Optional[int] = None
-    offset: Optional[int] = None
-    archived: Optional[bool] = None
-    favorite: Optional[bool] = None
     query: Optional[str] = None
     next_token: Optional[str] = None
+    offset: Optional[int] = None
+    limit: Optional[int] = None
     sort_field: Optional[DataAssetSortBy] = None
     sort_order: Optional[SortOrder] = None
     type: Optional[DataAssetType] = None
     ownership: Optional[Ownership] = None
     origin: Optional[DataAssetSearchOrigin] = None
+    favorite: Optional[bool] = None
+    archived: Optional[bool] = None
     filters: Optional[list[SearchFilter]] = None
 
 
