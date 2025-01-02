@@ -6,7 +6,7 @@ from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep, time
 from typing import Optional
 
-from codeocean.components import SortOrder, SearchFilter, Permissions
+from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
 from codeocean.computation import PipelineProcess, Param
 from codeocean.enum import StrEnum
 
@@ -186,12 +186,6 @@ class DataAssetSortBy(StrEnum):
     Size = "size"
 
 
-class DataAssetOwnership(StrEnum):
-    Private = "private"
-    Shared = "shared"
-    Created = "created"
-
-
 class DataAssetSearchOrigin(StrEnum):
     Internal = "internal"
     External = "external"
@@ -209,7 +203,7 @@ class DataAssetSearchParams:
     sort_field: Optional[DataAssetSortBy] = None
     sort_order: Optional[SortOrder] = None
     type: Optional[DataAssetType] = None
-    ownership: Optional[DataAssetOwnership] = None
+    ownership: Optional[Ownership] = None
     origin: Optional[DataAssetSearchOrigin] = None
     filters: Optional[list[SearchFilter]] = None
 

@@ -5,7 +5,7 @@ from dataclasses_json import dataclass_json
 from typing import Optional
 from requests_toolbelt.sessions import BaseUrlSession
 
-from codeocean.components import SortOrder, SearchFilter
+from codeocean.components import Ownership, SortOrder, SearchFilter
 from codeocean.computation import Computation
 from codeocean.data_asset import DataAssetAttachParams, DataAssetAttachResults
 from codeocean.enum import StrEnum
@@ -22,7 +22,7 @@ class CapsuleSortBy(StrEnum):
     Name = "name"
 
 
-class CapsuleOwnership(StrEnum):
+class Ownership(StrEnum):
     Private = "private"
     Shared = "shared"
     Created = "created"
@@ -68,7 +68,7 @@ class CapsuleSearchParams:
     limit: Optional[int] = None
     sort_field: Optional[CapsuleSortBy] = None
     sort_order: Optional[SortOrder] = None
-    ownership: Optional[CapsuleOwnership] = None
+    ownership: Optional[Ownership] = None
     status: Optional[CapsuleStatus] = None
     favorite: Optional[bool] = None
     archived: Optional[bool] = None
