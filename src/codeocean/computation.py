@@ -54,14 +54,15 @@ class Computation:
     id: str
     created: int
     name: str
-    state: ComputationState
     run_time: int
+    state: ComputationState
     cloud_workstation: Optional[bool] = None
     data_assets: Optional[list[InputDataAsset]] = None
-    end_status: Optional[ComputationEndStatus] = None
-    has_results: Optional[bool] = None
     parameters: Optional[list[Param]] = None
     processes: Optional[list[PipelineProcess]] = None
+    end_status: Optional[ComputationEndStatus] = None
+    exit_code: Optional[int] = None
+    has_results: Optional[bool] = None
 
 
 @dataclass_json
