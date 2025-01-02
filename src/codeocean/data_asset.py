@@ -9,6 +9,7 @@ from typing import Optional
 from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
 from codeocean.computation import PipelineProcess, Param
 from codeocean.enum import StrEnum
+from codeocean.folder import Folder, DownloadFileURL
 
 
 class DataAssetType(StrEnum):
@@ -298,3 +299,20 @@ class DataAssets:
         res = self.client.post("data_assets/search", json=search_params.to_dict())
 
         return DataAssetSearchResults.from_dict(res.json())
+    
+    def list_data_asset_files(self, data_asset_id: str, path: str = "") -> Folder:
+        data = {
+            "path": path,
+        }
+
+        res = self.client.post(f"data_assets/{data_asset_id}/files", json=data)
+
+        return Folder.from_dict(res.json())
+
+    def get_data_asset_file_download_url(self, data_asset_id: str, path: str) -> DownloadFileURL:
+        res = self.client.get(
+            f"data_assets/{data_asset_id}/files/download_url",
+            params={"path": path},
+        )
+
+        return DownloadFileURL.from_dict(res.json())
