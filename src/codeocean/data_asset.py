@@ -28,10 +28,10 @@ class DataAssetState(StrEnum):
 @dataclass_json
 @dataclass(frozen=True)
 class Provenance:
-    commit: str
-    run_script: str
-    docker_image: str
-    capsule: str
+    commit: Optional[str] = None
+    run_script: Optional[str] = None
+    docker_image: Optional[str] = None
+    capsule: Optional[str] = None
     data_assets: Optional[list[str]] = None
 
 
