@@ -22,12 +22,6 @@ class CapsuleSortBy(StrEnum):
     Name = "name"
 
 
-class Ownership(StrEnum):
-    Private = "private"
-    Shared = "shared"
-    Created = "created"
-
-
 @dataclass_json
 @dataclass(frozen=True)
 class OriginalCapsuleInfo:

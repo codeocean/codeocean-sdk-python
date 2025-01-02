@@ -30,3 +30,4 @@ class ListFolderParams:
 @dataclass(frozen=True)
 class DownloadFileURL:
     url: str
+    

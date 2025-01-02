@@ -299,7 +299,7 @@ class DataAssets:
         res = self.client.post("data_assets/search", json=search_params.to_dict())
 
         return DataAssetSearchResults.from_dict(res.json())
-    
+
     def list_data_asset_files(self, data_asset_id: str, path: str = "") -> Folder:
         data = {
             "path": path,
