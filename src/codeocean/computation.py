@@ -7,6 +7,7 @@ from typing import Optional
 from time import sleep, time
 
 from codeocean.enum import StrEnum
+from codeocean.folder import Folder, DownloadFileURL
 
 
 class ComputationState(StrEnum):
@@ -98,33 +99,6 @@ class RunParams:
     parameters: Optional[list[str]] = None
     named_parameters: Optional[list[NamedRunParam]] = None
     processes: Optional[list[PipelineProcessParams]] = None
-
-
-@dataclass_json
-@dataclass(frozen=True)
-class FolderItem:
-    name: str
-    path: str
-    type: str
-    size: Optional[int] = None
-
-
-@dataclass_json
-@dataclass(frozen=True)
-class Folder:
-    items: list[FolderItem]
-
-
-@dataclass_json
-@dataclass(frozen=True)
-class ListFolderParams:
-    path: str
-
-
-@dataclass_json
-@dataclass(frozen=True)
-class DownloadFileURL:
-    url: str
 
 
 @dataclass
