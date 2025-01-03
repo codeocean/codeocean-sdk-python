@@ -325,3 +325,9 @@ class DataAssets:
         )
 
         return DownloadFileURL.from_dict(res.json())
+    
+    def transfer_data_asset(self, data_asset_id: str, transfer_params: TransferDataParams):
+        self.client.post(
+            f"data_assets/{data_asset_id}/transfer", 
+            json=transfer_params.to_dict()
+        )
