@@ -80,16 +80,18 @@ class DataAsset:
     state: DataAssetState
     type: DataAssetType
     last_used: int
-    app_parameters: Optional[list[AppParameter]] = None
-    custom_metadata: Optional[dict] = None
-    description: Optional[str] = None
-    failure_reason: Optional[str] = None
     files: Optional[int] = None
-    provenance: Optional[Provenance] = None
     size: Optional[int] = None
-    source_bucket: Optional[SourceBucket] = None
+    description: Optional[str] = None
     tags: Optional[list[str]] = None
+    provenance: Optional[Provenance] = None
+    source_bucket: Optional[SourceBucket] = None
+    custom_metadata: Optional[dict] = None
+    app_parameters: Optional[list[AppParameter]] = None
     contained_data_assets: Optional[list[ContainedDataAsset]] = None
+    last_transferred: Optional[int] = None
+    transfer_error: Optional[str] = None
+    failure_reason: Optional[str] = None
 
 
 @dataclass_json
@@ -223,6 +225,13 @@ class ContainedDataAsset:
     id: Optional[str] = None
     mount: Optional[str] = None
     size: Optional[int] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class TransferDataParams:
+    target: Target
+    force: Optional[bool] = None
 
 
 @dataclass
