@@ -5,17 +5,21 @@ from dataclasses_json import dataclass_json
 from typing import Optional
 from requests_toolbelt.sessions import BaseUrlSession
 
+from codeocean.components import Ownership, SortOrder, SearchFilter
 from codeocean.computation import Computation
 from codeocean.data_asset import DataAssetAttachParams, DataAssetAttachResults
 from codeocean.enum import StrEnum
 
 
 class CapsuleStatus(StrEnum):
-    NonPublished = "non-published"
-    Submitted = "submitted"
-    Publishing = "publishing"
-    Published = "published"
-    Verified = "verified"
+    NonRelease = "non_release"
+    Release = "release"
+
+
+class CapsuleSortBy(StrEnum):
+    Created = "created"
+    LastAccessed = "last_accessed"
+    Name = "name"
 
 
 @dataclass_json
@@ -42,11 +46,35 @@ class Capsule:
     cloned_from_url: Optional[str] = None
     description: Optional[str] = None
     field: Optional[str] = None
-    keywords: Optional[list[str]] = None
+    tags: Optional[list[str]] = None
     original_capsule: Optional[OriginalCapsuleInfo] = None
-    published_capsule: Optional[str] = None
+    release_capsule: Optional[str] = None
     submission: Optional[dict] = None
     versions: Optional[list[dict]] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class CapsuleSearchParams:
+    query: Optional[str] = None
+    next_token: Optional[str] = None
+    offset: Optional[int] = None
+    limit: Optional[int] = None
+    sort_field: Optional[CapsuleSortBy] = None
+    sort_order: Optional[SortOrder] = None
+    ownership: Optional[Ownership] = None
+    status: Optional[CapsuleStatus] = None
+    favorite: Optional[bool] = None
+    archived: Optional[bool] = None
+    filters: Optional[list[SearchFilter]] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class CapsuleSearchResults:
+    has_more: bool
+    results: list[Capsule]
+    next_token: Optional[str] = None
 
 
 @dataclass
@@ -80,3 +108,8 @@ class Capsules:
             f"capsules/{capsule_id}/data_assets/",
             json=data_assets,
         )
+
+    def search_capsules(self, search_params: CapsuleSearchParams) -> CapsuleSearchResults:
+        res = self.client.post("capsules/search", json=search_params.to_dict())
+
+        return CapsuleSearchResults.from_dict(res.json())

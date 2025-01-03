@@ -6,15 +6,17 @@ from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep, time
 from typing import Optional
 
-from codeocean.components import SortOrder, SearchFilter, Permissions
+from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
 from codeocean.computation import PipelineProcess, Param
 from codeocean.enum import StrEnum
+from codeocean.folder import Folder, DownloadFileURL
 
 
 class DataAssetType(StrEnum):
     Dataset = "dataset"
     Result = "result"
     Combined = "combined"
+    Model = "model"
 
 
 class DataAssetState(StrEnum):
@@ -26,10 +28,10 @@ class DataAssetState(StrEnum):
 @dataclass_json
 @dataclass(frozen=True)
 class Provenance:
-    commit: str
-    run_script: str
-    docker_image: str
-    capsule: str
+    commit: Optional[str] = None
+    run_script: Optional[str] = None
+    docker_image: Optional[str] = None
+    capsule: Optional[str] = None
     data_assets: Optional[list[str]] = None
 
 
@@ -78,16 +80,18 @@ class DataAsset:
     state: DataAssetState
     type: DataAssetType
     last_used: int
-    app_parameters: Optional[list[AppParameter]] = None
-    custom_metadata: Optional[dict] = None
-    description: Optional[str] = None
-    failure_reason: Optional[str] = None
     files: Optional[int] = None
-    provenance: Optional[Provenance] = None
     size: Optional[int] = None
-    source_bucket: Optional[SourceBucket] = None
+    description: Optional[str] = None
     tags: Optional[list[str]] = None
+    provenance: Optional[Provenance] = None
+    source_bucket: Optional[SourceBucket] = None
+    custom_metadata: Optional[dict] = None
+    app_parameters: Optional[list[AppParameter]] = None
     contained_data_assets: Optional[list[ContainedDataAsset]] = None
+    last_transferred: Optional[int] = None
+    transfer_error: Optional[str] = None
+    failure_reason: Optional[str] = None
 
 
 @dataclass_json
@@ -185,12 +189,6 @@ class DataAssetSortBy(StrEnum):
     Size = "size"
 
 
-class DataAssetOwnership(StrEnum):
-    Private = "private"
-    Shared = "shared"
-    Created = "created"
-
-
 class DataAssetSearchOrigin(StrEnum):
     Internal = "internal"
     External = "external"
@@ -199,16 +197,17 @@ class DataAssetSearchOrigin(StrEnum):
 @dataclass_json
 @dataclass(frozen=True)
 class DataAssetSearchParams:
-    limit: int
-    offset: int
-    archived: bool
-    favorite: bool
     query: Optional[str] = None
+    next_token: Optional[str] = None
+    offset: Optional[int] = None
+    limit: Optional[int] = None
     sort_field: Optional[DataAssetSortBy] = None
     sort_order: Optional[SortOrder] = None
     type: Optional[DataAssetType] = None
-    ownership: Optional[DataAssetOwnership] = None
+    ownership: Optional[Ownership] = None
     origin: Optional[DataAssetSearchOrigin] = None
+    favorite: Optional[bool] = None
+    archived: Optional[bool] = None
     filters: Optional[list[SearchFilter]] = None
 
 
@@ -217,6 +216,7 @@ class DataAssetSearchParams:
 class DataAssetSearchResults:
     has_more: bool
     results: list[DataAsset]
+    next_token: Optional[str] = None
 
 
 @dataclass_json
@@ -225,6 +225,13 @@ class ContainedDataAsset:
     id: Optional[str] = None
     mount: Optional[str] = None
     size: Optional[int] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class TransferDataParams:
+    target: Target
+    force: Optional[bool] = None
 
 
 @dataclass
@@ -301,3 +308,26 @@ class DataAssets:
         res = self.client.post("data_assets/search", json=search_params.to_dict())
 
         return DataAssetSearchResults.from_dict(res.json())
+
+    def list_data_asset_files(self, data_asset_id: str, path: str = "") -> Folder:
+        data = {
+            "path": path,
+        }
+
+        res = self.client.post(f"data_assets/{data_asset_id}/files", json=data)
+
+        return Folder.from_dict(res.json())
+
+    def get_data_asset_file_download_url(self, data_asset_id: str, path: str) -> DownloadFileURL:
+        res = self.client.get(
+            f"data_assets/{data_asset_id}/files/download_url",
+            params={"path": path},
+        )
+
+        return DownloadFileURL.from_dict(res.json())
+
+    def transfer_data_asset(self, data_asset_id: str, transfer_params: TransferDataParams):
+        self.client.post(
+            f"data_assets/{data_asset_id}/transfer",
+            json=transfer_params.to_dict()
+        )
