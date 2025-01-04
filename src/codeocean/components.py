@@ -69,3 +69,9 @@ class SearchFilter:
     values: Optional[list[str | float]] = None
     range: Optional[SearchFilterRange] = None
     exclude: Optional[bool] = None
+
+
+class Ownership(StrEnum):
+    Private = "private"
+    Shared = "shared"
+    Created = "created"
