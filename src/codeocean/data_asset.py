@@ -4,7 +4,7 @@ from dataclasses_json import dataclass_json
 from dataclasses import dataclass
 from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep, time
-from typing import Optional
+from typing import Optional, Iterator
 
 from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
 from codeocean.computation import PipelineProcess, Param
@@ -331,3 +331,15 @@ class DataAssets:
             f"data_assets/{data_asset_id}/transfer",
             json=transfer_params.to_dict()
         )
+
+    def paginate_search(self, data_asset_search_params: DataAssetSearchParams) -> Iterator[list[DataAsset]]:
+        has_more = True
+        search_params = data_asset_search_params.to_dict()
+        while has_more:
+            response = self.search_data_assets(
+                search_params=DataAssetSearchParams(**search_params)
+            )
+            next_token = response.next_token
+            has_more = response.has_more
+            search_params["next_token"] = next_token
+            yield response.results
