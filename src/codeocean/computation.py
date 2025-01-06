@@ -170,3 +170,9 @@ class Computations:
 
     def delete_computation(self, computation_id: str):
         self.client.delete(f"computations/{computation_id}")
+
+    def rename_computation(self, computation_id: str, name: str):
+        self.client.patch(
+            f"computations/{computation_id}",
+            params={"name": name}
+            )
