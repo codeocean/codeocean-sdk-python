@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+## 0.3.0 (2025-01-07)
+
+- [#25](https://github.com/codeocean/codeocean-sdk-python/pull/25) feat: Add support for Python 3.13
+- [#24](https://github.com/codeocean/codeocean-sdk-python/pull/24) feat: adds paginated search method to data asset api
+- [#22](https://github.com/codeocean/codeocean-sdk-python/pull/22) feat: add rename_computation function
+- [#21](https://github.com/codeocean/codeocean-sdk-python/pull/21) feat: Code Ocean Version 3.1 updates
+- [#18](https://github.com/codeocean/codeocean-sdk-python/pull/18) feat: add combined type and contained_data_assets field 
+- [#16](https://github.com/codeocean/codeocean-sdk-python/pull/16) fix: revert default number of retries to 0
+
 ## 0.2.0 (2024-10-21)
 
 - [#15](https://github.com/codeocean/codeocean-sdk-python/pull/15) feat: Add option for custom retries
