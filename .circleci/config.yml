@@ -3,7 +3,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.13
 
     resource_class: small
 
@@ -21,8 +21,31 @@ jobs:
 
       - run: hatch run test:test
 
+  release:
+    executor: default
+
+    steps:
+      - checkout
+
+      - run: pip install -e ".[dev]" -U
+
+      - run: hatch build
+
+      - run: hatch publish
+
 workflows:
 
   build:
     jobs:
-      - build
+      - build:
+          filters:
+            tags:
+              ignore: /.*/
+      - release:
+          context:
+            - pypi-creds
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
