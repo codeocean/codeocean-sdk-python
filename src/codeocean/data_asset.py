@@ -332,15 +332,17 @@ class DataAssets:
             json=transfer_params.to_dict()
         )
 
-    def paginate_search(self, data_asset_search_params: DataAssetSearchParams) -> Iterator[DataAsset]:
-        has_more = True
-        search_params = data_asset_search_params.to_dict()
-        while has_more:
+    def search_data_assets_iterator(self, search_params: DataAssetSearchParams) -> Iterator[DataAsset]:
+        params = search_params.to_dict()
+        while True:
             response = self.search_data_assets(
-                search_params=DataAssetSearchParams(**search_params)
+                search_params=DataAssetSearchParams(**params)
             )
-            next_token = response.next_token
-            has_more = response.has_more
-            search_params["next_token"] = next_token
+
             for result in response.results:
                 yield result
+                
+            if not response.has_more:
+                return
+                
+            params["next_token"] = response.next_token
