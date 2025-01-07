@@ -309,6 +309,21 @@ class DataAssets:
 
         return DataAssetSearchResults.from_dict(res.json())
 
+    def search_data_assets_iterator(self, search_params: DataAssetSearchParams) -> Iterator[DataAsset]:
+        params = search_params.to_dict()
+        while True:
+            response = self.search_data_assets(
+                search_params=DataAssetSearchParams(**params)
+            )
+
+            for result in response.results:
+                yield result
+
+            if not response.has_more:
+                return
+
+            params["next_token"] = response.next_token
+
     def list_data_asset_files(self, data_asset_id: str, path: str = "") -> Folder:
         data = {
             "path": path,
@@ -331,18 +346,3 @@ class DataAssets:
             f"data_assets/{data_asset_id}/transfer",
             json=transfer_params.to_dict()
         )
-
-    def search_data_assets_iterator(self, search_params: DataAssetSearchParams) -> Iterator[DataAsset]:
-        params = search_params.to_dict()
-        while True:
-            response = self.search_data_assets(
-                search_params=DataAssetSearchParams(**params)
-            )
-
-            for result in response.results:
-                yield result
-                
-            if not response.has_more:
-                return
-                
-            params["next_token"] = response.next_token
