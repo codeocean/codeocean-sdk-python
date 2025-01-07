@@ -4,7 +4,7 @@ from dataclasses_json import dataclass_json
 from dataclasses import dataclass
 from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep, time
-from typing import Optional
+from typing import Optional, Iterator
 
 from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
 from codeocean.computation import PipelineProcess, Param
@@ -308,6 +308,21 @@ class DataAssets:
         res = self.client.post("data_assets/search", json=search_params.to_dict())
 
         return DataAssetSearchResults.from_dict(res.json())
+
+    def search_data_assets_iterator(self, search_params: DataAssetSearchParams) -> Iterator[DataAsset]:
+        params = search_params.to_dict()
+        while True:
+            response = self.search_data_assets(
+                search_params=DataAssetSearchParams(**params)
+            )
+
+            for result in response.results:
+                yield result
+
+            if not response.has_more:
+                return
+
+            params["next_token"] = response.next_token
 
     def list_data_asset_files(self, data_asset_id: str, path: str = "") -> Folder:
         data = {
