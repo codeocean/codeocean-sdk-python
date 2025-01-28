@@ -18,3 +18,12 @@ For development, install from source with:
 ```sh
 pip install -e .[dev] -U
 ```
+# Code Ocean Python SDK Compatibility Table
+
+This table shows the compatibility between different versions of the Code Ocean Python SDK and the Code Ocean platform.
+
+| SDK Version  | Compatible Code Ocean Platform Versions     | Notes                         |
+|--------------|---------------------------------------------|-------------------------------|
+| 0.1.0        | 2.18                                        | Initial release of the SDK    |
+| 0.1.2 - 0.2.0| 2.18 - 3.0                                  | Minor bug fixes and updates   |
+| 0.3.0        | 3.1+                                        | Code Ocean v3.1 updates; breaking changes|
