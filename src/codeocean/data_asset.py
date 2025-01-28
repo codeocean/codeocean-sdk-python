@@ -97,10 +97,10 @@ class DataAsset:
 @dataclass_json
 @dataclass(frozen=True)
 class DataAssetUpdateParams:
-    name: str
-    description: str
-    tags: list[str]
-    mount: str
+    name: Optional[str] = None
+    description: Optional[str] = None
+    tags: Optional[list[str]] = None
+    mount: Optional[str] = None
     custom_metadata: Optional[dict] = None
 
 
