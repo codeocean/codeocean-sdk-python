@@ -18,3 +18,8 @@ For development, install from source with:
 ```sh
 pip install -e .[dev] -U
 ```
+# Code Ocean Python SDK Version Compatibility
+
+Each release of this Code Ocean Python SDK is tested and verified against a specific minimum version of the Code Ocean platform API. Generally, this minimum version is the latest Code Ocean version at the time of the SDK’s release.
+We recommend ensuring your SDK dependency is pinned to a version compatible with your Code Ocean deployment.
+For details on when the minimum Code Ocean platform version changes, see the [CHANGELOG](CHANGELOG.md).

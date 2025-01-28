@@ -9,6 +9,7 @@ CHANGELOG
 - [#21](https://github.com/codeocean/codeocean-sdk-python/pull/21) feat: Code Ocean Version 3.1 updates
 - [#18](https://github.com/codeocean/codeocean-sdk-python/pull/18) feat: Combined data asset
 - [#16](https://github.com/codeocean/codeocean-sdk-python/pull/16) fix: revert default number of retries to 0
+- **Minimum Code Ocean platform version updated to `3.1.0`.**  
 
 ## 0.2.0 (2024-10-21)
 
