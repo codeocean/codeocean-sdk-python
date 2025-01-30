@@ -53,8 +53,8 @@ class SourceBucket:
 @dataclass_json
 @dataclass(frozen=True)
 class AppParameter:
-    name: str
-    value: str
+    name: Optional[str] = None
+    value: Optional[str] = None
 
 
 @dataclass_json
@@ -175,11 +175,11 @@ class DataAssetAttachParams:
 @dataclass(frozen=True)
 class DataAssetAttachResults:
     id: str
-    mount: str
-    mount_state: str
-    job_id: str
-    external: bool
-    ready: bool
+    mount_state: Optional[str] = None
+    job_id: Optional[str] = None
+    external: Optional[bool] = None
+    ready: Optional[bool] = None
+    mount: Optional[str] = None
 
 
 class DataAssetSortBy(StrEnum):
