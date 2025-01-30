@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+## 0.3.1 (2025-01-30)
+- [#31](https://github.com/codeocean/codeocean-sdk-python/pull/31) fix: set fields as optional fields according to openapi spec
+- [#30](https://github.com/codeocean/codeocean-sdk-python/pull/30) fix: make all DataAssetUpdateParams fields optional
+- [#29](https://github.com/codeocean/codeocean-sdk-python/pull/29) Add SDK compatibility details
+
 ## 0.3.0 (2025-01-07)
 
 - [#25](https://github.com/codeocean/codeocean-sdk-python/pull/25) feat: Add support for Python 3.13
