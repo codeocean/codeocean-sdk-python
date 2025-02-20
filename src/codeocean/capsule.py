@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
-from typing import Optional, Iterator 
+from typing import Optional, Iterator
 from requests_toolbelt.sessions import BaseUrlSession
 
 from codeocean.components import Ownership, SortOrder, SearchFilter
