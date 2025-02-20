@@ -113,7 +113,7 @@ class Capsules:
         res = self.client.post("capsules/search", json=search_params.to_dict())
 
         return CapsuleSearchResults.from_dict(res.json())
-    
+
     def search_capsules_iterator(self, search_params: CapsuleSearchParams) -> Iterator[Capsules]:
         params = search_params.to_dict()
         while True:
