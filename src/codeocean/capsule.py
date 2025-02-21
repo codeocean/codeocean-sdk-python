@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
-from typing import Optional
+from typing import Optional, Iterator
 from requests_toolbelt.sessions import BaseUrlSession
 
 from codeocean.components import Ownership, SortOrder, SearchFilter
@@ -113,3 +113,18 @@ class Capsules:
         res = self.client.post("capsules/search", json=search_params.to_dict())
 
         return CapsuleSearchResults.from_dict(res.json())
+
+    def search_capsules_iterator(self, search_params: CapsuleSearchParams) -> Iterator[Capsules]:
+        params = search_params.to_dict()
+        while True:
+            response = self.search_capsules(
+                search_params=CapsuleSearchParams(**params)
+            )
+
+            for result in response.results:
+                yield result
+
+            if not response.has_more:
+                return
+
+            params["next_token"] = response.next_token
