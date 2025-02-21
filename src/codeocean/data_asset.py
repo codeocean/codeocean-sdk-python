@@ -33,6 +33,7 @@ class Provenance:
     docker_image: Optional[str] = None
     capsule: Optional[str] = None
     data_assets: Optional[list[str]] = None
+    computation: Optional[str] = None
 
 
 class DataAssetOrigin(StrEnum):
