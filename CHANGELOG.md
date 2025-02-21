@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+## 0.3.2 (2025-02-21)
+- [#33](https://github.com/codeocean/codeocean-sdk-python/pull/33) feat: add iterator function for search capsule API
+
 ## 0.3.1 (2025-01-30)
 - [#31](https://github.com/codeocean/codeocean-sdk-python/pull/31) fix: set fields as optional fields according to openapi spec
 - [#30](https://github.com/codeocean/codeocean-sdk-python/pull/30) fix: make all DataAssetUpdateParams fields optional
