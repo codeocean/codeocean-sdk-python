@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.4.0 (2025-02-28)
+- [#35](https://github.com/codeocean/codeocean-sdk-python/pull/35) feat: Code Ocean Version 3.2 updates 
+- **Minimum Code Ocean platform version updated to `3.2.0`.**  
+
 ## 0.3.2 (2025-02-21)
 - [#33](https://github.com/codeocean/codeocean-sdk-python/pull/33) feat: add iterator function for search capsule API
 
