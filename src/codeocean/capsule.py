@@ -5,7 +5,7 @@ from dataclasses_json import dataclass_json
 from typing import Optional, Iterator
 from requests_toolbelt.sessions import BaseUrlSession
 
-from codeocean.components import Ownership, SortOrder, SearchFilter
+from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
 from codeocean.computation import Computation
 from codeocean.data_asset import DataAssetAttachParams, DataAssetAttachResults
 from codeocean.enum import StrEnum
@@ -91,6 +91,12 @@ class Capsules:
         res = self.client.get(f"capsules/{capsule_id}/computations")
 
         return [Computation.from_dict(c) for c in res.json()]
+
+    def update_permissions(self, capsule_id: str, permissions: Permissions):
+        self.client.post(
+            f"capsules/{capsule_id}/permissions",
+            json=permissions.to_dict(),
+        )
 
     def attach_data_assets(
             self,
