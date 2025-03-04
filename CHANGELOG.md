@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+## 0.5.0 (2025-03-03)
+- [#38](https://github.com/codeocean/codeocean-sdk-python/pull/38) feat: add update_permissions function for capsules 
+
 ## 0.4.0 (2025-02-28)
 - [#35](https://github.com/codeocean/codeocean-sdk-python/pull/35) feat: Code Ocean Version 3.2 updates 
 - **Minimum Code Ocean platform version updated to `3.2.0`.**  
