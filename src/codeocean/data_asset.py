@@ -312,6 +312,8 @@ class DataAssets:
 
     def search_data_assets_iterator(self, search_params: DataAssetSearchParams) -> Iterator[DataAsset]:
         params = search_params.to_dict()
+        if params.get("limit") is None:
+            params["limit"] = 1000
         while True:
             response = self.search_data_assets(
                 search_params=DataAssetSearchParams(**params)
