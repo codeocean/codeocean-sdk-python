@@ -6,7 +6,8 @@ dist/
 *.py[cod]
 
 # Environments
-.[v]env
+.venv
+.env
 
 # IDEs
 .idea
