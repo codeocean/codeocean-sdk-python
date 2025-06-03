@@ -60,6 +60,7 @@ class Computation:
     cloud_workstation: Optional[bool] = None
     data_assets: Optional[list[InputDataAsset]] = None
     parameters: Optional[list[Param]] = None
+    nextflow_profile: Optional[str] = None
     processes: Optional[list[PipelineProcess]] = None
     end_status: Optional[ComputationEndStatus] = None
     exit_code: Optional[int] = None
@@ -95,6 +96,7 @@ class RunParams:
     pipeline_id: Optional[str] = None
     version: Optional[int] = None
     resume_run_id: Optional[str] = None
+    nextflow_profile: Optional[str] = None
     data_assets: Optional[list[DataAssetsRunParam]] = None
     parameters: Optional[list[str]] = None
     named_parameters: Optional[list[NamedRunParam]] = None
