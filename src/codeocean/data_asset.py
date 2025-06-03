@@ -68,6 +68,7 @@ class ResultsInfo:
     run_script: Optional[str] = None
     data_assets: Optional[list[str]] = None
     parameters: Optional[list[Param]] = None
+    nextflow_profile: Optional[str] = None
     processes: Optional[list[PipelineProcess]] = None
 
 
@@ -89,6 +90,7 @@ class DataAsset:
     source_bucket: Optional[SourceBucket] = None
     custom_metadata: Optional[dict] = None
     app_parameters: Optional[list[AppParameter]] = None
+    nextflow_profile: Optional[str] = None
     contained_data_assets: Optional[list[ContainedDataAsset]] = None
     last_transferred: Optional[int] = None
     transfer_error: Optional[str] = None
