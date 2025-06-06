@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+## 0.6.0 (2025-06-03)
+- [#44](https://github.com/codeocean/codeocean-sdk-python/pull/44) feat: support for nextflow_profiles in data assets and computations
+- [#43](https://github.com/codeocean/codeocean-sdk-python/pull/43) fix: updates .gitignore to exclude .env
+- **Minimum Code Ocean platform version updated to `3.6.0`.** 
+
 ## 0.5.0 (2025-03-03)
 - [#38](https://github.com/codeocean/codeocean-sdk-python/pull/38) feat: add update_permissions function for capsules 
 
