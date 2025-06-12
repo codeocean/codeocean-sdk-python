@@ -29,7 +29,8 @@ class CapsuleSortBy(StrEnum):
 @dataclass_json
 @dataclass(frozen=True)
 class OriginalCapsuleInfo:
-    """Information about the original capsule when this capsule is cloned from another."""
+    """Information about the original capsule when this capsule is cloned from
+    another."""
 
     id: Optional[str] = dataclass_field(
         default=None, metadata={"description": "Original capsule ID"}
@@ -73,7 +74,9 @@ class Capsule:
     article: Optional[dict] = dataclass_field(
         default=None,
         metadata={
-            "description": "Capsule article info with URL, ID, DOI, citation, state, name, journal_name, and publish_time"
+            "description": "Capsule article info with URL, ID, DOI, "
+            "citation, state, name, journal_name, and "
+            "publish_time"
         },
     )
     cloned_from_url: Optional[str] = dataclass_field(
@@ -93,7 +96,8 @@ class Capsule:
     original_capsule: Optional[OriginalCapsuleInfo] = dataclass_field(
         default=None,
         metadata={
-            "description": "Original capsule info when this is cloned from another capsule"
+            "description": "Original capsule info when this is cloned from "
+            "another capsule"
         },
     )
     release_capsule: Optional[str] = dataclass_field(
@@ -102,13 +106,16 @@ class Capsule:
     submission: Optional[dict] = dataclass_field(
         default=None,
         metadata={
-            "description": "Submission info with timestamp, commit hash, verification_capsule, verified status, and verified_timestamp"
+            "description": "Submission info with timestamp, commit hash, "
+            "verification_capsule, verified status, and "
+            "verified_timestamp"
         },
     )
     versions: Optional[list[dict]] = dataclass_field(
         default=None,
         metadata={
-            "description": "Capsule versions with major_version, minor_version, release_time, and DOI"
+            "description": "Capsule versions with major_version, "
+            "minor_version, release_time, and DOI"
         },
     )
 
@@ -116,40 +123,44 @@ class Capsule:
 @dataclass_json
 @dataclass(frozen=True)
 class CapsuleSearchParams:
-    """Parameters for searching capsules with various filters and pagination options."""
+    """Parameters for searching capsules with various filters and pagination
+    options."""
 
     query: Optional[str] = dataclass_field(
         default=None,
         metadata={
-            "description": "Search query in free text or structured format (name:... tag:...)"
+            "description": "Search query in free text or structured format "
+            "(name:... tag:...)"
         },
     )
     next_token: Optional[str] = dataclass_field(
         default=None,
         metadata={
-            "description": "Token for next page of results from previous response"
+            "description": "Token for next page of results from previous " "response"
         },
     )
     offset: Optional[int] = dataclass_field(
         default=None,
         metadata={
-            "description": "Starting index for search results (ignored if next_token is set)"
+            "description": "Starting index for search results (ignored if "
+            "next_token is set)"
         },
     )
     limit: Optional[int] = dataclass_field(
         default=None,
         metadata={
-            "description": "Number of items to return (up to 1000, defaults to 100)"
+            "description": "Number of items to return (up to 1000, " "defaults to 100)"
         },
     )
     sort_field: Optional[CapsuleSortBy] = dataclass_field(
         default=None,
-        metadata={"description": "Field to sort by (created, name, last_accessed)"},
+        metadata={"description": "Field to sort by (created, name, " "last_accessed)"},
     )
     sort_order: Optional[SortOrder] = dataclass_field(
         default=None,
         metadata={
-            "description": "Sort order ('asc' or 'desc') - must be provided with a sort_field parameter as well!"
+            "description": "Sort order ('asc' or 'desc') - must be provided "
+            "with a sort_field parameter as well!"
         },
     )
     ownership: Optional[Ownership] = dataclass_field(
@@ -161,7 +172,8 @@ class CapsuleSearchParams:
     status: Optional[CapsuleStatus] = dataclass_field(
         default=None,
         metadata={
-            "description": "Filter by status (release or non_release) - defaults to all"
+            "description": "Filter by status (release or non_release) - "
+            "defaults to all"
         },
     )
     favorite: Optional[bool] = dataclass_field(
@@ -173,7 +185,8 @@ class CapsuleSearchParams:
     filters: Optional[list[SearchFilter]] = dataclass_field(
         default=None,
         metadata={
-            "description": "Additional field-level filters for name, description, tags, or custom fields"
+            "description": "Additional field-level filters for name, "
+            "description, tags, or custom fields"
         },
     )
 
@@ -241,7 +254,8 @@ class Capsules:
     def search_capsules(
         self, search_params: CapsuleSearchParams
     ) -> CapsuleSearchResults:
-        """Search for capsules with filtering, sorting, and pagination options."""
+        """Search for capsules with filtering, sorting, and pagination
+        options."""
         res = self.client.post("capsules/search", json=search_params.to_dict())
 
         return CapsuleSearchResults.from_dict(res.json())
