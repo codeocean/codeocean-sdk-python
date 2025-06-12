@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
 from typing import Optional, Iterator
 from requests_toolbelt.sessions import BaseUrlSession
@@ -12,11 +12,13 @@ from codeocean.enum import StrEnum
 
 
 class CapsuleStatus(StrEnum):
+    """Status of a capsule indicating its release state."""
     NonRelease = "non_release"
     Release = "release"
 
 
 class CapsuleSortBy(StrEnum):
+    """Fields available for sorting capsule search results."""
     Created = "created"
     LastAccessed = "last_accessed"
     Name = "name"
@@ -25,83 +27,91 @@ class CapsuleSortBy(StrEnum):
 @dataclass_json
 @dataclass(frozen=True)
 class OriginalCapsuleInfo:
-    id: Optional[str] = None
-    major_version: Optional[int] = None
-    minor_version: Optional[int] = None
-    name: Optional[str] = None
-    created: Optional[int] = None
-    public: Optional[bool] = None
+    """Information about the original capsule when this capsule is cloned from another."""
+    id: Optional[str] = field(default=None, metadata={"description": "Original capsule ID"})
+    major_version: Optional[int] = field(default=None, metadata={"description": "Original capsule major version"})
+    minor_version: Optional[int] = field(default=None, metadata={"description": "Original capsule minor version"})
+    name: Optional[str] = field(default=None, metadata={"description": "Original capsule name"})
+    created: Optional[int] = field(default=None, metadata={"description": "Original capsule creation time (int64 timestamp)"})
+    public: Optional[bool] = field(default=None, metadata={"description": "Indicates whether the original capsule is public"})
 
 
 @dataclass_json
 @dataclass(frozen=True)
 class Capsule:
-    id: str
-    created: int
-    name: str
-    status: CapsuleStatus
-    owner: str
-    slug: str
-    article: Optional[dict] = None
-    cloned_from_url: Optional[str] = None
-    description: Optional[str] = None
-    field: Optional[str] = None
-    tags: Optional[list[str]] = None
-    original_capsule: Optional[OriginalCapsuleInfo] = None
-    release_capsule: Optional[str] = None
-    submission: Optional[dict] = None
-    versions: Optional[list[dict]] = None
+    """Represents a Code Ocean capsule with its metadata and properties."""
+    id: str = field(metadata={"description": "Capsule ID"})
+    created: int = field(metadata={"description": "Capsule creation time (int64 timestamp)"})
+    name: str = field(metadata={"description": "Capsule display name"})
+    status: CapsuleStatus = field(metadata={"description": "Status of the capsule (non_release or release)"})
+    owner: str = field(metadata={"description": "Capsule owner's ID"})
+    slug: str = field(metadata={"description": "Alternate capsule ID (URL-friendly identifier)"})
+    article: Optional[dict]  = field(default=None, metadata={"description": "Capsule article info with URL, ID, DOI, citation, state, name, journal_name, and publish_time"})
+    cloned_from_url: Optional[str] = field(default=None, metadata={"description": "URL to external Git repository linked to capsule"})
+    description: Optional[str] = field(default=None, metadata={"description": "Capsule description"})
+    field: Optional[str] = field(default=None, metadata={"description": "Capsule research field"})
+    tags: Optional[list[str]] = field(default=None, metadata={"description": "List of tags associated with the capsule"})
+    original_capsule: Optional[OriginalCapsuleInfo] = field(default=None, metadata={"description": "Original capsule info when this is cloned from another capsule"})
+    release_capsule: Optional[str] = field(default=None, metadata={"description": "Release capsule ID"})
+    submission: Optional[dict] = field(default=None, metadata={"description": "Submission info with timestamp, commit hash, verification_capsule, verified status, and verified_timestamp"})
+    versions: Optional[list[dict]] = field(default=None, metadata={"description": "Capsule versions with major_version, minor_version, release_time, and DOI"})
 
 
 @dataclass_json
 @dataclass(frozen=True)
 class CapsuleSearchParams:
-    query: Optional[str] = None
-    next_token: Optional[str] = None
-    offset: Optional[int] = None
-    limit: Optional[int] = None
-    sort_field: Optional[CapsuleSortBy] = None
-    sort_order: Optional[SortOrder] = None
-    ownership: Optional[Ownership] = None
-    status: Optional[CapsuleStatus] = None
-    favorite: Optional[bool] = None
-    archived: Optional[bool] = None
-    filters: Optional[list[SearchFilter]] = None
+    """Parameters for searching capsules with various filters and pagination options."""
+    query: Optional[str] = field(default=None, metadata={"description": "Search query in free text or structured format (name:... tag:...)"})
+    next_token: Optional[str] = field(default=None, metadata={"description": "Token for next page of results from previous response"})
+    offset: Optional[int] = field(default=None, metadata={"description": "Starting index for search results (ignored if next_token is set)"})
+    limit: Optional[int] = field(default=None, metadata={"description": "Number of items to return (up to 1000, defaults to 100)"})
+    sort_field: Optional[CapsuleSortBy] = field(default=None, metadata={"description": "Field to sort by (created, name, last_accessed)"})
+    sort_order: Optional[SortOrder] = field(default=None, metadata={"description": "Sort order (asc or desc) - must be provided with sort_field"})
+    ownership: Optional[Ownership] = field(default=None, metadata={"description": "Filter by ownership (created or shared) - defaults to all accessible"})
+    status: Optional[CapsuleStatus] = field(default=None, metadata={"description": "Filter by status (release or non_release) - defaults to all"})
+    favorite: Optional[bool] = field(default=None, metadata={"description": "Search only favorite capsules"})
+    archived: Optional[bool] = field(default=None, metadata={"description": "Search only archived capsules"})
+    filters: Optional[list[SearchFilter]] = field(default=None, metadata={"description": "Additional field-level filters for name, description, tags, or custom fields"})
 
 
 @dataclass_json
 @dataclass(frozen=True)
 class CapsuleSearchResults:
-    has_more: bool
-    results: list[Capsule]
-    next_token: Optional[str] = None
+    """Results from a capsule search operation with pagination support."""
+    has_more: bool = field(metadata={"description": "Indicates if there are more results available"})
+    results: list[Capsule] = field(metadata={"description": "Array of capsules found matching the search criteria"})
+    next_token: Optional[str] = field(default=None, metadata={"description": "Token for fetching the next page of results"})
 
 
 @dataclass
 class Capsules:
+    """Client for interacting with Code Ocean capsule APIs."""
 
     client: BaseUrlSession
 
     def get_capsule(self, capsule_id: str) -> Capsule:
+        """Retrieve metadata for a specific capsule by its ID."""
         res = self.client.get(f"capsules/{capsule_id}")
 
         return Capsule.from_dict(res.json())
 
     def list_computations(self, capsule_id: str) -> list[Computation]:
+        """Get all computations associated with a specific capsule."""
         res = self.client.get(f"capsules/{capsule_id}/computations")
 
         return [Computation.from_dict(c) for c in res.json()]
 
     def update_permissions(self, capsule_id: str, permissions: Permissions):
+        """Update permissions for a capsule."""
         self.client.post(
             f"capsules/{capsule_id}/permissions",
             json=permissions.to_dict(),
         )
 
     def attach_data_assets(
-            self,
-            capsule_id: str,
-            attach_params: list[DataAssetAttachParams]) -> list[DataAssetAttachResults]:
+        self, capsule_id: str, attach_params: list[DataAssetAttachParams]
+    ) -> list[DataAssetAttachResults]:
+        """Attach one or more data assets to a capsule with optional mount paths."""
         res = self.client.post(
             f"capsules/{capsule_id}/data_assets",
             json=[j.to_dict() for j in attach_params],
@@ -110,22 +120,27 @@ class Capsules:
         return [DataAssetAttachResults.from_dict(c) for c in res.json()]
 
     def detach_data_assets(self, capsule_id: str, data_assets: list[str]):
+        """Detach one or more data assets from a capsule by their IDs."""
         self.client.delete(
             f"capsules/{capsule_id}/data_assets/",
             json=data_assets,
         )
 
-    def search_capsules(self, search_params: CapsuleSearchParams) -> CapsuleSearchResults:
+    def search_capsules(
+        self, search_params: CapsuleSearchParams
+    ) -> CapsuleSearchResults:
+        """Search for capsules with filtering, sorting, and pagination options."""
         res = self.client.post("capsules/search", json=search_params.to_dict())
 
         return CapsuleSearchResults.from_dict(res.json())
 
-    def search_capsules_iterator(self, search_params: CapsuleSearchParams) -> Iterator[Capsules]:
+    def search_capsules_iterator(
+        self, search_params: CapsuleSearchParams
+    ) -> Iterator[Capsule]:
+        """Iterate through all capsules matching search criteria with automatic pagination."""
         params = search_params.to_dict()
         while True:
-            response = self.search_capsules(
-                search_params=CapsuleSearchParams(**params)
-            )
+            response = self.search_capsules(search_params=CapsuleSearchParams(**params))
 
             for result in response.results:
                 yield result
