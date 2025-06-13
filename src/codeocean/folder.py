@@ -10,11 +10,18 @@ from typing import Optional
 class FolderItem:
     """Represents a file or folder item within a folder listing."""
 
-    name: str = field(metadata={"description": "Name of the file or folder"})
-    path: str = field(metadata={"description": "Path of the file or folder"})
-    type: str = field(metadata={"description": "Item type ('file' or 'folder')"})
+    name: str = field(
+        metadata={"description": "Name of the file or folder"}
+    )
+    path: str = field(
+        metadata={"description": "Path of the file or folder"}
+    )
+    type: str = field(
+        metadata={"description": "Item type ('file' or 'folder')"}
+    )
     size: Optional[int] = field(
-        default=None, metadata={"description": "Size in bytes (only for files)"}
+        default=None,
+        metadata={"description": "Size in bytes (only for files)"}
     )
 
 

@@ -47,12 +47,13 @@ class Provenance:
         metadata={"description": "Docker image used to create the data asset"},
     )
     capsule: Optional[str] = field(
-        default=None, metadata={"description": "Capsule used to create the data asset"}
+        default=None,
+        metadata={"description": "Capsule used to create the data asset"},
     )
     data_assets: Optional[list[str]] = field(
         default=None,
         metadata={
-            "description": "Data assets that were used to create this data asset"
+            "description": "Data assets that were used to create this data asset",
         },
     )
     computation: Optional[str] = field(
@@ -75,18 +76,16 @@ class SourceBucket:
     """Information about the bucket from which the data asset was created."""
 
     origin: DataAssetOrigin = field(
-        metadata={"description": "Origin type (aws, local, gcp)"}
+        metadata={"description": "Origin type (aws, local, gcp)"},
     )
     bucket: Optional[str] = field(
-        default=None, metadata={"description": "The original bucket's name"}
+        default=None,
+        metadata={"description": "The original bucket's name"},
     )
     prefix: Optional[str] = field(
         default=None,
         metadata={
-            "description": (
-                "The folder in the S3 bucket from which "
-                "the data asset was created"
-            )
+            "description": "The folder in the S3 bucket from which the data asset was created",
         },
     )
     external: Optional[bool] = field(
@@ -101,10 +100,12 @@ class AppParameter:
     """Name and value of app panel parameters used to generate result data assets."""
 
     name: Optional[str] = field(
-        default=None, metadata={"description": "Parameter name"}
+        default=None,
+        metadata={"description": "Parameter name"},
     )
     value: Optional[str] = field(
-        default=None, metadata={"description": "Parameter value"}
+        default=None,
+        metadata={"description": "Parameter value"},
     )
 
 
@@ -117,43 +118,44 @@ class ResultsInfo:
     """
 
     capsule_id: Optional[str] = field(
-        default=None, metadata={"description": "ID of the capsule that was executed"}
+        default=None,
+        metadata={"description": "ID of the capsule that was executed"},
     )
     pipeline_id: Optional[str] = field(
-        default=None, metadata={"description": "ID of the pipeline that was executed"}
+        default=None,
+        metadata={"description": "ID of the pipeline that was executed"},
     )
     version: Optional[int] = field(
-        default=None, metadata={"description": "Capsule or pipeline release version"}
+        default=None,
+        metadata={"description": "Capsule or pipeline release version"},
     )
     commit: Optional[str] = field(
         default=None,
         metadata={
-            "description": "Commit hash of capsule/pipeline code at time of execution"
+            "description": "Commit hash of capsule/pipeline code at time of execution",
         },
     )
     run_script: Optional[str] = field(
         default=None,
         metadata={
-            "description": "Path to the script that was executed relative to"
-            " /Capsule folder"
+            "description": "Path to the script that was executed relative to /capsule folder",
         },
     )
     data_assets: Optional[list[str]] = field(
         default=None,
-        metadata={"description": "IDs of data assets used during the run"}
+        metadata={"description": "IDs of data assets used during the run"},
     )
     parameters: Optional[list[Param]] = field(
         default=None,
-        metadata={
-            "description": "Run parameters used for execution"
-        }
+        metadata={"description": "Run parameters used for execution"},
     )
     nextflow_profile: Optional[str] = field(
         default=None,
         metadata={"description": "Pipeline Nextflow profile"},
     )
     processes: Optional[list[PipelineProcess]] = field(
-        default=None, metadata={"description": "Pipeline processes information"}
+        default=None,
+        metadata={"description": "Pipeline processes information"},
     )
 
 
@@ -162,65 +164,72 @@ class ResultsInfo:
 class DataAsset:
     """Represents a Code Ocean data asset with its metadata and properties."""
 
-    id: str = field(metadata={"description": "Unique data asset ID (UUID string)"})
-    created: int = field(
-        metadata={"description": "Data asset creation time (seconds since epoch)"}
+    id: str = field(
+        metadata={"description": "Unique data asset ID (UUID string)"},
     )
-    name: str = field(metadata={"description": "Name of the data asset"})
+    created: int = field(
+        metadata={"description": "Data asset creation time (seconds since epoch)"},
+    )
+    name: str = field(
+        metadata={"description": "Name of the data asset"},
+    )
     mount: str = field(
-        metadata={"description": "The default mount folder of the data asset"}
+        metadata={"description": "The default mount folder of the data asset"},
     )
     state: DataAssetState = field(
-        metadata={"description": "Data asset creation state (draft, ready, failed)"}
+        metadata={"description": "Data asset creation state (draft, ready, failed)"},
     )
     type: DataAssetType = field(
         metadata={
-            "description": "Type of the data asset (dataset, result, combined, model)"
-        }
+            "description": "Type of the data asset (dataset, result, combined, model)",
+        },
     )
     last_used: int = field(
         metadata={
-            "description": "Time data asset was last used in seconds from unix epoch"
-        }
+            "description": "Time data asset was last used in seconds from unix epoch",
+        },
     )
     files: Optional[int] = field(
-        default=None, metadata={"description": "Number of files in the data asset"}
+        default=None,
+        metadata={"description": "Number of files in the data asset"},
     )
     size: Optional[int] = field(
         default=None,
         metadata={"description": "Size in bytes of the data asset (parsed to int)"},
     )
     description: Optional[str] = field(
-        default=None, metadata={"description": "Data asset description"}
+        default=None,
+        metadata={"description": "Data asset description"},
     )
     tags: Optional[list[str]] = field(
-        default=None, metadata={"description": "Keywords for searching the data asset"}
+        default=None,
+        metadata={"description": "Keywords for searching the data asset"},
     )
     provenance: Optional[Provenance] = field(
         default=None,
         metadata={
             "description": "Shows the data asset provenance if type is result; only "
-            "'capsule' or 'computation' field will be populated depending on source"
+            "'capsule' or 'computation' field will be populated depending on source",
         },
     )
     source_bucket: Optional[SourceBucket] = field(
         default=None,
         metadata={
-            "description": "Information on bucket from which data asset was created"
+            "description": "Information on bucket from which data asset was created",
         },
     )
     custom_metadata: Optional[dict] = field(
         default=None,
         metadata={
             "description": "Custom metadata fields defined by deployment admin with "
-            "user-set values"
+            "user-set values",
         },
     )
     app_parameters: Optional[list[AppParameter]] = field(
         default=None,
         metadata={
             "description": "Name and value of app panel parameters used to generate "
-            "result data asset"
+            "result data asset",
         },
     )
     nextflow_profile: Optional[str] = field(
@@ -235,20 +244,20 @@ class DataAsset:
         default=None,
         metadata={
             "description": "Time data asset's files were last transferred to a "
-            "different S3 storage location"
+            "different S3 storage location",
         },
     )
     transfer_error: Optional[str] = field(
         default=None,
         metadata={
             "description": "The error that occurred during the last transfer attempt "
-            "if it failed"
+            "if it failed",
         },
     )
     failure_reason: Optional[str] = field(
         default=None,
         metadata={
-            "description": "Reason for data asset creation failure if state is failed"
+            "description": "Reason for data asset creation failure if state is failed",
         },
     )
 
@@ -259,16 +268,20 @@ class DataAssetUpdateParams:
     """Parameters for updating data asset metadata."""
 
     name: Optional[str] = field(
-        default=None, metadata={"description": "Data asset name"}
+        default=None,
+        metadata={"description": "Data asset name"},
     )
     description: Optional[str] = field(
-        default=None, metadata={"description": "Data asset description"}
+        default=None,
+        metadata={"description": "Data asset description"},
     )
     tags: Optional[list[str]] = field(
-        default=None, metadata={"description": "Keywords for searching the data asset"}
+        default=None,
+        metadata={"description": "Keywords for searching the data asset"},
     )
     mount: Optional[str] = field(
-        default=None, metadata={"description": "Default mount folder of the data asset"}
+        default=None,
+        metadata={"description": "Default mount folder of the data asset"},
     )
     custom_metadata: Optional[dict] = field(
         default=None,
@@ -283,34 +296,25 @@ class AWSS3Source:
 
     bucket: str = field(
         metadata={
-            "description": "The S3 bucket from which the data asset will be created"
-        }
+            "description": "The S3 bucket from which the data asset will be created",
+        },
     )
     prefix: Optional[str] = field(
         default=None,
         metadata={
-            "description": (
-                "The folder in the S3 bucket from which "
-                "the data asset will be created"
-            )
+            "description": "The folder in the S3 bucket from which the data asset will be created",
         },
     )
     keep_on_external_storage: Optional[bool] = field(
         default=None,
         metadata={
-            "description": (
-                "When true, data asset files will not be copied to "
-                "Code Ocean"
-            )
+            "description": "When true, data asset files will not be copied to Code Ocean",
         },
     )
     public: Optional[bool] = field(
         default=None,
         metadata={
-            "description": (
-                "When true, Code Ocean will access the source bucket "
-                "without credentials"
-            )
+            "description": "When true, Code Ocean will access the source bucket without credentials",
         },
     )
 
@@ -325,23 +329,23 @@ class GCPCloudStorageSource:
 
     bucket: str = field(
         metadata={
-            "description": "The GCP Cloud Storage bucket from which the"
-            " data asset will be created"
-        }
+            "description": "The GCP Cloud Storage bucket from which the data asset will be created",
+        },
     )
     client_id: Optional[str] = field(
-        default=None, metadata={"description": "GCP client ID for authentication"}
+        default=None,
+        metadata={"description": "GCP client ID for authentication"},
     )
     client_secret: Optional[str] = field(
-        default=None, metadata={"description": "GCP client secret for authentication"}
+        default=None,
+        metadata={"description": "GCP client secret for authentication"},
     )
     prefix: Optional[str] = field(
         default=None,
         metadata={
             "description": (
-                "The folder in the GCP bucket from which "
-                "the data asset will be created"
-            )
+                "The folder in the GCP bucket from which the data asset will be created"
+            ),
         },
     )
 
@@ -352,15 +356,14 @@ class ComputationSource:
     """Computation source configuration for creating result data assets."""
 
     id: str = field(
-        metadata={"description": "Computation ID from which to create the data asset"}
+        metadata={"description": "Computation ID from which to create the data asset"},
     )
     path: Optional[str] = field(
         default=None,
         metadata={
             "description": (
-                "Results path within computation "
-                "(empty captures all result files)"
-            )
+                "Results path within computation (empty captures all result files)"
+            ),
         },
     )
 
@@ -371,13 +374,16 @@ class Source:
     """Source configuration for data asset creation from various origins."""
 
     aws: Optional[AWSS3Source] = field(
-        default=None, metadata={"description": "AWS S3 source configuration"}
+        default=None,
+        metadata={"description": "AWS S3 source configuration"},
     )
     gcp: Optional[GCPCloudStorageSource] = field(
-        default=None, metadata={"description": "GCP Cloud Storage source configuration"}
+        default=None,
+        metadata={"description": "GCP Cloud Storage source configuration"},
     )
     computation: Optional[ComputationSource] = field(
-        default=None, metadata={"description": "Computation source configuration"}
+        default=None,
+        metadata={"description": "Computation source configuration"},
     )
 
 
@@ -387,15 +393,14 @@ class AWSS3Target:
     """AWS S3 target configuration for external data asset storage."""
 
     bucket: str = field(
-        metadata={"description": "The S3 bucket where the data asset will be stored"}
+        metadata={"description": "The S3 bucket where the data asset will be stored"},
     )
     prefix: Optional[str] = field(
         default=None,
         metadata={
             "description": (
-                "The folder in the S3 bucket where the data asset "
-                "will be placed"
-            )
+                "The folder in the S3 bucket where the data asset will be placed"
+            ),
         },
     )
 
@@ -406,7 +411,8 @@ class Target:
     """Target configuration for external data asset storage."""
 
     aws: Optional[AWSS3Target] = field(
-        default=None, metadata={"description": "AWS S3 target configuration"}
+        default=None,
+        metadata={"description": "AWS S3 target configuration"},
     )
 
 
@@ -418,15 +424,20 @@ class DataAssetParams:
     and configurations.
     """
 
-    name: str = field(metadata={"description": "Data asset name"})
+    name: str = field(
+        metadata={"description": "Data asset name"},
+    )
     tags: list[str] = field(
         metadata={
-            "description": "Keywords applied to the data asset to aid in searching"
-        }
+            "description": "Keywords applied to the data asset to aid in searching",
+        },
     )
-    mount: str = field(metadata={"description": "Data asset default mount folder"})
+    mount: str = field(
+        metadata={"description": "Data asset default mount folder"},
+    )
     description: Optional[str] = field(
-        default=None, metadata={"description": "Data asset description"}
+        default=None,
+        metadata={"description": "Data asset description"},
     )
     source: Optional[Source] = field(
         default=None,
@@ -439,20 +450,19 @@ class DataAssetParams:
     custom_metadata: Optional[dict] = field(
         default=None,
         metadata={
-            "description": "Custom metadata fields according to admin-defined fields"
+            "description": "Custom metadata fields according to admin-defined fields",
         },
     )
     data_asset_ids: Optional[list[str]] = field(
         default=None,
         metadata={
-            "description": "List of data asset IDs for creating combined data assets"
+            "description": "List of data asset IDs for creating combined data assets",
         },
     )
     results_info: Optional[ResultsInfo] = field(
         default=None,
         metadata={
-            "description": "Additional information for "
-            "data assets from external results"
+            "description": "Additional information for data assets from external results",
         },
     )
 
@@ -462,9 +472,12 @@ class DataAssetParams:
 class DataAssetAttachParams:
     """Parameters for attaching data assets to capsules."""
 
-    id: str = field(metadata={"description": "Data asset ID to attach"})
+    id: str = field(
+        metadata={"description": "Data asset ID to attach"},
+    )
     mount: Optional[str] = field(
-        default=None, metadata={"description": "Mount path for the attached data asset"}
+        default=None,
+        metadata={"description": "Mount path for the attached data asset"},
     )
 
 
@@ -473,12 +486,16 @@ class DataAssetAttachParams:
 class DataAssetAttachResults:
     """Results from attaching data assets to capsules."""
 
-    id: str = field(metadata={"description": "Data asset ID that was attached"})
+    id: str = field(
+        metadata={"description": "Data asset ID that was attached"},
+    )
     mount_state: Optional[str] = field(
-        default=None, metadata={"description": "Current state of the data asset mount"}
+        default=None,
+        metadata={"description": "Current state of the data asset mount"},
     )
     job_id: Optional[str] = field(
-        default=None, metadata={"description": "Job ID for the attachment operation"}
+        default=None,
+        metadata={"description": "Job ID for the attachment operation"},
     )
     external: Optional[bool] = field(
         default=None,
@@ -522,28 +539,27 @@ class DataAssetSearchParams:
         default=None,
         metadata={
             "description": "Search query in free text or structured format "
-            "(name:... tag:... run_script:... commit_id:...)"
+            "(name:... tag:... run_script:... commit_id:...)",
         },
     )
     next_token: Optional[str] = field(
         default=None,
         metadata={
-            "description": "Token for next page of results from previous response"
+            "description": "Token for next page of results from previous response",
         },
     )
     offset: Optional[int] = field(
         default=None,
         metadata={
             "description": (
-                "Starting index for search results "
-                "(ignored if next_token is set)"
-            )
+                "Starting index for search results (ignored if next_token is set)"
+            ),
         },
     )
     limit: Optional[int] = field(
         default=None,
         metadata={
-            "description": "Number of items to return (up to 1000, defaults to 100)"
+            "description": "Number of items to return (up to 1000, defaults to 100)",
         },
     )
     sort_field: Optional[DataAssetSortBy] = field(
@@ -553,23 +569,22 @@ class DataAssetSearchParams:
     sort_order: Optional[SortOrder] = field(
         default=None,
         metadata={
-            "description": "Sort order (asc or desc) - must be provided with sort_field"
+            "description": "Sort order (asc or desc) - must be provided with sort_field",
         },
     )
     type: Optional[DataAssetType] = field(
         default=None,
         metadata={
             "description": "Filter by data asset type "
-            "(dataset, result, combined, model)"
+            "(dataset, result, combined, model)",
         },
     )
     ownership: Optional[Ownership] = field(
         default=None,
         metadata={
             "description": (
-                "Filter by ownership (created or shared) - "
-                "defaults to all accessible"
-            )
+                "Filter by ownership (created or shared) - defaults to all accessible"
+            ),
         },
     )
     origin: Optional[DataAssetSearchOrigin] = field(
@@ -577,17 +592,17 @@ class DataAssetSearchParams:
         metadata={"description": "Filter by origin (internal or external)"},
     )
     favorite: Optional[bool] = field(
-        default=None, metadata={"description": "Search only favorite data assets"}
+        default=None,
+        metadata={"description": "Search only favorite data assets"},
     )
     archived: Optional[bool] = field(
-        default=None, metadata={"description": "Search only archived data assets"}
+        default=None,
+        metadata={"description": "Search only archived data assets"},
     )
     filters: Optional[list[SearchFilter]] = field(
         default=None,
         metadata={
-            "description": "Additional field-level filters "
-            "for name, description, tags, "
-            "or custom fields"
+            "description": "Additional field-level filters for name, description, tags, or custom fields",
         },
     )
 
@@ -599,15 +614,15 @@ class DataAssetSearchResults:
 
     has_more: bool = field(
         metadata={
-            "description": "Indicates if there are more results available"
-        }
+            "description": "Indicates if there are more results available",
+        },
     )
     results: list[DataAsset] = field(
         metadata={
             "description": (
                 "Array of data assets found matching the search criteria"
-            )
-        }
+            ),
+        },
     )
     next_token: Optional[str] = field(
         default=None,
@@ -621,11 +636,12 @@ class ContainedDataAsset:
     """Information about data assets contained within a combined data asset."""
 
     id: Optional[str] = field(
-        default=None, metadata={"description": "ID of the contained data asset"}
+        default=None,
+        metadata={"description": "ID of the contained data asset"},
     )
     mount: Optional[str] = field(
         default=None,
-        metadata={"description": "Mount path of the contained data asset"}
+        metadata={"description": "Mount path of the contained data asset"},
     )
     size: Optional[int] = field(
         default=None,
@@ -641,16 +657,15 @@ class TransferDataParams:
 
     target: Target = field(
         metadata={
-            "description": "Target storage location configuration"
-        }
+            "description": "Target storage location configuration",
+        },
     )
     force: Optional[bool] = field(
         default=None,
         metadata={
             "description": (
-                "Perform transfer even if there are release pipelines "
-                "using the data asset"
-            )
+                "Perform transfer even if there are release pipelines using the data asset"
+            ),
         },
     )
 
@@ -667,9 +682,7 @@ class DataAssets:
 
         return DataAsset.from_dict(res.json())
 
-    def update_metadata(
-        self, data_asset_id: str, update_params: DataAssetUpdateParams
-    ) -> DataAsset:
+    def update_metadata(self, data_asset_id: str, update_params: DataAssetUpdateParams) -> DataAsset:
         """
         Update metadata for a data asset including name, description, tags, mount,
         and custom metadata.
@@ -789,18 +802,13 @@ class DataAssets:
             params={"archive": archive},
         )
 
-    def search_data_assets(
-        self,
-        search_params: DataAssetSearchParams
-    ) -> DataAssetSearchResults:
+    def search_data_assets(self, search_params: DataAssetSearchParams) -> DataAssetSearchResults:
         """Search for data assets with filtering, sorting, and pagination options."""
         res = self.client.post("data_assets/search", json=search_params.to_dict())
 
         return DataAssetSearchResults.from_dict(res.json())
 
-    def search_data_assets_iterator(
-        self, search_params: DataAssetSearchParams
-    ) -> Iterator[DataAsset]:
+    def search_data_assets_iterator(self, search_params: DataAssetSearchParams) -> Iterator[DataAsset]:
         """
         Iterate through all data assets matching search criteria with
         automatic pagination.
@@ -834,9 +842,7 @@ class DataAssets:
 
         return Folder.from_dict(res.json())
 
-    def get_data_asset_file_download_url(
-        self, data_asset_id: str, path: str
-    ) -> DownloadFileURL:
+    def get_data_asset_file_download_url(self, data_asset_id: str, path: str) -> DownloadFileURL:
         """Generate a download URL for a specific file from an internal data asset."""
         res = self.client.get(
             f"data_assets/{data_asset_id}/files/download_url",
@@ -845,9 +851,7 @@ class DataAssets:
 
         return DownloadFileURL.from_dict(res.json())
 
-    def transfer_data_asset(
-        self, data_asset_id: str, transfer_params: TransferDataParams
-    ):
+    def transfer_data_asset(self, data_asset_id: str, transfer_params: TransferDataParams):
         """
         Transfer a data asset's files to a different S3 storage location (Admin only).
 

@@ -34,13 +34,16 @@ class Param:
     """Parameter information for computations with name and value."""
 
     name: Optional[str] = field(
-        default=None, metadata={"description": "Parameter label/display name"}
+        default=None,
+        metadata={"description": "Parameter label/display name"},
     )
     param_name: Optional[str] = field(
-        default=None, metadata={"description": "Internal parameter name identifier"}
+        default=None,
+        metadata={"description": "Internal parameter name identifier"},
     )
     value: Optional[str] = field(
-        default=None, metadata={"description": "Parameter value as string"}
+        default=None,
+        metadata={"description": "Parameter value as string"},
     )
 
 
@@ -50,10 +53,10 @@ class PipelineProcess:
     """Information about a process within a pipeline execution."""
 
     name: str = field(
-        metadata={"description": "Pipeline process name as it appears in main.nf"}
+        metadata={"description": "Pipeline process name as it appears in main.nf"},
     )
     capsule_id: str = field(
-        metadata={"description": "ID of the capsule executed in this process"}
+        metadata={"description": "ID of the capsule executed in this process"},
     )
     version: Optional[int] = field(
         default=None,
@@ -64,7 +67,8 @@ class PipelineProcess:
         metadata={"description": "Indicates if the capsule is a Code Ocean public app"},
     )
     parameters: Optional[list[Param]] = field(
-        default=None, metadata={"description": "Run parameters for this process"}
+        default=None,
+        metadata={"description": "Run parameters for this process"},
     )
 
 
@@ -73,9 +77,12 @@ class PipelineProcess:
 class InputDataAsset:
     """Data asset attached to a computation with mount information."""
 
-    id: str = field(metadata={"description": "Attached data asset ID"})
+    id: str = field(
+        metadata={"description": "Attached data asset ID"},
+    )
     mount: Optional[str] = field(
-        default=None, metadata={"description": "Mount path for the attached data asset"}
+        default=None,
+        metadata={"description": "Mount path for the attached data asset"},
     )
 
 
@@ -84,21 +91,27 @@ class InputDataAsset:
 class Computation:
     """Represents a Code Ocean computation run with its metadata and execution details."""
 
-    id: str = field(metadata={"description": "Unique computation ID"})
-    created: int = field(
-        metadata={"description": "Computation creation time (int64 timestamp)"}
+    id: str = field(
+        metadata={"description": "Unique computation ID"},
     )
-    name: str = field(metadata={"description": "Display name of the computation"})
-    run_time: int = field(metadata={"description": "Total run time in seconds"})
+    created: int = field(
+        metadata={"description": "Computation creation time (int64 timestamp)"},
+    )
+    name: str = field(
+        metadata={"description": "Display name of the computation"},
+    )
+    run_time: int = field(
+        metadata={"description": "Total run time in seconds"},
+    )
     state: ComputationState = field(
         metadata={
-            "description": "Current state of the computation (initializing, running, finalizing, completed, failed)"
-        }
+            "description": "Current state of the computation (initializing, running, finalizing, completed, failed)",
+        },
     )
     cloud_workstation: Optional[bool] = field(
         default=None,
         metadata={
-            "description": "Indicates whether this computation is a cloud workstation"
+            "description": "Indicates whether this computation is a cloud workstation",
         },
     )
     data_assets: Optional[list[InputDataAsset]] = field(
@@ -116,25 +129,25 @@ class Computation:
     processes: Optional[list[PipelineProcess]] = field(
         default=None,
         metadata={
-            "description": "Pipeline processes information if this is a pipeline computation"
+            "description": "Pipeline processes information if this is a pipeline computation",
         },
     )
     end_status: Optional[ComputationEndStatus] = field(
         default=None,
         metadata={
-            "description": "Final status once computation is completed (succeeded, failed, stopped)"
+            "description": "Final status once computation is completed (succeeded, failed, stopped)",
         },
     )
     exit_code: Optional[int] = field(
         default=None,
         metadata={
-            "description": "Exit code (0 for success, non-zero for failure, 1 for pipeline errors)"
+            "description": "Exit code (0 for success, non-zero for failure, 1 for pipeline errors)",
         },
     )
     has_results: Optional[bool] = field(
         default=None,
         metadata={
-            "description": "Indicates whether the computation has generated results"
+            "description": "Indicates whether the computation has generated results",
         },
     )
     nextflow_profile: Optional[str] = field(
@@ -148,7 +161,9 @@ class Computation:
 class DataAssetsRunParam:
     """Data asset parameter for running computations with mount specification."""
 
-    id: str = field(metadata={"description": "Data asset ID to attach"})
+    id: str = field(
+        metadata={"description": "Data asset ID to attach"},
+    )
     mount: Optional[str] = field(
         default=None,
         metadata={"description": "Mount path where the data asset will be accessible"},
@@ -161,9 +176,11 @@ class NamedRunParam:
     """Named parameter for running computations with explicit parameter name."""
 
     param_name: str = field(
-        metadata={"description": "Internal parameter name identifier"}
+        metadata={"description": "Internal parameter name identifier"},
     )
-    value: str = field(metadata={"description": "Parameter value as string"})
+    value: str = field(
+        metadata={"description": "Parameter value as string"},
+    )
 
 
 @dataclass_json
@@ -172,14 +189,15 @@ class PipelineProcessParams:
     """Parameters for configuring a specific process within a pipeline execution."""
 
     name: str = field(
-        metadata={"description": "Name of the pipeline process to configure"}
+        metadata={"description": "Name of the pipeline process to configure"},
     )
     parameters: Optional[list[str]] = field(
         default=None,
         metadata={"description": "Ordered list of parameter values for this process"},
     )
     named_parameters: Optional[list[NamedRunParam]] = field(
-        default=None, metadata={"description": "Named parameters for this process"}
+        default=None,
+        metadata={"description": "Named parameters for this process"},
     )
 
 
@@ -191,17 +209,18 @@ class RunParams:
     capsule_id: Optional[str] = field(
         default=None,
         metadata={
-            "description": "ID of the capsule to run (required for capsule runs)"
+            "description": "ID of the capsule to run (required for capsule runs)",
         },
     )
     pipeline_id: Optional[str] = field(
         default=None,
         metadata={
-            "description": "ID of the pipeline to run (required for pipeline runs)"
+            "description": "ID of the pipeline to run (required for pipeline runs)",
         },
     )
     version: Optional[int] = field(
-        default=None, metadata={"description": "Specific version of the capsule to run"}
+        default=None,
+        metadata={"description": "Specific version of the capsule to run"},
     )
     resume_run_id: Optional[str] = field(
         default=None,
@@ -214,14 +233,16 @@ class RunParams:
     data_assets: Optional[list[DataAssetsRunParam]] = field(
         default=None,
         metadata={
-            "description": "List of data assets to attach with their mount paths"
+            "description": "List of data assets to attach with their mount paths",
         },
     )
     parameters: Optional[list[str]] = field(
-        default=None, metadata={"description": "Ordered list of parameter values"}
+        default=None,
+        metadata={"description": "Ordered list of parameter values"},
     )
     named_parameters: Optional[list[NamedRunParam]] = field(
-        default=None, metadata={"description": "Named parameters for the computation"}
+        default=None,
+        metadata={"description": "Named parameters for the computation"},
     )
     processes: Optional[list[PipelineProcessParams]] = field(
         default=None,
@@ -317,9 +338,7 @@ class Computations:
 
         return Folder.from_dict(res.json())
 
-    def get_result_file_download_url(
-        self, computation_id: str, path: str
-    ) -> DownloadFileURL:
+    def get_result_file_download_url(self, computation_id: str, path: str) -> DownloadFileURL:
         """Generate a download URL for a specific result file from a computation."""
         res = self.client.get(
             f"computations/{computation_id}/results/download_url",

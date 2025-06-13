@@ -21,12 +21,12 @@ class UserPermissions:
     """User permission configuration with email and role assignment."""
 
     email: str = field(
-        metadata={"description": "User email address for permission assignment"}
+        metadata={"description": "User email address for permission assignment"},
     )
     role: UserRole = field(
         metadata={
-            "description": "Permission level granted to the user (owner, editor, viewer)"
-        }
+            "description": "Permission level granted to the user (owner, editor, viewer)",
+        },
     )
 
 
@@ -45,12 +45,12 @@ class GroupPermissions:
     """Group permission configuration with group identifier and role assignment."""
 
     group: str = field(
-        metadata={"description": "Group identifier for permission assignment"}
+        metadata={"description": "Group identifier for permission assignment"},
     )
     role: GroupRole = field(
         metadata={
-            "description": "Permission level granted to the group (owner, editor, viewer, discoverable)"
-        }
+            "description": "Permission level granted to the group (owner, editor, viewer, discoverable)",
+        },
     )
 
 
@@ -68,10 +68,12 @@ class Permissions:
     """Complete permission configuration for Code Ocean resources including users, groups, and public access."""
 
     users: Optional[list[UserPermissions]] = field(
-        default=None, metadata={"description": "List of user-specific permissions"}
+        default=None,
+        metadata={"description": "List of user-specific permissions"},
     )
     groups: Optional[list[GroupPermissions]] = field(
-        default=None, metadata={"description": "List of group-specific permissions"}
+        default=None,
+        metadata={"description": "List of group-specific permissions"},
     )
     everyone: Optional[EveryoneRole] = field(
         default=None,
@@ -80,7 +82,7 @@ class Permissions:
     share_assets: Optional[bool] = field(
         default=None,
         metadata={
-            "description": "Whether to share associated assets with granted permissions"
+            "description": "Whether to share associated assets with granted permissions",
         },
     )
 
@@ -97,8 +99,12 @@ class SortOrder(StrEnum):
 class SearchFilterRange:
     """Numeric range filter for search operations with minimum and maximum values."""
 
-    min: float = field(metadata={"description": "Minimum value for range filter"})
-    max: float = field(metadata={"description": "Maximum value for range filter"})
+    min: float = field(
+        metadata={"description": "Minimum value for range filter"},
+    )
+    max: float = field(
+        metadata={"description": "Maximum value for range filter"},
+    )
 
 
 @dataclass_json
@@ -108,11 +114,12 @@ class SearchFilter:
 
     key: str = field(
         metadata={
-            "description": "Field name to filter on (name, description, tags, or custom field key)"
-        }
+            "description": "Field name to filter on (name, description, tags, or custom field key)",
+        },
     )
     value: Optional[str | float] = field(
-        default=None, metadata={"description": "Single field value to include/exclude"}
+        default=None,
+        metadata={"description": "Single field value to include/exclude"},
     )
     values: Optional[list[str | float]] = field(
         default=None,
@@ -121,13 +128,13 @@ class SearchFilter:
     range: Optional[SearchFilterRange] = field(
         default=None,
         metadata={
-            "description": "Numeric range filter (only one of min/max must be set)"
+            "description": "Numeric range filter (only one of min/max must be set)",
         },
     )
     exclude: Optional[bool] = field(
         default=None,
         metadata={
-            "description": "Whether to include (false) or exclude (true) the specified values"
+            "description": "Whether to include (false) or exclude (true) the specified values",
         },
     )
 

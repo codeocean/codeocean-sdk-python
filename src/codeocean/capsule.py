@@ -33,16 +33,20 @@ class OriginalCapsuleInfo:
     another."""
 
     id: Optional[str] = dataclass_field(
-        default=None, metadata={"description": "Original capsule ID"}
+        default=None,
+        metadata={"description": "Original capsule ID"},
     )
     major_version: Optional[int] = dataclass_field(
-        default=None, metadata={"description": "Original capsule major version"}
+        default=None,
+        metadata={"description": "Original capsule major version"},
     )
     minor_version: Optional[int] = dataclass_field(
-        default=None, metadata={"description": "Original capsule minor version"}
+        default=None,
+        metadata={"description": "Original capsule minor version"},
     )
     name: Optional[str] = dataclass_field(
-        default=None, metadata={"description": "Original capsule name"}
+        default=None,
+        metadata={"description": "Original capsule name"},
     )
     created: Optional[int] = dataclass_field(
         default=None,
@@ -59,17 +63,23 @@ class OriginalCapsuleInfo:
 class Capsule:
     """Represents a Code Ocean capsule with its metadata and properties."""
 
-    id: str = dataclass_field(metadata={"description": "Capsule ID"})
+    id: str = dataclass_field(
+        metadata={"description": "Capsule ID"},
+    )
     created: int = dataclass_field(
-        metadata={"description": "Capsule creation time (int64 timestamp)"}
+        metadata={"description": "Capsule creation time (int64 timestamp)"},
     )
-    name: str = dataclass_field(metadata={"description": "Capsule display name"})
+    name: str = dataclass_field(
+        metadata={"description": "Capsule display name"},
+    )
     status: CapsuleStatus = dataclass_field(
-        metadata={"description": "Status of the capsule (non_release or release)"}
+        metadata={"description": "Status of the capsule (non_release or release)"},
     )
-    owner: str = dataclass_field(metadata={"description": "Capsule owner's ID"})
+    owner: str = dataclass_field(
+        metadata={"description": "Capsule owner's ID"},
+    )
     slug: str = dataclass_field(
-        metadata={"description": "Alternate capsule ID (URL-friendly identifier)"}
+        metadata={"description": "Alternate capsule ID (URL-friendly identifier)"},
     )
     article: Optional[dict] = dataclass_field(
         default=None,
@@ -84,10 +94,12 @@ class Capsule:
         metadata={"description": "URL to external Git repository linked to capsule"},
     )
     description: Optional[str] = dataclass_field(
-        default=None, metadata={"description": "Capsule description"}
+        default=None,
+        metadata={"description": "Capsule description"},
     )
     field: Optional[str] = dataclass_field(
-        default=None, metadata={"description": "Capsule research field"}
+        default=None,
+        metadata={"description": "Capsule research field"},
     )
     tags: Optional[list[str]] = dataclass_field(
         default=None,
@@ -96,12 +108,12 @@ class Capsule:
     original_capsule: Optional[OriginalCapsuleInfo] = dataclass_field(
         default=None,
         metadata={
-            "description": "Original capsule info when this is cloned from "
-            "another capsule"
+            "description": "Original capsule info when this is cloned from another capsule"
         },
     )
     release_capsule: Optional[str] = dataclass_field(
-        default=None, metadata={"description": "Release capsule ID"}
+        default=None,
+        metadata={"description": "Release capsule ID"},
     )
     submission: Optional[dict] = dataclass_field(
         default=None,
@@ -114,8 +126,7 @@ class Capsule:
     versions: Optional[list[dict]] = dataclass_field(
         default=None,
         metadata={
-            "description": "Capsule versions with major_version, "
-            "minor_version, release_time, and DOI"
+            "description": "Capsule versions with major_version, minor_version, release_time, and DOI"
         },
     )
 
@@ -129,38 +140,35 @@ class CapsuleSearchParams:
     query: Optional[str] = dataclass_field(
         default=None,
         metadata={
-            "description": "Search query in free text or structured format "
-            "(name:... tag:...)"
+            "description": "Search query in free text or structured format (name:... tag:...)"
         },
     )
     next_token: Optional[str] = dataclass_field(
         default=None,
         metadata={
-            "description": "Token for next page of results from previous " "response"
+            "description": "Token for next page of results from previous response"
         },
     )
     offset: Optional[int] = dataclass_field(
         default=None,
         metadata={
-            "description": "Starting index for search results (ignored if "
-            "next_token is set)"
+            "description": "Starting index for search results (ignored if next_token is set)"
         },
     )
     limit: Optional[int] = dataclass_field(
         default=None,
         metadata={
-            "description": "Number of items to return (up to 1000, " "defaults to 100)"
+            "description": "Number of items to return (up to 1000, defaults to 100)"
         },
     )
     sort_field: Optional[CapsuleSortBy] = dataclass_field(
         default=None,
-        metadata={"description": "Field to sort by (created, name, " "last_accessed)"},
+        metadata={"description": "Field to sort by (created, name, last_accessed)"},
     )
     sort_order: Optional[SortOrder] = dataclass_field(
         default=None,
         metadata={
-            "description": "Sort order ('asc' or 'desc') - must be provided "
-            "with a sort_field parameter as well!"
+            "description": "Sort order ('asc' or 'desc') - must be provided with a sort_field parameter as well!"
         },
     )
     ownership: Optional[Ownership] = dataclass_field(
@@ -171,22 +179,20 @@ class CapsuleSearchParams:
     )
     status: Optional[CapsuleStatus] = dataclass_field(
         default=None,
-        metadata={
-            "description": "Filter by status (release or non_release) - "
-            "defaults to all"
-        },
+        metadata={"description": "Filter by status (release or non_release) - defaults to all"},
     )
     favorite: Optional[bool] = dataclass_field(
-        default=None, metadata={"description": "Search only favorite capsules"}
+        default=None,
+        metadata={"description": "Search only favorite capsules"},
     )
     archived: Optional[bool] = dataclass_field(
-        default=None, metadata={"description": "Search only archived capsules"}
+        default=None,
+        metadata={"description": "Search only archived capsules"},
     )
     filters: Optional[list[SearchFilter]] = dataclass_field(
         default=None,
         metadata={
-            "description": "Additional field-level filters for name, "
-            "description, tags, or custom fields"
+            "description": "Additional field-level filters for name, description, tags, or custom fields"
         },
     )
 
@@ -197,10 +203,10 @@ class CapsuleSearchResults:
     """Results from a capsule search operation with pagination support."""
 
     has_more: bool = dataclass_field(
-        metadata={"description": "Indicates if there are more results available"}
+        metadata={"description": "Indicates if there are more results available"},
     )
     results: list[Capsule] = dataclass_field(
-        metadata={"description": "Array of capsules found matching the search criteria"}
+        metadata={"description": "Array of capsules found matching the search criteria"},
     )
     next_token: Optional[str] = dataclass_field(
         default=None,
@@ -251,18 +257,14 @@ class Capsules:
             json=data_assets,
         )
 
-    def search_capsules(
-        self, search_params: CapsuleSearchParams
-    ) -> CapsuleSearchResults:
+    def search_capsules(self, search_params: CapsuleSearchParams) -> CapsuleSearchResults:
         """Search for capsules with filtering, sorting, and pagination
         options."""
         res = self.client.post("capsules/search", json=search_params.to_dict())
 
         return CapsuleSearchResults.from_dict(res.json())
 
-    def search_capsules_iterator(
-        self, search_params: CapsuleSearchParams
-    ) -> Iterator[Capsule]:
+    def search_capsules_iterator(self, search_params: CapsuleSearchParams) -> Iterator[Capsule]:
         """Iterate through all capsules matching search criteria with automatic pagination."""
         params = search_params.to_dict()
         while True:
