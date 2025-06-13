@@ -150,10 +150,6 @@ class Computation:
             "description": "Indicates whether the computation has generated results",
         },
     )
-    nextflow_profile: Optional[str] = field(
-        default=None,
-        metadata={"description": "Pipeline Nextflow profile used for this computation"},
-    )
 
 
 @dataclass_json
