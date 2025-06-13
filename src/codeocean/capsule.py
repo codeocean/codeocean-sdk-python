@@ -239,7 +239,11 @@ class Capsules:
             json=permissions.to_dict(),
         )
 
-    def attach_data_assets(self, capsule_id: str, attach_params: list[DataAssetAttachParams]) -> list[DataAssetAttachResults]:
+    def attach_data_assets(
+        self,
+        capsule_id: str,
+        attach_params: list[DataAssetAttachParams],
+    ) -> list[DataAssetAttachResults]:
         """Attach one or more data assets to a capsule with optional mount paths."""
         res = self.client.post(
             f"capsules/{capsule_id}/data_assets",
