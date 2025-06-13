@@ -696,7 +696,7 @@ class DataAssets:
         """
         res = self.client.put(
             f"data_assets/{data_asset_id}",
-            json=update_params.to_dict()
+            json=update_params.to_dict(),
         )
 
         return DataAsset.from_dict(res.json())
@@ -752,18 +752,15 @@ class DataAssets:
         """
         if polling_interval < 5:
             raise ValueError(
-                f"Polling interval {polling_interval} "
-                "should be greater than or equal to 5"
+                f"Polling interval {polling_interval} should be greater than or equal to 5"
             )
         if timeout is not None and timeout < polling_interval:
             raise ValueError(
-                f"Timeout {timeout} should be greater than or equal to "
-                f"polling interval {polling_interval}"
+                f"Timeout {timeout} should be greater than or equal to polling interval {polling_interval}"
             )
         if timeout is not None and timeout < 0:
             raise ValueError(
-                f"Timeout {timeout} should be greater than or equal to"
-                " 0 (seconds), or None"
+                f"Timeout {timeout} should be greater than or equal to 0 (seconds), or None"
             )
         t0 = time()
         while True:
@@ -777,9 +774,7 @@ class DataAssets:
                     f"Data asset {data_asset.id} was not ready within {timeout} seconds"
                 )
 
-            sleep(
-                polling_interval
-            )
+            sleep(polling_interval)
 
     def delete_data_asset(self, data_asset_id: str):
         """Delete a data asset permanently."""
@@ -793,10 +788,7 @@ class DataAssets:
         )
 
     def archive_data_asset(self, data_asset_id: str, archive: bool):
-        """
-        Archive or unarchive a data asset to control its visibility and
-        accessibility.
-        """
+        """Archive or unarchive a data asset to control its visibility and accessibility."""
         self.client.patch(
             f"data_assets/{data_asset_id}/archive",
             params={"archive": archive},
@@ -816,9 +808,7 @@ class DataAssets:
         params = search_params.to_dict()
         while True:
             response = self.search_data_assets(
-                search_params=DataAssetSearchParams(
-                    **params
-                )
+                search_params=DataAssetSearchParams(**params),
             )
 
             for result in response.results:
@@ -860,5 +850,6 @@ class DataAssets:
         force=True when transferring data assets used by release pipelines.
         """
         self.client.post(
-            f"data_assets/{data_asset_id}/transfer", json=transfer_params.to_dict()
+            f"data_assets/{data_asset_id}/transfer",
+            json=transfer_params.to_dict(),
         )

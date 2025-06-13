@@ -13,6 +13,7 @@ from codeocean.data_asset import DataAssets
 
 @dataclass
 class CodeOcean:
+
     domain: str
     token: str
     retries: Optional[Retry | int] = 0
