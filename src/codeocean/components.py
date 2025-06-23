@@ -8,7 +8,7 @@ from codeocean.enum import StrEnum
 
 
 class UserRole(StrEnum):
-    """Role levels for user permissions in Code Ocean resources."""
+    """Role levels for user permissions of Code Ocean resources."""
 
     Owner = "owner"
     Editor = "editor"
@@ -25,13 +25,13 @@ class UserPermissions:
     )
     role: UserRole = field(
         metadata={
-            "description": "Permission level granted to the user (owner, editor, viewer)",
+            "description": "Permission level granted to the user (owner, editor, or viewer)",
         },
     )
 
 
 class GroupRole(StrEnum):
-    """Role levels for group permissions in Code Ocean resources."""
+    """Role levels for group permissions of Code Ocean resources."""
 
     Owner = "owner"
     Editor = "editor"
@@ -49,13 +49,13 @@ class GroupPermissions:
     )
     role: GroupRole = field(
         metadata={
-            "description": "Permission level granted to the group (owner, editor, viewer, discoverable)",
+            "description": "Permission level granted to the group (owner, editor, viewer, or discoverable)",
         },
     )
 
 
 class EveryoneRole(StrEnum):
-    """Role levels for public access permissions in Code Ocean resources."""
+    """Role levels for public access permissions of Code Ocean resources."""
 
     Viewer = "viewer"
     Discoverable = "discoverable"
@@ -77,18 +77,18 @@ class Permissions:
     )
     everyone: Optional[EveryoneRole] = field(
         default=None,
-        metadata={"description": "Public access level (viewer, discoverable, none)"},
+        metadata={"description": "Public access level (viewer, discoverable, or none)"},
     )
     share_assets: Optional[bool] = field(
         default=None,
         metadata={
-            "description": "Whether to share associated assets with granted permissions",
+            "description": "Whether to share all related assets (attached data assets and pipeline capsules) with added users and groups",
         },
     )
 
 
 class SortOrder(StrEnum):
-    """Sort order options for search and listing operations."""
+    """Sort order options for search operations."""
 
     Ascending = "asc"
     Descending = "desc"

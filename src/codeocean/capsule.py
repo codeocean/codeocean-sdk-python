@@ -29,7 +29,7 @@ class CapsuleSortBy(StrEnum):
 @dataclass_json
 @dataclass(frozen=True)
 class OriginalCapsuleInfo:
-    """Information about the original capsule when this capsule is cloned from
+    """Information about the original capsule when this capsule is duplicated from
     another."""
 
     id: Optional[str] = dataclass_field(
@@ -108,7 +108,7 @@ class Capsule:
     original_capsule: Optional[OriginalCapsuleInfo] = dataclass_field(
         default=None,
         metadata={
-            "description": "Original capsule info when this is cloned from another capsule"
+            "description": "Original capsule info when this capsule is duplicated from another"
         },
     )
     release_capsule: Optional[str] = dataclass_field(
@@ -163,7 +163,7 @@ class CapsuleSearchParams:
     )
     sort_field: Optional[CapsuleSortBy] = dataclass_field(
         default=None,
-        metadata={"description": "Field to sort by (created, name, last_accessed)"},
+        metadata={"description": "Field to sort by (created, name, or last_accessed)"},
     )
     sort_order: Optional[SortOrder] = dataclass_field(
         default=None,
