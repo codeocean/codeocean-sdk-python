@@ -82,7 +82,8 @@ class Permissions:
     share_assets: Optional[bool] = field(
         default=None,
         metadata={
-            "description": "Whether to share all related assets (attached data assets and pipeline capsules) with added users and groups",
+            "description": "Whether to share all related assets (attached data assets and "
+            "pipeline capsules) with added users and groups",
         },
     )
 
