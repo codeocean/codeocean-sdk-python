@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+## 0.7.0 (2025-06-24)
+- [#46](https://github.com/codeocean/codeocean-sdk-python/pull/46) feat: Add API documentation
+
 ## 0.6.0 (2025-06-03)
 - [#44](https://github.com/codeocean/codeocean-sdk-python/pull/44) feat: support for nextflow_profiles in data assets and computations
 - [#43](https://github.com/codeocean/codeocean-sdk-python/pull/43) fix: updates .gitignore to exclude .env
