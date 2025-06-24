@@ -185,7 +185,7 @@ class PipelineProcessParams:
     """Parameters for configuring a specific process within a pipeline execution."""
 
     name: str = field(
-        metadata={"description": "Name of the pipeline process to configure"},
+        metadata={"description": "Name of the pipeline process as it appears in main.nf"},
     )
     parameters: Optional[list[str]] = field(
         default=None,
@@ -216,7 +216,7 @@ class RunParams:
     )
     version: Optional[int] = field(
         default=None,
-        metadata={"description": "Specific version of the capsule to run"},
+        metadata={"description": "Specific version of the capsule or pipeline to run"},
     )
     resume_run_id: Optional[str] = field(
         default=None,
@@ -234,7 +234,7 @@ class RunParams:
     )
     parameters: Optional[list[str]] = field(
         default=None,
-        metadata={"description": "Ordered list of parameter values"},
+        metadata={"description": "Ordered list of parameter values for the computation"},
     )
     named_parameters: Optional[list[NamedRunParam]] = field(
         default=None,
@@ -268,9 +268,6 @@ class Computations:
         For pipeline execution: Set run_params.pipeline_id and optionally provide data_assets,
         processes (with process-specific parameters), and nextflow_profile configuration.
 
-        Typical workflow: 1) run_capsule() to start execution, 2) wait_until_completed() to
-        monitor progress, 3) list_computation_results() and get_result_file_download_url()
-        to retrieve outputs.
         """
         res = self.client.post("computations", json=run_params.to_dict())
 

@@ -36,7 +36,7 @@ class Provenance:
 
     commit: Optional[str] = field(
         default=None,
-        metadata={"description": "Commit hash the data asset was created from"},
+        metadata={"description": "Commit hash of capsule/pipeline code at time of execution"},
     )
     run_script: Optional[str] = field(
         default=None,
@@ -48,17 +48,17 @@ class Provenance:
     )
     capsule: Optional[str] = field(
         default=None,
-        metadata={"description": "Capsule used to create the data asset"},
+        metadata={"description": "ID of the capsule used to create the data asset"},
     )
     data_assets: Optional[list[str]] = field(
         default=None,
         metadata={
-            "description": "Data assets that were used to create this data asset",
+            "description": "Data assets that were used as input to create this data asset",
         },
     )
     computation: Optional[str] = field(
         default=None,
-        metadata={"description": "Computation ID used to create the data asset"},
+        metadata={"description": "ID of the computation from which this data asset was created"},
     )
 
 
@@ -80,7 +80,7 @@ class SourceBucket:
     )
     bucket: Optional[str] = field(
         default=None,
-        metadata={"description": "The original bucket's name"},
+        metadata={"description": "The S3 bucket from which the data asset was created"},
     )
     prefix: Optional[str] = field(
         default=None,
@@ -90,7 +90,7 @@ class SourceBucket:
     )
     external: Optional[bool] = field(
         default=None,
-        metadata={"description": "Indicates if the data asset is stored externally"},
+        metadata={"description": "Indicates if the data asset is stored external to Code Ocean"},
     )
 
 
@@ -168,7 +168,7 @@ class DataAsset:
         metadata={"description": "Unique data asset ID (UUID string)"},
     )
     created: int = field(
-        metadata={"description": "Data asset creation time (seconds since epoch)"},
+        metadata={"description": "Data asset creation time in seconds from epoch"},
     )
     name: str = field(
         metadata={"description": "Name of the data asset"},
@@ -507,7 +507,7 @@ class DataAssetAttachResults:
     )
     mount: Optional[str] = field(
         default=None,
-        metadata={"description": "Actual mount path used for the data asset"},
+        metadata={"description": "Path at which the data asset is mounted"},
     )
 
 
@@ -716,12 +716,6 @@ class DataAssets:
         request validity, not success, as creation takes time. Use wait_until_ready()
         to monitor creation progress.
 
-        Typical workflow:
-        1) create_data_asset() to initiate creation
-        2) wait_until_ready() to monitor progress until state is 'ready'
-        3) get_data_asset() to fetch final metadata
-        4) list_data_asset_files() and get_data_asset_file_download_url()
-           to access contents
         """
         res = self.client.post("data_assets", json=data_asset_params.to_dict())
 
