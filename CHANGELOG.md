@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.8.0 (2025-07-11)
+- [#50](https://github.com/codeocean/codeocean-sdk-python/pull/50) feat: Add Min-Server-Version header support
+- [#49](https://github.com/codeocean/codeocean-sdk-python/pull/49) feat: Identify AI agents in API requests
+
 ## 0.7.0 (2025-06-24)
 - [#46](https://github.com/codeocean/codeocean-sdk-python/pull/46) feat: Add API documentation
 
