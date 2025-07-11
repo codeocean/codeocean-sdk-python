@@ -10,6 +10,9 @@ from codeocean.capsule import Capsules
 from codeocean.computation import Computations
 from codeocean.data_asset import DataAssets
 
+# Minimum server version required by this SDK
+MIN_SERVER_VERSION = "3.6.0"
+
 
 @dataclass
 class CodeOcean:
@@ -38,7 +41,7 @@ class CodeOcean:
         self.session.auth = (self.token, "")
         self.session.headers.update({
             "Content-Type": "application/json",
-            "Min-Server-Version": "3.6.0",
+            "Min-Server-Version": MIN_SERVER_VERSION,
         })
         if self.agent_id:
             self.session.headers.update({"Agent-Id": self.agent_id})
