@@ -10,9 +10,6 @@ from codeocean.capsule import Capsules
 from codeocean.computation import Computations
 from codeocean.data_asset import DataAssets
 
-# Minimum server version required by this SDK
-MIN_SERVER_VERSION = "3.6.0"
-
 
 @dataclass
 class CodeOcean:
@@ -36,12 +33,15 @@ class CodeOcean:
     retries: Optional[Retry | int] = 0
     agent_id: Optional[str] = None
 
+    # Minimum server version required by this SDK
+    MIN_SERVER_VERSION = "3.6.0"
+
     def __post_init__(self):
         self.session = BaseUrlSession(base_url=f"{self.domain}/api/v1/")
         self.session.auth = (self.token, "")
         self.session.headers.update({
             "Content-Type": "application/json",
-            "Min-Server-Version": MIN_SERVER_VERSION,
+            "Min-Server-Version": CodeOcean.MIN_SERVER_VERSION,
         })
         if self.agent_id:
             self.session.headers.update({"Agent-Id": self.agent_id})

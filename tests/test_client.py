@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 from urllib3.util import Retry
 
-from codeocean.client import CodeOcean, MIN_SERVER_VERSION
+from codeocean.client import CodeOcean
 
 
 class TestClient(unittest.TestCase):
@@ -32,7 +32,7 @@ class TestClient(unittest.TestCase):
         self.assertIn("Content-Type", headers)
         self.assertEqual(headers["Content-Type"], "application/json")
         self.assertIn("Min-Server-Version", headers)
-        self.assertEqual(headers["Min-Server-Version"], MIN_SERVER_VERSION)
+        self.assertEqual(headers["Min-Server-Version"], CodeOcean.MIN_SERVER_VERSION)
 
     @patch("codeocean.client.TCPKeepAliveAdapter")
     def test_retry_configuration_types(self, mock_adapter):
