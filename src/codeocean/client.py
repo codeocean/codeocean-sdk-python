@@ -5,10 +5,12 @@ from requests_toolbelt.adapters.socket_options import TCPKeepAliveAdapter
 from requests_toolbelt.sessions import BaseUrlSession
 from typing import Optional
 from urllib3.util import Retry
+import requests
 
 from codeocean.capsule import Capsules
 from codeocean.computation import Computations
 from codeocean.data_asset import DataAssets
+from codeocean.error import Error
 
 
 @dataclass
@@ -45,11 +47,15 @@ class CodeOcean:
         })
         if self.agent_id:
             self.session.headers.update({"Agent-Id": self.agent_id})
-        self.session.hooks["response"] = [
-            lambda response, *args, **kwargs: response.raise_for_status()
-        ]
+        self.session.hooks["response"] = [self._error_handler]
         self.session.mount(self.domain, TCPKeepAliveAdapter(max_retries=self.retries))
 
         self.capsules = Capsules(client=self.session)
         self.computations = Computations(client=self.session)
         self.data_assets = DataAssets(client=self.session)
+
+    def _error_handler(self, response, *args, **kwargs):
+        try:
+            response.raise_for_status()
+        except requests.HTTPError as err:
+            raise Error(err) from err
