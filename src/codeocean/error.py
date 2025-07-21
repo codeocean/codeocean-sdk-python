@@ -9,7 +9,7 @@ class Error(Exception):
 
     Attributes:
         status_code (int): The HTTP status code of the error response.
-        message (str): A message describing the error, extracted from the response body or defaulting to a generic message.
+        message (str): A message describing the error, extracted from the response body.
         items (list or None): If the response body is a list, this attribute contains the list; otherwise, it is None.
 
     Args:
