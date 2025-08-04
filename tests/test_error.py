@@ -17,7 +17,7 @@ class TestError(unittest.TestCase):
         # Create mock HTTPError and response
         mock_response = Mock()
         mock_response.status_code = 400
-        mock_response.json.return_value = {"message": "Custom error message", "datasets": [{"id":"123", "name":"tv"}]}
+        mock_response.json.return_value = {"message": "Custom error message", "datasets": [{"id": "123", "name": "tv"}]}
 
         mock_http_error = Mock(spec=requests.HTTPError)
         mock_http_error.response = mock_response
@@ -28,7 +28,7 @@ class TestError(unittest.TestCase):
         # Verify attributes
         self.assertEqual(error.status_code, 400)
         self.assertEqual(error.message, "Custom error message")
-        self.assertEqual(error.data, {"message": "Custom error message", "datasets": [{"id":"123", "name":"tv"}]})
+        self.assertEqual(error.data, {"message": "Custom error message", "datasets": [{"id": "123", "name": "tv"}]})
 
     def test_error_with_json_dict_no_message(self):
         """Test Error creation with JSON dict response without message field."""
@@ -101,7 +101,7 @@ class TestError(unittest.TestCase):
 
         # Test __str__ method
         error_str = str(error)
-        
+
         # Verify the string contains expected components
         self.assertEqual(error_str, """400 Client Error: Bad Request for url: http://example.com
 
@@ -133,7 +133,7 @@ Data:
 
         # Test __str__ method
         error_str = str(error)
-        
+
         # Verify the string contains expected components
         self.assertEqual(error_str, """404 Client Error: Not Found for url: http://example.com
 
