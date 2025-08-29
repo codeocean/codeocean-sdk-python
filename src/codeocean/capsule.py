@@ -140,7 +140,38 @@ class CapsuleSearchParams:
     query: Optional[str] = dataclass_field(
         default=None,
         metadata={
-            "description": "Search query in free text or structured format (name:... tag:...)"
+            "description": """Search expression supporting free text and field:value filters.
+            Valid fields:
+             - id
+             - name
+             - doi
+             - tag
+             - field
+             - affiliation
+             - journal
+             - article
+             - author
+
+            Free text:
+             - Matches across weighted fields (name, tags, description, authors, etc.)
+
+            Syntax rules:
+             - Same field repeated = OR
+             - Different fields = AND
+             - Quotes = exact phrase
+             - No explicit OR operator
+             - No wildcards (*)
+             - Not case sensitive
+
+            Notes:
+             - "description" is not directly searchable; it is covered by free-text matching.
+
+            Examples:
+             - name:RNA-seq tag:genomics
+             - name:"single cell analysis"
+             - Synergy
+             - name:Synergy
+            """
         },
     )
     next_token: Optional[str] = dataclass_field(
