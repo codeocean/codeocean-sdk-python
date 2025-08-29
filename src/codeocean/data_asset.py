@@ -538,8 +538,30 @@ class DataAssetSearchParams:
     query: Optional[str] = field(
         default=None,
         metadata={
-            "description": "Search query in free text or structured format "
-            "(name:... tag:... run_script:... commit_id:...)",
+            "description": """Search expression supporting free text and field:value filters.
+            Valid fields:
+             - name
+             - tag
+             - run_script
+             - commit_id
+             - contained_data_id
+
+            Free text:
+             - Matches across weighted fields (name, tags, description, custom metadata)
+
+            Syntax rules:
+             - Same field repeated = OR
+             - Different fields = AND
+             - Quotes = exact phrase
+             - No explicit OR operator
+             - No wildcards (*)
+             - Not case sensitive
+
+            Examples:
+             - name:RNA-seq tag:genomics
+             - name:"analysis pipeline"
+             - name:Synergy
+            """
         },
     )
     next_token: Optional[str] = field(
