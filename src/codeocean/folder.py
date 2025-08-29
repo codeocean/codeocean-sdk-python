@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses_json import dataclass_json
 from dataclasses import dataclass, field
 from typing import Optional
+import warnings
 
 
 @dataclass_json
@@ -52,4 +53,24 @@ class DownloadFileURL:
 
     url: str = field(
         metadata={"description": "Pre-signed URL for downloading the specified file"}
+    )
+
+    def __post_init__(self):
+        warnings.warn(
+            "DownloadFileURL is deprecated and will be removed in a future release.",
+            DeprecationWarning,
+            stacklevel=2
+        )
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class FileURLs:
+    """Represents a collection of file download URLs."""
+
+    download_url: str = field(
+        metadata={"description": "Signed URL for downloading the file"}
+    )
+    view_url: str = field(
+        metadata={"description": "Signed URL for viewing the file in the browser"}
     )
