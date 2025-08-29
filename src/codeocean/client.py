@@ -9,6 +9,7 @@ import requests
 
 from codeocean.capsule import Capsules
 from codeocean.computation import Computations
+from codeocean.custom_metadata import CustomMetadataSchema
 from codeocean.data_asset import DataAssets
 from codeocean.error import Error
 
@@ -36,7 +37,7 @@ class CodeOcean:
     agent_id: Optional[str] = None
 
     # Minimum server version required by this SDK
-    MIN_SERVER_VERSION = "3.6.0"
+    MIN_SERVER_VERSION = "3.9.0"
 
     def __post_init__(self):
         self.session = BaseUrlSession(base_url=f"{self.domain}/api/v1/")
@@ -52,6 +53,7 @@ class CodeOcean:
 
         self.capsules = Capsules(client=self.session)
         self.computations = Computations(client=self.session)
+        self.custom_metadata = CustomMetadataSchema(client=self.session)
         self.data_assets = DataAssets(client=self.session)
 
     def _error_handler(self, response, *args, **kwargs):
