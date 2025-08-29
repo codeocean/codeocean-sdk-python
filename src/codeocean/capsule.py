@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field as dataclass_field
 from dataclasses_json import dataclass_json
-from typing import Optional, Iterator
+from typing import Optional, Iterator, Any
 from requests_toolbelt.sessions import BaseUrlSession
 
 from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
@@ -24,6 +24,18 @@ class CapsuleSortBy(StrEnum):
     Created = "created"
     LastAccessed = "last_accessed"
     Name = "name"
+
+
+class AppPanelDataAssetKind(StrEnum):
+    Internal = "internal"
+    External = "external"
+    Combined = "combined"
+
+
+class AppPanelParameterType(StrEnum):
+    Text = "text"
+    List = "list"
+    File = "file"
 
 
 @dataclass_json
@@ -80,6 +92,10 @@ class Capsule:
     )
     slug: str = dataclass_field(
         metadata={"description": "Alternate capsule ID (URL-friendly identifier)"},
+    )
+    last_accessed: Optional[int] = dataclass_field(
+        default=None,
+        metadata={"description": "Capsule last accessed time (int64 timestamp)"},
     )
     article: Optional[dict] = dataclass_field(
         default=None,
@@ -214,6 +230,85 @@ class CapsuleSearchResults:
     )
 
 
+@dataclass_json
+@dataclass(frozen=True)
+class AppPanelCategories:
+    id: str
+    name: str
+    description: Optional[str] = None
+    help_text: Optional[str] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class AppPanelParameters:
+    name: str
+    type: AppPanelParameterType
+    category: Optional[str] = None
+    param_name: Optional[str] = None
+    description: Optional[str] = None
+    help_text: Optional[str] = None
+    value_type: Optional[str] = None
+    default_value: Optional[str] = None
+    required: Optional[bool] = None
+    hidden: Optional[bool] = None
+    minimum: Optional[float] = None
+    maximum: Optional[float] = None
+    pattern: Optional[str] = None
+    value_options: Optional[Any] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class AppPanelGeneral:
+    title: Optional[str] = None
+    instructions: Optional[str] = None
+    help_text: Optional[str] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class AppPanelDataAsset:
+    id: str
+    mount: str
+    name: str
+    kind: AppPanelDataAssetKind
+    accessible: bool
+    description: Optional[str] = None
+    help_text: Optional[str] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class AppPanelResult:
+    file_name: str
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class AppPanelProcess:
+    name: str
+    categories: Optional[AppPanelCategories] = None
+    parameters: Optional[AppPanelParameters] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class AppPanel:
+    general: Optional[AppPanelGeneral] = None
+    data_assets: Optional[list[AppPanelDataAsset]] = None
+    categories: Optional[list[AppPanelCategories]] = None
+    parameters: Optional[list[AppPanelParameters]] = None
+    results: Optional[list[AppPanelResult]] = None
+    processes: Optional[list[AppPanelProcess]] = None
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class AppPanelParams:
+    version: Optional[int] = None
+
+
 @dataclass
 class Capsules:
     """Client for interacting with Code Ocean capsule APIs."""
@@ -279,3 +374,20 @@ class Capsules:
                 return
 
             params["next_token"] = response.next_token
+
+    def get_capsule_app_panel(self, capsule_id: str, version: Optional[AppPanelParams] = None) -> AppPanel:
+        """Retrieve app panel information for a specific capsule by its ID."""
+        res = self.client.get(f"capsules/{capsule_id}/parameters", params=version.to_dict() if version else None)
+
+        return AppPanel.from_dict(res.json())
+
+    def archive_capsule(self, capsule_id: str, archive: bool):
+        """Archive or unarchive a capsule to control its visibility and accessibility."""
+        self.client.patch(
+            f"capsules/{capsule_id}/archive",
+            params={"archive": archive},
+        )
+
+    def delete_capsule(self, capsule_id: str):
+        """Delete a capsule permanently."""
+        self.client.delete(f"capsules/{capsule_id}")
