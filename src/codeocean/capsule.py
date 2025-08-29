@@ -27,12 +27,24 @@ class CapsuleSortBy(StrEnum):
 
 
 class AppPanelDataAssetKind(StrEnum):
+    """The kind of data asset displayed in an app panel.
+
+    - 'Internal' → Data stored inside Code Ocean.
+    - 'External' → Data stored external to Code Ocean.
+    - 'Combined' → Data containing multiple external data assets.
+
+    In pipelines, a data asset can only be replaced with one of the same kind.
+
+    """
+
     Internal = "internal"
     External = "external"
     Combined = "combined"
 
 
 class AppPanelParameterType(StrEnum):
+    """The type of parameter displayed in an app panel."""
+
     Text = "text"
     List = "list"
     File = "file"
@@ -233,80 +245,188 @@ class CapsuleSearchResults:
 @dataclass_json
 @dataclass(frozen=True)
 class AppPanelCategories:
-    id: str
-    name: str
-    description: Optional[str] = None
-    help_text: Optional[str] = None
+    """ Categories for a capsule's App Panel parameters."""
+
+    id: str = dataclass_field(
+        metadata={"description": "Unique identifier for the category."},
+    )
+    name: str = dataclass_field(
+        metadata={"description": "Human-readable name of the category."},
+    )
+    description: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Optional detailed description of the category."},
+    )
+    help_text: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Optional help text providing guidance or additional information about the category."},
+    )
 
 
 @dataclass_json
 @dataclass(frozen=True)
 class AppPanelParameters:
-    name: str
-    type: AppPanelParameterType
-    category: Optional[str] = None
-    param_name: Optional[str] = None
-    description: Optional[str] = None
-    help_text: Optional[str] = None
-    value_type: Optional[str] = None
-    default_value: Optional[str] = None
-    required: Optional[bool] = None
-    hidden: Optional[bool] = None
-    minimum: Optional[float] = None
-    maximum: Optional[float] = None
-    pattern: Optional[str] = None
-    value_options: Optional[Any] = None
+    """Parameters for a capsule's App Panel."""
+    name: str = dataclass_field(
+        metadata={"description": "Parameter label/display name."}
+    )
+    type: AppPanelParameterType = dataclass_field(
+        metadata={"description": "Type of the parameter (text, list, file)."}
+    )
+    category: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "ID of category the parameter belongs to."}
+    )
+    param_name: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "The parameter name/argument key"}
+    )
+    description: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Description of the parameter."}
+    )
+    help_text: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Help text for the parameter."}
+    )
+    value_type: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Value type of the parameter."}
+    )
+    default_value: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Default value of the parameter."}
+    )
+    required: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Indicates if the parameter is required."}
+    )
+    hidden: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Indicates if the parameter is hidden."}
+    )
+    minimum: Optional[float] = dataclass_field(
+        default=None,
+        metadata={"description": "Minimum value for the parameter."}
+    )
+    maximum: Optional[float] = dataclass_field(
+        default=None,
+        metadata={"description": "Maximum value for the parameter."}
+    )
+    pattern: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Regular expression pattern for the parameter."}
+    )
+    value_options: Optional[Any] = dataclass_field(
+        default=None,
+        metadata={"description": "Allowed values for the parameter."}
+    )
 
 
 @dataclass_json
 @dataclass(frozen=True)
 class AppPanelGeneral:
-    title: Optional[str] = None
-    instructions: Optional[str] = None
-    help_text: Optional[str] = None
+    """General information about a capsule's App Panel."""
+    title: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Title of the App Panel."}
+    )
+    instructions: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Instructions for using the App Panel."}
+    )
+    help_text: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Help text for the App Panel."}
+    )
 
 
 @dataclass_json
 @dataclass(frozen=True)
 class AppPanelDataAsset:
-    id: str
-    mount: str
-    name: str
-    kind: AppPanelDataAssetKind
-    accessible: bool
-    description: Optional[str] = None
-    help_text: Optional[str] = None
+    """Data asset parameter for the App Panel."""
+    id: str = dataclass_field(
+        metadata={"description": "Unique identifier for the data asset."}
+    )
+    mount: str = dataclass_field(
+        metadata={"description": "Mount path of the data asset within the capsule. "
+                  "Use this mount path to replace the currently attached data asset with your own"}
+    )
+    name: str = dataclass_field(
+        metadata={"description": "Display name of the data asset."}
+    )
+    kind: AppPanelDataAssetKind = dataclass_field(
+        metadata={"description": "Kind of the data asset (internal, external, combined)."}
+    )
+    accessible: bool = dataclass_field(
+        metadata={"description": "Indicates if the data asset is accessible to the user."}
+    )
+    description: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Optional description of the data asset parameter."}
+    )
+    help_text: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Optional help text for the data asset parameter."}
+    )
 
 
 @dataclass_json
 @dataclass(frozen=True)
 class AppPanelResult:
-    file_name: str
+    """Selected result files to display once the computation is complete."""
+    file_name: str = dataclass_field(
+        metadata={"description": "Name of the result file."}
+    )
 
 
 @dataclass_json
 @dataclass(frozen=True)
 class AppPanelProcess:
-    name: str
-    categories: Optional[AppPanelCategories] = None
-    parameters: Optional[AppPanelParameters] = None
+    """Pipeline process name and its corresponding app panel (for pipelines of capsules only)"""
+    name: str = dataclass_field(
+        metadata={"description": "Name of the pipeline process."}
+    )
+    categories: Optional[AppPanelCategories] = dataclass_field(
+        default=None,
+        metadata={"description": "Categories for the pipeline process's app panel parameters."}
+    )
+    parameters: Optional[AppPanelParameters] = dataclass_field(
+        default=None,
+        metadata={"description": "Parameters for the pipeline process's app panel."}
+    )
 
 
 @dataclass_json
 @dataclass(frozen=True)
 class AppPanel:
-    general: Optional[AppPanelGeneral] = None
-    data_assets: Optional[list[AppPanelDataAsset]] = None
-    categories: Optional[list[AppPanelCategories]] = None
-    parameters: Optional[list[AppPanelParameters]] = None
-    results: Optional[list[AppPanelResult]] = None
-    processes: Optional[list[AppPanelProcess]] = None
-
-
-@dataclass_json
-@dataclass(frozen=True)
-class AppPanelParams:
-    version: Optional[int] = None
+    """App Panel configuration for a capsule or pipeline, including general info, data assets,
+    categories, parameters, and results.
+    """
+    general: Optional[AppPanelGeneral] = dataclass_field(
+        default=None,
+        metadata={"description": "General information about the App Panel."}
+    )
+    data_assets: Optional[list[AppPanelDataAsset]] = dataclass_field(
+        default=None,
+        metadata={"description": "List of data assets used in the App Panel."}
+    )
+    categories: Optional[list[AppPanelCategories]] = dataclass_field(
+        default=None,
+        metadata={"description": "Categories for organizing App Panel parameters."}
+    )
+    parameters: Optional[list[AppPanelParameters]] = dataclass_field(
+        default=None,
+        metadata={"description": "Parameters for the App Panel."}
+    )
+    results: Optional[list[AppPanelResult]] = dataclass_field(
+        default=None,
+        metadata={"description": "Result files to display after computation."}
+    )
+    processes: Optional[list[AppPanelProcess]] = dataclass_field(
+        default=None,
+        metadata={"description": "Pipeline processes and their App Panels."}
+    )
 
 
 @dataclass
@@ -320,6 +440,16 @@ class Capsules:
         res = self.client.get(f"capsules/{capsule_id}")
 
         return Capsule.from_dict(res.json())
+
+    def delete_capsule(self, capsule_id: str):
+        """Delete a capsule permanently."""
+        self.client.delete(f"capsules/{capsule_id}")
+
+    def get_capsule_app_panel(self, capsule_id: str, version: Optional[int] = None) -> AppPanel:
+        """Retrieve app panel information for a specific capsule by its ID."""
+        res = self.client.get(f"capsules/{capsule_id}/parameters", params={"version": version} if version else None)
+
+        return AppPanel.from_dict(res.json())
 
     def list_computations(self, capsule_id: str) -> list[Computation]:
         """Get all computations associated with a specific capsule."""
@@ -354,6 +484,13 @@ class Capsules:
             json=data_assets,
         )
 
+    def archive_capsule(self, capsule_id: str, archive: bool):
+        """Archive or unarchive a capsule to control its visibility and accessibility."""
+        self.client.patch(
+            f"capsules/{capsule_id}/archive",
+            params={"archive": archive},
+        )
+
     def search_capsules(self, search_params: CapsuleSearchParams) -> CapsuleSearchResults:
         """Search for capsules with filtering, sorting, and pagination
         options."""
@@ -374,20 +511,3 @@ class Capsules:
                 return
 
             params["next_token"] = response.next_token
-
-    def get_capsule_app_panel(self, capsule_id: str, version: Optional[AppPanelParams] = None) -> AppPanel:
-        """Retrieve app panel information for a specific capsule by its ID."""
-        res = self.client.get(f"capsules/{capsule_id}/parameters", params=version.to_dict() if version else None)
-
-        return AppPanel.from_dict(res.json())
-
-    def archive_capsule(self, capsule_id: str, archive: bool):
-        """Archive or unarchive a capsule to control its visibility and accessibility."""
-        self.client.patch(
-            f"capsules/{capsule_id}/archive",
-            params={"archive": archive},
-        )
-
-    def delete_capsule(self, capsule_id: str):
-        """Delete a capsule permanently."""
-        self.client.delete(f"capsules/{capsule_id}")

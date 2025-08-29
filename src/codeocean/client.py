@@ -37,7 +37,7 @@ class CodeOcean:
     agent_id: Optional[str] = None
 
     # Minimum server version required by this SDK
-    MIN_SERVER_VERSION = "3.6.0"
+    MIN_SERVER_VERSION = "3.9.0"
 
     def __post_init__(self):
         self.session = BaseUrlSession(base_url=f"{self.domain}/api/v1/")
