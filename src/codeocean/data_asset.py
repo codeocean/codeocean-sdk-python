@@ -9,7 +9,8 @@ from typing import Optional, Iterator
 from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
 from codeocean.computation import PipelineProcess, Param
 from codeocean.enum import StrEnum
-from codeocean.folder import Folder, DownloadFileURL
+from codeocean.folder import FileURLs, Folder, DownloadFileURL
+import warnings
 
 
 class DataAssetType(StrEnum):
@@ -849,13 +850,31 @@ class DataAssets:
         return Folder.from_dict(res.json())
 
     def get_data_asset_file_download_url(self, data_asset_id: str, path: str) -> DownloadFileURL:
-        """Generate a download URL for a specific file from an internal data asset."""
+        """(Deprecated) Generate a download URL for a specific file from an internal data asset.
+
+        Deprecated: Use get_data_asset_file_urls instead.
+        """
+        warnings.warn(
+            "get_data_asset_file_download_url is deprecated and will be removed in a future release. "
+            "Use get_data_asset_file_urls instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         res = self.client.get(
             f"data_assets/{data_asset_id}/files/download_url",
             params={"path": path},
         )
 
         return DownloadFileURL.from_dict(res.json())
+
+    def get_data_asset_file_urls(self, data_asset_id: str, path: str) -> FileURLs:
+        """Generate view and download URLs for a specific file from an internal data asset."""
+        res = self.client.get(
+            f"data_assets/{data_asset_id}/files/urls",
+            params={"path": path},
+        )
+
+        return FileURLs.from_dict(res.json())
 
     def transfer_data_asset(self, data_asset_id: str, transfer_params: TransferDataParams):
         """
