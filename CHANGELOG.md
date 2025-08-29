@@ -1,9 +1,11 @@
 CHANGELOG
 =========
 
+## 0.9.1 (2025-08-29)
+- [#56](https://github.com/codeocean/codeocean-sdk-python/pull/56) fix: update query description in search APIs
+
 ## 0.9.0 (2025-08-05)
 - [#47](https://github.com/codeocean/codeocean-sdk-python/pull/47) feat: add error handling
-
 
 ## 0.8.0 (2025-07-11)
 - [#50](https://github.com/codeocean/codeocean-sdk-python/pull/50) feat: Add Min-Server-Version header support
