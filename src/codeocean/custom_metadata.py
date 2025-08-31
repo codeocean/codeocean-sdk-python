@@ -10,6 +10,7 @@ from codeocean.enum import StrEnum
 
 class CustomMetadataFieldType(StrEnum):
     """ Type of the custom metadata field value. """
+
     String = "string"
     Number = "number"
     Date = "date"
@@ -19,6 +20,7 @@ class CustomMetadataFieldType(StrEnum):
 @dataclass(frozen=True)
 class CustomMetadataFieldRange:
     """ Range of valid values for a custom metadata field. """
+
     min: Optional[float] = dataclass_field(
         default=None,
         metadata={"description": "Minimum valid value"}
@@ -33,6 +35,7 @@ class CustomMetadataFieldRange:
 @dataclass(frozen=True)
 class CustomMetadataField:
     """ Represents a custom metadata field in the Code Ocean platform. """
+
     name: str = dataclass_field(
         metadata={"description": "Name of the custom metadata field"}
     )
@@ -69,6 +72,7 @@ class CustomMetadataField:
 @dataclass(frozen=True)
 class CustomMetadata:
     """ Represents the custom metadata schema in the Code Ocean platform. """
+
     fields: Optional[list[CustomMetadataField]] = dataclass_field(
         default=None,
         metadata={"description": "List of custom metadata fields"}

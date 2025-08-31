@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field as dataclass_field
 from dataclasses_json import dataclass_json
-from typing import Optional, Iterator, Any
+from typing import Optional, Iterator
 from requests_toolbelt.sessions import BaseUrlSession
 
 from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
@@ -34,7 +34,6 @@ class AppPanelDataAssetKind(StrEnum):
     - 'Combined' → Data containing multiple external data assets.
 
     In pipelines, a data asset can only be replaced with one of the same kind.
-
     """
 
     Internal = "internal"
@@ -245,7 +244,7 @@ class CapsuleSearchResults:
 @dataclass_json
 @dataclass(frozen=True)
 class AppPanelCategories:
-    """ Categories for a capsule's App Panel parameters."""
+    """Categories for a capsule's App Panel parameters."""
 
     id: str = dataclass_field(
         metadata={"description": "Unique identifier for the category."},
@@ -267,6 +266,7 @@ class AppPanelCategories:
 @dataclass(frozen=True)
 class AppPanelParameters:
     """Parameters for a capsule's App Panel."""
+
     name: str = dataclass_field(
         metadata={"description": "Parameter label/display name."}
     )
@@ -317,7 +317,7 @@ class AppPanelParameters:
         default=None,
         metadata={"description": "Regular expression pattern for the parameter."}
     )
-    value_options: Optional[Any] = dataclass_field(
+    value_options: Optional[list[str]] = dataclass_field(
         default=None,
         metadata={"description": "Allowed values for the parameter."}
     )
@@ -327,6 +327,7 @@ class AppPanelParameters:
 @dataclass(frozen=True)
 class AppPanelGeneral:
     """General information about a capsule's App Panel."""
+
     title: Optional[str] = dataclass_field(
         default=None,
         metadata={"description": "Title of the App Panel."}
@@ -345,6 +346,7 @@ class AppPanelGeneral:
 @dataclass(frozen=True)
 class AppPanelDataAsset:
     """Data asset parameter for the App Panel."""
+
     id: str = dataclass_field(
         metadata={"description": "Unique identifier for the data asset."}
     )
@@ -375,6 +377,7 @@ class AppPanelDataAsset:
 @dataclass(frozen=True)
 class AppPanelResult:
     """Selected result files to display once the computation is complete."""
+
     file_name: str = dataclass_field(
         metadata={"description": "Name of the result file."}
     )
@@ -384,6 +387,7 @@ class AppPanelResult:
 @dataclass(frozen=True)
 class AppPanelProcess:
     """Pipeline process name and its corresponding app panel (for pipelines of capsules only)"""
+
     name: str = dataclass_field(
         metadata={"description": "Name of the pipeline process."}
     )
@@ -403,6 +407,7 @@ class AppPanel:
     """App Panel configuration for a capsule or pipeline, including general info, data assets,
     categories, parameters, and results.
     """
+
     general: Optional[AppPanelGeneral] = dataclass_field(
         default=None,
         metadata={"description": "General information about the App Panel."}
@@ -447,7 +452,7 @@ class Capsules:
 
     def get_capsule_app_panel(self, capsule_id: str, version: Optional[int] = None) -> AppPanel:
         """Retrieve app panel information for a specific capsule by its ID."""
-        res = self.client.get(f"capsules/{capsule_id}/parameters", params={"version": version} if version else None)
+        res = self.client.get(f"capsules/{capsule_id}/app_panel", params={"version": version} if version else None)
 
         return AppPanel.from_dict(res.json())
 
