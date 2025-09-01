@@ -5,12 +5,12 @@ from dataclasses import dataclass, field
 from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep, time
 from typing import Optional, Iterator
+from warnings import warn
 
 from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
 from codeocean.computation import PipelineProcess, Param
 from codeocean.enum import StrEnum
 from codeocean.folder import FileURLs, Folder, DownloadFileURL
-import warnings
 
 
 class DataAssetType(StrEnum):
@@ -854,7 +854,7 @@ class DataAssets:
 
         Deprecated: Use get_data_asset_file_urls instead.
         """
-        warnings.warn(
+        warn(
             "get_data_asset_file_download_url is deprecated and will be removed in a future release. "
             "Use get_data_asset_file_urls instead.",
             DeprecationWarning,

@@ -5,10 +5,10 @@ from dataclasses_json import dataclass_json
 from requests_toolbelt.sessions import BaseUrlSession
 from typing import Optional
 from time import sleep, time
+from warnings import warn
 
 from codeocean.enum import StrEnum
 from codeocean.folder import FileURLs, Folder, DownloadFileURL
-import warnings
 
 
 class ComputationState(StrEnum):
@@ -337,7 +337,7 @@ class Computations:
 
         Deprecated: Use get_result_file_urls instead.
         """
-        warnings.warn(
+        warn(
             "get_result_file_download_url is deprecated and will be removed in a future release. "
             "Use get_result_file_urls instead.",
             DeprecationWarning,

@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses_json import dataclass_json
 from dataclasses import dataclass, field
 from typing import Optional
-import warnings
+from warnings import warn
 
 
 @dataclass_json
@@ -56,7 +56,7 @@ class DownloadFileURL:
     )
 
     def __post_init__(self):
-        warnings.warn(
+        warn(
             "DownloadFileURL is deprecated and will be removed in a future release.",
             DeprecationWarning,
             stacklevel=2
