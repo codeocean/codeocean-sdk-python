@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+## 0.10.0 (2025-09-01)
+- [#54](https://github.com/codeocean/codeocean-sdk-python/pull/54) feat: Code Ocean version 3.9 functionality
+
 ## 0.9.1 (2025-08-29)
 - [#56](https://github.com/codeocean/codeocean-sdk-python/pull/56) fix: update query description in search APIs
 
