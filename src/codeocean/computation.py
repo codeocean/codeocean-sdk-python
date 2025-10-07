@@ -5,9 +5,10 @@ from dataclasses_json import dataclass_json
 from requests_toolbelt.sessions import BaseUrlSession
 from typing import Optional
 from time import sleep, time
+from warnings import warn
 
 from codeocean.enum import StrEnum
-from codeocean.folder import Folder, DownloadFileURL
+from codeocean.folder import FileURLs, Folder, DownloadFileURL
 
 
 class ComputationState(StrEnum):
@@ -332,13 +333,31 @@ class Computations:
         return Folder.from_dict(res.json())
 
     def get_result_file_download_url(self, computation_id: str, path: str) -> DownloadFileURL:
-        """Generate a download URL for a specific result file from a computation."""
+        """[DEPRECATED] Generate a download URL for a specific result file from a computation.
+
+        Deprecated: Use get_result_file_urls instead.
+        """
+        warn(
+            "get_result_file_download_url is deprecated and will be removed in a future release. "
+            "Use get_result_file_urls instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         res = self.client.get(
             f"computations/{computation_id}/results/download_url",
             params={"path": path},
         )
 
         return DownloadFileURL.from_dict(res.json())
+
+    def get_result_file_urls(self, computation_id: str, path: str) -> FileURLs:
+        """Generate view and download URLs for a specific result file from a computation."""
+        res = self.client.get(
+            f"computations/{computation_id}/results/urls",
+            params={"path": path},
+        )
+
+        return FileURLs.from_dict(res.json())
 
     def delete_computation(self, computation_id: str):
         """Delete a computation and stop it if currently running."""
