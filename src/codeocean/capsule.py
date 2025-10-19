@@ -547,3 +547,24 @@ class Capsules:
                 return
 
             params["next_token"] = response.next_token
+
+    def search_pipelines(self, search_params: CapsuleSearchParams) -> CapsuleSearchResults:
+        """Search for pipelines with filtering, sorting, and pagination
+        options."""
+        res = self.client.post("pipelines/search", json=search_params.to_dict())
+
+        return CapsuleSearchResults.from_dict(res.json())
+
+    def search_pipelines_iterator(self, search_params: CapsuleSearchParams) -> Iterator[Pipeline]:
+        """Iterate through all pipelines matching search criteria with automatic pagination."""
+        params = search_params.to_dict()
+        while True:
+            response = self.search_pipelines(search_params=CapsuleSearchParams(**params))
+
+            for result in response.results:
+                yield result
+
+            if not response.has_more:
+                return
+
+            params["next_token"] = response.next_token
