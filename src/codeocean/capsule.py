@@ -555,7 +555,7 @@ class Capsules:
 
         return CapsuleSearchResults.from_dict(res.json())
 
-    def search_pipelines_iterator(self, search_params: CapsuleSearchParams) -> Iterator[Pipeline]:
+    def search_pipelines_iterator(self, search_params: CapsuleSearchParams) -> Iterator[Capsule]:
         """Iterate through all pipelines matching search criteria with automatic pagination."""
         params = search_params.to_dict()
         while True:
