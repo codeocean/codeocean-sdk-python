@@ -274,6 +274,19 @@ class Computations:
 
         return Computation.from_dict(res.json())
 
+    def run_pipeline(self, run_params: RunParams) -> Computation:
+        """
+        Execute a pipeline with specified parameters and data assets.
+
+        Set run_params.pipeline_id and optionally provide data_assets,
+        processes (with process-specific parameters), and nextflow_profile configuration.
+
+        This is a convenience method that calls the same endpoint as run_capsule.
+        """
+        res = self.client.post("computations", json=run_params.to_dict())
+
+        return Computation.from_dict(res.json())
+
     def wait_until_completed(
         self,
         computation: Computation,

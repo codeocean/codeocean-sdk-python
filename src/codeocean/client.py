@@ -12,6 +12,7 @@ from codeocean.computation import Computations
 from codeocean.custom_metadata import CustomMetadataSchema
 from codeocean.data_asset import DataAssets
 from codeocean.error import Error
+from codeocean.pipeline import Pipelines
 
 
 @dataclass
@@ -55,6 +56,7 @@ class CodeOcean:
         self.computations = Computations(client=self.session)
         self.custom_metadata = CustomMetadataSchema(client=self.session)
         self.data_assets = DataAssets(client=self.session)
+        self.pipelines = Pipelines(client=self.session)
 
     def _error_handler(self, response, *args, **kwargs):
         try:
