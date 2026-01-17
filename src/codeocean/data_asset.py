@@ -294,7 +294,7 @@ class DataAssetUpdateParams:
 @dataclass(frozen=True)
 class AWSS3Source:
     """AWS S3 source configuration for creating data assets."""
-    
+
     bucket: str = field(
         metadata={
             "description": "The S3 bucket from which the data asset will be created",
