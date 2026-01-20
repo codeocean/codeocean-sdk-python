@@ -38,7 +38,7 @@ run_params = RunParams(
     ],
 )
 
-computation = client.computations.run_capsule(run_params)
+computation = client.computations.run_pipeline(run_params)
 
 # Wait for pipeline to finish.
 
