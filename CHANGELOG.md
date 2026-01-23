@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.13.0 (2026-01-23)
+- [#64](https://github.com/codeocean/codeocean-sdk-python/pull/64) feat: Code Ocean version 4.1 functionality
+- **Minimum Code Ocean platform version updated to `4.1.0`.**  
+
 ## 0.12.0 (2025-10-20)
 - [#61](https://github.com/codeocean/codeocean-sdk-python/pull/61) feat: add search_pipelines method
 
