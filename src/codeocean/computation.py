@@ -274,6 +274,9 @@ class Computations:
 
         return Computation.from_dict(res.json())
 
+    # Alias for run_capsule
+    run_pipeline = run_capsule
+
     def wait_until_completed(
         self,
         computation: Computation,

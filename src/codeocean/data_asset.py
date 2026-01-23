@@ -300,6 +300,12 @@ class AWSS3Source:
             "description": "The S3 bucket from which the data asset will be created",
         },
     )
+    endpoint_name: Optional[str] = field(
+        default=None,
+        metadata={
+            "description": "The name of the custom S3 endpoint where the bucket is stored",
+        },
+    )
     prefix: Optional[str] = field(
         default=None,
         metadata={
@@ -316,6 +322,13 @@ class AWSS3Source:
         default=None,
         metadata={
             "description": "When true, Code Ocean will access the source bucket without credentials",
+        },
+    )
+    use_input_bucket: Optional[bool] = field(
+        default=None,
+        metadata={
+            "description": "When true, Code Ocean will try to create the dataset from an internal "
+            "input bucket. All properties are ignored except for prefix. Only allowed to Admin users.",
         },
     )
 
@@ -395,6 +408,10 @@ class AWSS3Target:
 
     bucket: str = field(
         metadata={"description": "The S3 bucket where the data asset will be stored"},
+    )
+    endpoint_name: Optional[str] = field(
+        default=None,
+        metadata={"description": "The name of the custom S3 endpoint where the bucket is stored"},
     )
     prefix: Optional[str] = field(
         default=None,
