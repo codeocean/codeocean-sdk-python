@@ -3,6 +3,7 @@
 1. Open a PR with the following changes:
     1. Bump the version in [pyproject.toml](pyproject.toml).
     1. Update the [CHANGELOG.md](CHANGELOG.md).
+    1. If the change requires a newer Code Ocean server version, update `MIN_SERVER_VERSION` in [client.py](src/codeocean/client.py).
     1. Commit the updates with the message `Bump version to X.Y.Z`.
 1. Merge the PR.
 1. Locally, sync your clone with GitHub:
