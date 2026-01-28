@@ -4,13 +4,15 @@ from dataclasses_json import dataclass_json
 from dataclasses import dataclass, field
 from requests_toolbelt.sessions import BaseUrlSession
 from time import sleep, time
-from typing import Optional, Iterator
+from typing import Optional, Iterator, TYPE_CHECKING
 from warnings import warn
 
 from codeocean.components import Ownership, SortOrder, SearchFilter, Permissions
-from codeocean.computation import PipelineProcess, Param
 from codeocean.enum import StrEnum
 from codeocean.folder import FileURLs, Folder, DownloadFileURL
+
+if TYPE_CHECKING:
+    from codeocean.computation import PipelineProcess, Param
 
 
 class DataAssetType(StrEnum):
