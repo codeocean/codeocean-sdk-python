@@ -384,6 +384,32 @@ class ComputationSource:
 
 @dataclass_json
 @dataclass(frozen=True)
+class CloudWorkstationSource:
+    """Cloud Workstation session source configuration for creating data assets."""
+
+    id: str = field(
+        metadata={"description": "Computation ID of the Cloud Workstation session"},
+    )
+    path: str = field(
+        metadata={
+            "description": (
+                "Path within the Cloud Workstation to create the data asset from"
+            ),
+        },
+    )
+    run_script: Optional[str] = field(
+        default=None,
+        metadata={
+            "description": (
+                "Path to the script that was executed, relative to the capsule folder."
+                "Existence determines if the data would be of type result"
+            ),
+        },
+    )
+
+
+@dataclass_json
+@dataclass(frozen=True)
 class Source:
     """Source configuration for data asset creation from various origins."""
 
@@ -398,6 +424,10 @@ class Source:
     computation: Optional[ComputationSource] = field(
         default=None,
         metadata={"description": "Computation source configuration"},
+    )
+    cloud_workstation: Optional[CloudWorkstationSource] = field(
+        default=None,
+        metadata={"description": "Cloud Workstation source configuration"},
     )
 
 
