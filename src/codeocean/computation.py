@@ -339,7 +339,7 @@ class Computations:
             f"computations/{computation_id}/data_assets",
             json=[j.to_dict() for j in attach_params],
         )
-        return [DataAssetAttachResults.from_dict(c) for c in res.json()]   
+        return [DataAssetAttachResults.from_dict(c) for c in res.json()]
 
     def detach_data_assets(self, computation_id: str, data_assets: list[str]):
         """Detach one or more data assets from a cloud workstation session computation by their IDs."""
