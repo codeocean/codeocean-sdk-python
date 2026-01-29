@@ -485,7 +485,9 @@ class DataAssetParams:
     )
     source: Optional[Source] = field(
         default=None,
-        metadata={"description": "Source configuration (AWS S3, GCP, or computation)"},
+        metadata={
+            "description": "Source configuration (AWS S3, GCP, computation, or cloud workstation)",
+        },
     )
     target: Optional[Target] = field(
         default=None,
