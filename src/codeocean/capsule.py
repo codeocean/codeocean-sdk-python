@@ -8,7 +8,21 @@ from codeocean.models.capsule import (
     Capsule,
     CapsuleSearchParams,
     CapsuleSearchResults,
-    AppPanel
+    AppPanel,
+)
+# Re-exports for backward compatibility
+from codeocean.models.capsule import (  # noqa: F401
+    CapsuleStatus,
+    CapsuleSortBy,
+    OriginalCapsuleInfo,
+    AppPanelDataAssetKind,
+    AppPanelParameterType,
+    AppPanelCategories,
+    AppPanelParameters,
+    AppPanelGeneral,
+    AppPanelDataAsset,
+    AppPanelResult,
+    AppPanelProcess,
 )
 from codeocean.models.components import Permissions
 from codeocean.models.computation import Computation

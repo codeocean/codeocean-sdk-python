@@ -16,6 +16,27 @@ from codeocean.models.data_asset import (
     DataAssetSearchResults,
     TransferDataParams,
 )
+# Re-exports for backward compatibility
+from codeocean.models.data_asset import (  # noqa: F401
+    DataAssetType,
+    DataAssetOrigin,
+    Provenance,
+    SourceBucket,
+    AppParameter,
+    ResultsInfo,
+    Source,
+    AWSS3Source,
+    GCPCloudStorageSource,
+    ComputationSource,
+    CloudWorkstationSource,
+    Target,
+    AWSS3Target,
+    DataAssetAttachParams,
+    DataAssetAttachResults,
+    DataAssetSortBy,
+    DataAssetSearchOrigin,
+    ContainedDataAsset,
+)
 from codeocean.models.folder import FileURLs, Folder, DownloadFileURL
 
 

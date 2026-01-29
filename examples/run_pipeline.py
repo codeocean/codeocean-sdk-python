@@ -1,16 +1,8 @@
 import os
 
 from codeocean import CodeOcean
-from codeocean.models.computation import RunParams
-from codeocean.models.data_asset import (
-    DataAssetParams,
-    DataAssetsRunParam,
-    PipelineProcessParams,
-    Source,
-    ComputationSource,
-    Target,
-    AWSS3Target,
-)
+from codeocean.computation import RunParams, DataAssetsRunParam, PipelineProcessParams
+from codeocean.data_asset import DataAssetParams, Source, ComputationSource, Target, AWSS3Target
 
 
 # Create the client using your domain and API token.

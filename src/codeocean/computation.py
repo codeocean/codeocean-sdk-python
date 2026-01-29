@@ -7,6 +7,16 @@ from time import sleep, time
 from warnings import warn
 
 from codeocean.models.computation import Computation, ComputationState, RunParams
+# Re-exports for backward compatibility
+from codeocean.models.computation import (  # noqa: F401
+    ComputationEndStatus,
+    Param,
+    PipelineProcess,
+    InputDataAsset,
+    DataAssetsRunParam,
+    NamedRunParam,
+    PipelineProcessParams,
+)
 from codeocean.models.data_asset import DataAssetAttachParams, DataAssetAttachResults
 from codeocean.models.folder import FileURLs, Folder, DownloadFileURL
 
