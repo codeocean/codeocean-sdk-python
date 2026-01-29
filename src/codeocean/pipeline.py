@@ -4,16 +4,16 @@ from dataclasses import dataclass, field
 from typing import Iterator
 from requests_toolbelt.sessions import BaseUrlSession
 
-from codeocean.capsule import (
+from codeocean.capsule import Capsules
+from codeocean.models.capsule import (
     Capsule,
-    Capsules,
     CapsuleSearchParams,
     CapsuleSearchResults,
     AppPanel,
 )
-from codeocean.components import Permissions
-from codeocean.computation import Computation
-from codeocean.data_asset import DataAssetAttachParams, DataAssetAttachResults
+from codeocean.models.components import Permissions
+from codeocean.models.computation import Computation
+from codeocean.models.data_asset import DataAssetAttachParams, DataAssetAttachResults
 
 
 @dataclass

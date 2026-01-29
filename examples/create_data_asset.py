@@ -1,7 +1,7 @@
 import os
 
 from codeocean import CodeOcean
-from codeocean.data_asset import DataAssetParams, Source, AWSS3Source
+from codeocean.models.data_asset import DataAssetParams, Source, AWSS3Source
 
 
 # Create the client using your domain and API token.

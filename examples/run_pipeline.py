@@ -1,8 +1,8 @@
 import os
 
 from codeocean import CodeOcean
-from codeocean.computation import RunParams
-from codeocean.data_asset import (
+from codeocean.models.computation import RunParams
+from codeocean.models.data_asset import (
     DataAssetParams,
     DataAssetsRunParam,
     PipelineProcessParams,
