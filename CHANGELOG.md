@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.14.0 (2026-01-29)
+- [#66](https://github.com/codeocean/codeocean-sdk-python/pull/66) feat: Code Ocean version 4.2 functionality
+- **Minimum Code Ocean platform version updated to `4.2.0`.**  
+
 ## 0.13.0 (2026-01-23)
 - [#64](https://github.com/codeocean/codeocean-sdk-python/pull/64) feat: Code Ocean version 4.1 functionality
 - **Minimum Code Ocean platform version updated to `4.1.0`.**  
