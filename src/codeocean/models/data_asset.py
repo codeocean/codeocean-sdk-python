@@ -397,7 +397,7 @@ class CloudWorkstationSource:
         default=None,
         metadata={
             "description": (
-                "Path to the script that was executed, relative to the capsule folder."
+                "Path to the script that was executed, relative to the capsule folder. "
                 "Existence determines if the data would be of type result"
             ),
         },
