@@ -45,7 +45,7 @@ class Pipelines:
     def get_permissions(self, pipeline_id: str) -> Permissions:
         """Get permissions for a specific pipeline."""
         return self._capsules.get_permissions(pipeline_id)
-    
+
     def update_permissions(self, pipeline_id: str, permissions: Permissions):
         """Update permissions for a pipeline."""
         return self._capsules.update_permissions(pipeline_id, permissions)
