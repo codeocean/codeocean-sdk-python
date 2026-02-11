@@ -58,6 +58,12 @@ class Capsules:
 
         return [Computation.from_dict(c) for c in res.json()]
 
+    def get_permissions(self, capsule_id: str) -> Permissions:
+        """Get permissions for a specific capsule."""
+        res = self.client.get(f"{self._route}/{capsule_id}/permissions")
+
+        return Permissions.from_dict(res.json())    
+
     def update_permissions(self, capsule_id: str, permissions: Permissions):
         """Update permissions for a capsule."""
         self.client.post(

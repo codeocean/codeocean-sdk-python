@@ -183,6 +183,12 @@ class DataAssets:
 
             params["next_token"] = response.next_token
 
+    def get_data_asset_permissions(self, data_asset_id: str) -> Permissions:
+        """Get permissions for a specific data asset."""
+        res = self.client.get(f"data_assets/{data_asset_id}/permissions")
+
+        return Permissions.from_dict(res.json())
+
     def list_data_asset_files(self, data_asset_id: str, path: str = "") -> Folder:
         """
         List files and folders within an internal data asset at the specified path.
