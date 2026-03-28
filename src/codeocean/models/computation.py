@@ -97,6 +97,9 @@ class Computation:
     name: str = field(
         metadata={"description": "Display name of the computation"},
     )
+    owner: str = field(
+        metadata={"description": "Computation owner's ID"},
+    )
     run_time: int = field(
         metadata={"description": "Total run time in seconds"},
     )
@@ -104,6 +107,10 @@ class Computation:
         metadata={
             "description": "Current state of the computation (initializing, running, finalizing, completed, failed)",
         },
+    )
+    owner_email: Optional[str] = field(
+        default=None,
+        metadata={"description": "Computation owner's email address"},
     )
     cloud_workstation: Optional[bool] = field(
         default=None,
