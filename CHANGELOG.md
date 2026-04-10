@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+## 0.15.0 (2026-04-10)
+- [#69](https://github.com/codeocean/codeocean-sdk-python/pull/69) feat: Code Ocean version 4.3 functionality
+- [#68](https://github.com/codeocean/codeocean-sdk-python/pull/68) feat: add get_permissions method for capsules, pipelines, data assets
+- **Minimum Code Ocean platform version updated to `4.3.0`.**  
+
 ## 0.14.0 (2026-01-29)
 - [#66](https://github.com/codeocean/codeocean-sdk-python/pull/66) feat: Code Ocean version 4.2 functionality
 - **Minimum Code Ocean platform version updated to `4.2.0`.**  
