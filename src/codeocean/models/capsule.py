@@ -101,6 +101,10 @@ class Capsule:
     slug: str = dataclass_field(
         metadata={"description": "Alternate capsule ID (URL-friendly identifier)"},
     )
+    owner_email: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Capsule owner's email address"},
+    )
     last_accessed: Optional[int] = dataclass_field(
         default=None,
         metadata={"description": "Capsule last accessed time (int64 timestamp)"},

@@ -173,17 +173,20 @@ class DataAsset:
     mount: str = field(
         metadata={"description": "The default mount folder of the data asset"},
     )
+    last_used: int = field(
+        metadata={
+            "description": "Time data asset was last used in seconds from unix epoch",
+        },
+    )
+    owner: str = field(
+        metadata={"description": "Data asset owner's ID"},
+    )
     state: DataAssetState = field(
         metadata={"description": "Data asset creation state (draft, ready, failed)"},
     )
     type: DataAssetType = field(
         metadata={
             "description": "Type of the data asset (dataset, result, combined, model)",
-        },
-    )
-    last_used: int = field(
-        metadata={
-            "description": "Time data asset was last used in seconds from unix epoch",
         },
     )
     files: Optional[int] = field(
@@ -197,6 +200,10 @@ class DataAsset:
     description: Optional[str] = field(
         default=None,
         metadata={"description": "Data asset description"},
+    )
+    owner_email: Optional[str] = field(
+        default=None,
+        metadata={"description": "Data asset owner's email address"},
     )
     tags: Optional[list[str]] = field(
         default=None,
