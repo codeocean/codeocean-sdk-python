@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.16.0 (2026-06-08)
+- [#71](https://github.com/codeocean/codeocean-sdk-python/pull/71) feat: add Git sync support for capsules and pipelines
+- **Minimum Code Ocean platform version updated to `4.6.0`.**
+
 ## 0.15.0 (2026-04-10)
 - [#69](https://github.com/codeocean/codeocean-sdk-python/pull/69) feat: Code Ocean version 4.3 functionality
 - [#68](https://github.com/codeocean/codeocean-sdk-python/pull/68) feat: add get_permissions method for capsules, pipelines, data assets
