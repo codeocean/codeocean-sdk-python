@@ -28,5 +28,4 @@
     git push origin vX.Y.Z
     ```
 
-    This will trigger a workflow on CircleCI that will generate a GitHub release
-    and publish the new version to PyPI.
+    This will trigger a workflow on CircleCI that will publish the new version to PyPI.
