@@ -10,6 +10,7 @@ from codeocean.models.capsule import (
     CapsuleSearchParams,
     CapsuleSearchResults,
     AppPanel,
+    GitSyncResults,
 )
 from codeocean.models.components import Permissions
 from codeocean.models.computation import Computation
@@ -61,6 +62,10 @@ class Pipelines:
     def detach_data_assets(self, pipeline_id: str, data_assets: list[str]):
         """Detach one or more data assets from a pipeline by their IDs."""
         return self._capsules.detach_data_assets(pipeline_id, data_assets)
+
+    def sync_pipeline(self, pipeline_id: str) -> GitSyncResults:
+        """Sync a pipeline with its linked external Git repository."""
+        return self._capsules.sync_capsule(pipeline_id)
 
     def archive_pipeline(self, pipeline_id: str, archive: bool):
         """Archive or unarchive a pipeline to control its visibility and accessibility."""

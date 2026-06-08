@@ -161,6 +161,25 @@ class Capsule:
 
 @dataclass_json
 @dataclass(frozen=True)
+class GitSyncResults:
+    """Results of syncing a capsule or pipeline with its external Git remote."""
+
+    pushed: int = dataclass_field(
+        default=0,
+        metadata={"description": "Number of commits pushed to the external Git remote"},
+    )
+    pulled: int = dataclass_field(
+        default=0,
+        metadata={"description": "Number of commits pulled from the external Git remote"},
+    )
+    new_branch: bool = dataclass_field(
+        default=False,
+        metadata={"description": "Whether the current branch was newly created on the external remote by this sync"},
+    )
+
+
+@dataclass_json
+@dataclass(frozen=True)
 class CapsuleSearchParams:
     """Parameters for searching capsules with various filters and pagination
     options."""

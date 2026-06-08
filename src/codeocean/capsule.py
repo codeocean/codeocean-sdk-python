@@ -9,6 +9,7 @@ from codeocean.models.capsule import (
     CapsuleSearchParams,
     CapsuleSearchResults,
     AppPanel,
+    GitSyncResults,
 )
 # Re-exports for backward compatibility
 from codeocean.models.capsule import (  # noqa: F401
@@ -90,6 +91,12 @@ class Capsules:
             f"{self._route}/{capsule_id}/data_assets/",
             json=data_assets,
         )
+
+    def sync_capsule(self, capsule_id: str) -> GitSyncResults:
+        """Sync a capsule with its linked external Git repository."""
+        res = self.client.post(f"{self._route}/{capsule_id}/sync")
+
+        return GitSyncResults.from_dict(res.json())
 
     def archive_capsule(self, capsule_id: str, archive: bool):
         """Archive or unarchive a capsule to control its visibility and accessibility."""
