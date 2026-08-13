@@ -180,6 +180,90 @@ class GitSyncResults:
 
 @dataclass_json
 @dataclass(frozen=True)
+class ReleaseVersion:
+    """A released version of a capsule or pipeline."""
+
+    major_version: int = dataclass_field(
+        default=0,
+        metadata={"description": "Major version number of the release"},
+    )
+    minor_version: int = dataclass_field(
+        default=0,
+        metadata={"description": "Minor version number of the release"},
+    )
+    release_time: int = dataclass_field(
+        default=0,
+        metadata={"description": "Unix timestamp (seconds) when the version was released"},
+    )
+    doi: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Digital Object Identifier of the release, if one was assigned"},
+    )
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class CapsuleReleaseResults:
+    """Results of releasing a new version of an already-released capsule or pipeline.
+
+    Each boolean reflects a release-validation check. The release runs asynchronously:
+    ``release_capsule`` is the stable published capsule ID, and ``release_version`` is the
+    published capsule's current latest version, to be used as a baseline for polling - the
+    new release is ready once a version higher than this one appears.
+    """
+
+    reproducible_run: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether the capsule has a completed reproducible run"},
+    )
+    all_tracked: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether all files are tracked"},
+    )
+    metadata: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether the required metadata is present"},
+    )
+    no_credentials: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether the capsule is free of embedded credentials"},
+    )
+    default_branch: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether the capsule is on its default branch"},
+    )
+    git_sync: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether the capsule is in sync with its external Git remote"},
+    )
+    pipeline_capsules_released: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether all capsules referenced by the pipeline are released"},
+    )
+    release_functionality: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether the release functionality checks pass"},
+    )
+    valid_app_panel: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether the app panel is valid"},
+    )
+    post_run_capsule_released: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Whether the post-run capsule, if any, is released"},
+    )
+    release_capsule: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "ID of the published (release) capsule, stable across releases"},
+    )
+    release_version: Optional[ReleaseVersion] = dataclass_field(
+        default=None,
+        metadata={"description": "The release capsule's current latest version, a baseline for polling"},
+    )
+
+
+@dataclass_json
+@dataclass(frozen=True)
 class CapsuleSearchParams:
     """Parameters for searching capsules with various filters and pagination
     options."""

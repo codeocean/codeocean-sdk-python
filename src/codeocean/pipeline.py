@@ -7,6 +7,7 @@ from requests_toolbelt.sessions import BaseUrlSession
 from codeocean.capsule import Capsules
 from codeocean.models.capsule import (
     Capsule,
+    CapsuleReleaseResults,
     CapsuleSearchParams,
     CapsuleSearchResults,
     AppPanel,
@@ -66,6 +67,15 @@ class Pipelines:
     def sync_pipeline(self, pipeline_id: str) -> GitSyncResults:
         """Sync a pipeline with its linked external Git repository."""
         return self._capsules.sync_capsule(pipeline_id)
+
+    def release_pipeline(self, pipeline_id: str) -> CapsuleReleaseResults:
+        """Release a new version of an already-released pipeline.
+
+        Only subsequent releases are supported - the initial release must be done through
+        the app. The release runs asynchronously; poll the release pipeline and watch for a
+        version higher than the returned release_version to know when the new release is ready.
+        """
+        return self._capsules.release_capsule(pipeline_id)
 
     def archive_pipeline(self, pipeline_id: str, archive: bool):
         """Archive or unarchive a pipeline to control its visibility and accessibility."""

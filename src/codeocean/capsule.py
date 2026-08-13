@@ -6,6 +6,7 @@ from typing import Optional, Iterator
 
 from codeocean.models.capsule import (
     Capsule,
+    CapsuleReleaseResults,
     CapsuleSearchParams,
     CapsuleSearchResults,
     AppPanel,
@@ -13,6 +14,7 @@ from codeocean.models.capsule import (
 )
 # Re-exports for backward compatibility
 from codeocean.models.capsule import (  # noqa: F401
+    ReleaseVersion,
     CapsuleStatus,
     CapsuleSortBy,
     OriginalCapsuleInfo,
@@ -97,6 +99,17 @@ class Capsules:
         res = self.client.post(f"{self._route}/{capsule_id}/sync")
 
         return GitSyncResults.from_dict(res.json())
+
+    def release_capsule(self, capsule_id: str) -> CapsuleReleaseResults:
+        """Release a new version of an already-released capsule.
+
+        Only subsequent releases are supported - the initial release must be done through
+        the app. The release runs asynchronously; poll the release capsule and watch for a
+        version higher than the returned release_version to know when the new release is ready.
+        """
+        res = self.client.post(f"{self._route}/{capsule_id}/release")
+
+        return CapsuleReleaseResults.from_dict(res.json())
 
     def archive_capsule(self, capsule_id: str, archive: bool):
         """Archive or unarchive a capsule to control its visibility and accessibility."""
