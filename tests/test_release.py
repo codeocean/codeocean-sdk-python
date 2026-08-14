@@ -61,7 +61,6 @@ class TestRelease(unittest.TestCase):
                 "major_version": 2,
                 "minor_version": 5,
                 "release_time": 1700000100,
-                "doi": "10.1234/example",
             },
         }
         session = self._mock_session(get_body=body)
@@ -82,7 +81,6 @@ class TestRelease(unittest.TestCase):
                     major_version=2,
                     minor_version=5,
                     release_time=1700000100,
-                    doi="10.1234/example",
                 ),
             ),
         )

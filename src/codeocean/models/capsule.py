@@ -103,10 +103,6 @@ class Version:
     release_time: int = dataclass_field(
         metadata={"description": "Release time (int64 timestamp, seconds)"},
     )
-    doi: Optional[str] = dataclass_field(
-        default=None,
-        metadata={"description": "Digital Object Identifier of the release, if one was assigned"},
-    )
 
 
 @dataclass_json
@@ -185,7 +181,7 @@ class Capsule:
     versions: Optional[list[Version]] = dataclass_field(
         default=None,
         metadata={
-            "description": "Capsule versions with major_version, minor_version, release_time, and DOI"
+            "description": "Capsule versions with major and minor version, and release time"
         },
     )
 
