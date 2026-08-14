@@ -2,7 +2,7 @@ CHANGELOG
 =========
 
 ## 0.17.0 (2026-08-13)
-- feat: add release support for capsules and pipelines (`release_capsule` / `release_pipeline`)
+- [#75](https://github.com/codeocean/codeocean-sdk-python/pull/75) feat: add release support for capsules and pipelines (`release_capsule` / `release_pipeline`, `get_release_job`, `wait_until_release_completed`)
 - **Minimum Code Ocean platform version updated to `4.8.0`.**
 
 ## 0.16.0 (2026-06-08)

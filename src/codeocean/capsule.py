@@ -2,19 +2,25 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from requests_toolbelt.sessions import BaseUrlSession
+from time import sleep, time
 from typing import Optional, Iterator
 
 from codeocean.models.capsule import (
     Capsule,
-    CapsuleReleaseResults,
+    CapsuleReleaseJob,
+    CapsuleReleaseJobStatus,
     CapsuleSearchParams,
     CapsuleSearchResults,
     AppPanel,
     GitSyncResults,
 )
+# Related release models re-exported for convenient access from this module
+from codeocean.models.capsule import (  # noqa: F401
+    Version,
+    CapsuleReleaseValidationIssues,
+)
 # Re-exports for backward compatibility
 from codeocean.models.capsule import (  # noqa: F401
-    ReleaseVersion,
     CapsuleStatus,
     CapsuleSortBy,
     OriginalCapsuleInfo,
@@ -100,16 +106,85 @@ class Capsules:
 
         return GitSyncResults.from_dict(res.json())
 
-    def release_capsule(self, capsule_id: str) -> CapsuleReleaseResults:
-        """Release a new version of an already-released capsule.
+    def release_capsule(self, capsule_id: str) -> CapsuleReleaseJob:
+        """Start releasing a new version of an already-released capsule.
 
-        Only subsequent releases are supported - the initial release must be done through
-        the app. The release runs asynchronously; poll the release capsule and watch for a
-        version higher than the returned release_version to know when the new release is ready.
+        Only subsequent releases are supported - the initial release must be done through the
+        app. The release runs asynchronously: this returns a CapsuleReleaseJob with a job_id;
+        poll it with get_release_job (or wait_until_release_completed) until the status is
+        terminal, at which point release_capsule and release_version are populated.
+
+        Raises:
+            codeocean.error.Error: 400 if the capsule has never been released; 403 if the
+                capsule does not meet the release requirements - the body carried in
+                Error.data can be parsed with CapsuleReleaseValidationIssues.from_dict.
         """
         res = self.client.post(f"{self._route}/{capsule_id}/release")
 
-        return CapsuleReleaseResults.from_dict(res.json())
+        return CapsuleReleaseJob.from_dict(res.json())
+
+    def get_release_job(self, capsule_id: str, job_id: str) -> CapsuleReleaseJob:
+        """Get the status of a capsule release job.
+
+        On completion the returned job's release_capsule and release_version identify the
+        newly released capsule version.
+        """
+        res = self.client.get(f"{self._route}/{capsule_id}/release/{job_id}")
+
+        return CapsuleReleaseJob.from_dict(res.json())
+
+    def wait_until_release_completed(
+        self,
+        capsule_id: str,
+        job: CapsuleReleaseJob,
+        polling_interval: float = 5,
+        timeout: Optional[float] = None,
+    ) -> CapsuleReleaseJob:
+        """Poll a release job until it reaches a terminal state.
+
+        Args:
+            capsule_id: The capsule (or pipeline) the release job belongs to
+            job: The release job to monitor (as returned by release_capsule)
+            polling_interval: Time between status checks in seconds (minimum 5 seconds)
+            timeout: Maximum time to wait in seconds, or None for no timeout
+
+        Returns:
+            Updated release job once it has completed, failed, or been canceled
+
+        Raises:
+            ValueError: If polling_interval < 5 or timeout constraints are violated
+            TimeoutError: If the job doesn't reach a terminal state within the timeout period
+        """
+        if polling_interval < 5:
+            raise ValueError(
+                f"Polling interval {polling_interval} should be greater than or equal to 5"
+            )
+        if timeout is not None and timeout < polling_interval:
+            raise ValueError(
+                f"Timeout {timeout} should be greater than or equal to polling interval {polling_interval}"
+            )
+        if timeout is not None and timeout < 0:
+            raise ValueError(
+                f"Timeout {timeout} should be greater than or equal to 0 (seconds), or None"
+            )
+        terminal = [
+            CapsuleReleaseJobStatus.Completed,
+            CapsuleReleaseJobStatus.Failed,
+            CapsuleReleaseJobStatus.Canceled,
+        ]
+        t0 = time()
+        while True:
+            current = self.get_release_job(capsule_id, job.job_id)
+
+            if current.status in terminal:
+                return current
+
+            if timeout is not None and (time() - t0) > timeout:
+                raise TimeoutError(
+                    f"Release job {job.job_id} did not complete within {timeout} seconds"
+                )
+
+            sleep(polling_interval)
 
     def archive_capsule(self, capsule_id: str, archive: bool):
         """Archive or unarchive a capsule to control its visibility and accessibility."""
