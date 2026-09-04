@@ -78,3 +78,19 @@ class Pipelines:
     def search_pipelines_iterator(self, search_params: CapsuleSearchParams) -> Iterator[Capsule]:
         """Iterate through all pipelines matching search criteria with automatic pagination."""
         return self._capsules.search_capsules_iterator(search_params)
+
+    def search_pipelines_by_data_asset(self, data_asset_id: str) -> list[Capsule]:
+        """Find the pipelines that currently have a given data asset attached.
+
+        Searches for the data asset ID across all pipelines accessible to the caller,
+        following pagination until every match is collected. Results are whatever pipeline
+        search reports for the ID, so an empty list means no pipeline accessible to the
+        caller is reported as having the data asset attached.
+
+        Args:
+            data_asset_id: ID of the data asset to look for
+
+        Returns:
+            Pipelines reported as having the data asset attached
+        """
+        return self._capsules.search_capsules_by_data_asset(data_asset_id)

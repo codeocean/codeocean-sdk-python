@@ -125,3 +125,19 @@ class Capsules:
                 return
 
             params["next_token"] = response.next_token
+
+    def search_capsules_by_data_asset(self, data_asset_id: str) -> list[Capsule]:
+        """Find the capsules that currently have a given data asset attached.
+
+        Searches for the data asset ID across all capsules accessible to the caller,
+        following pagination until every match is collected. Results are whatever capsule
+        search reports for the ID, so an empty list means no capsule accessible to the
+        caller is reported as having the data asset attached.
+
+        Args:
+            data_asset_id: ID of the data asset to look for
+
+        Returns:
+            Capsules reported as having the data asset attached
+        """
+        return list(self.search_capsules_iterator(CapsuleSearchParams(query=data_asset_id)))
