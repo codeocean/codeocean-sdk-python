@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Iterator
+from typing import Iterator, Optional
 from requests_toolbelt.sessions import BaseUrlSession
 
 from codeocean.capsule import Capsules
 from codeocean.models.capsule import (
     Capsule,
+    CapsuleReleaseJob,
     CapsuleSearchParams,
     CapsuleSearchResults,
     AppPanel,
@@ -66,6 +67,44 @@ class Pipelines:
     def sync_pipeline(self, pipeline_id: str) -> GitSyncResults:
         """Sync a pipeline with its linked external Git repository."""
         return self._capsules.sync_capsule(pipeline_id)
+
+    def release_pipeline(self, pipeline_id: str) -> CapsuleReleaseJob:
+        """Start releasing a new version of an already-released pipeline.
+
+        Only subsequent releases are supported - the initial release must be done through the
+        app. The release runs asynchronously: this returns a CapsuleReleaseJob with a job_id;
+        poll it with get_release_job (or wait_until_release_completed) until the status is
+        terminal, at which point release_capsule and release_version are populated.
+
+        Raises:
+            codeocean.error.Error: 400 if the pipeline has never been released; 403 if the
+                pipeline does not meet the release requirements - the body carried in
+                Error.data can be parsed with CapsuleReleaseValidationIssues.from_dict.
+        """
+        return self._capsules.release_capsule(pipeline_id)
+
+    def get_release_job(self, pipeline_id: str, job_id: str) -> CapsuleReleaseJob:
+        """Get the status of a pipeline release job.
+
+        On completion the returned job's release_capsule and release_version identify the
+        newly released pipeline version.
+        """
+        return self._capsules.get_release_job(pipeline_id, job_id)
+
+    def wait_until_release_completed(
+        self,
+        pipeline_id: str,
+        job: CapsuleReleaseJob,
+        polling_interval: float = 5,
+        timeout: Optional[float] = None,
+    ) -> CapsuleReleaseJob:
+        """Poll a pipeline release job until it reaches a terminal state.
+
+        See Capsules.wait_until_release_completed for details.
+        """
+        return self._capsules.wait_until_release_completed(
+            pipeline_id, job, polling_interval, timeout
+        )
 
     def archive_pipeline(self, pipeline_id: str, archive: bool):
         """Archive or unarchive a pipeline to control its visibility and accessibility."""

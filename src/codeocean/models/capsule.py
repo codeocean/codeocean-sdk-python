@@ -15,6 +15,17 @@ class CapsuleStatus(StrEnum):
     Release = "release"
 
 
+class CapsuleReleaseJobStatus(StrEnum):
+    """Status of an asynchronous capsule or pipeline release job."""
+
+    Created = "created"
+    Started = "started"
+    Completed = "completed"
+    Failed = "failed"
+    Canceled = "canceled"
+    Canceling = "canceling"
+
+
 class CapsuleSortBy(StrEnum):
     """Fields available for sorting capsule search results."""
 
@@ -75,6 +86,22 @@ class OriginalCapsuleInfo:
     public: Optional[bool] = dataclass_field(
         default=None,
         metadata={"description": "Indicates whether the original capsule is public"},
+    )
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class Version:
+    """A released version of a capsule or pipeline."""
+
+    major_version: int = dataclass_field(
+        metadata={"description": "Major version number of the release"},
+    )
+    minor_version: int = dataclass_field(
+        metadata={"description": "Minor version number of the release"},
+    )
+    release_time: int = dataclass_field(
+        metadata={"description": "Release time (int64 timestamp, seconds)"},
     )
 
 
@@ -151,10 +178,10 @@ class Capsule:
             "verified_timestamp"
         },
     )
-    versions: Optional[list[dict]] = dataclass_field(
+    versions: Optional[list[Version]] = dataclass_field(
         default=None,
         metadata={
-            "description": "Capsule versions with major_version, minor_version, release_time, and DOI"
+            "description": "Capsule versions with major and minor version, and release time"
         },
     )
 
@@ -175,6 +202,94 @@ class GitSyncResults:
     new_branch: bool = dataclass_field(
         default=False,
         metadata={"description": "Whether the current branch was newly created on the external remote by this sync"},
+    )
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class CapsuleReleaseJob:
+    """An asynchronous capsule or pipeline release job.
+
+    Returned when a release is started (``release_capsule`` / ``release_pipeline``) and when
+    its status is polled (``get_release_job``). The release runs asynchronously - poll the job
+    until ``status`` is terminal (completed / failed / canceled). On completion,
+    ``release_capsule`` and ``release_version`` identify the newly released capsule version.
+    """
+
+    job_id: str = dataclass_field(
+        metadata={"description": "ID of the release job, used to poll its status"},
+    )
+    status: CapsuleReleaseJobStatus = dataclass_field(
+        metadata={"description": "Current status of the release job"},
+    )
+    started: Optional[int] = dataclass_field(
+        default=None,
+        metadata={"description": "Job start time (int64 timestamp, seconds)"},
+    )
+    duration: Optional[int] = dataclass_field(
+        default=None,
+        metadata={"description": "Job duration in seconds"},
+    )
+    release_capsule: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "ID of the published (release) capsule, set once the job completes"},
+    )
+    release_version: Optional[Version] = dataclass_field(
+        default=None,
+        metadata={"description": "The newly released version, set once the job completes"},
+    )
+    error: Optional[str] = dataclass_field(
+        default=None,
+        metadata={"description": "Error message when the job failed"},
+    )
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class CapsuleReleaseValidationIssues:
+    """Release requirements that were not met, returned with a 403 from the release endpoints.
+
+    Each flag is present and ``True`` only when its requirement is not met (a missing flag
+    means that requirement is satisfied). Because the SDK raises ``codeocean.error.Error`` on a
+    403, these are reachable via ``Error.data`` - e.g.
+    ``CapsuleReleaseValidationIssues.from_dict(err.data)``.
+    """
+
+    missing_reproducible_run: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "The capsule has no completed reproducible run"},
+    )
+    uncommitted_files: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "The capsule has uncommitted files"},
+    )
+    missing_metadata: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Required metadata is missing"},
+    )
+    non_default_branch: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "The capsule is not on its default branch"},
+    )
+    git_out_of_sync: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "The capsule is out of sync with its external Git remote"},
+    )
+    unreleased_pipeline_capsules: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "One or more capsules referenced by the pipeline are not released"},
+    )
+    missing_release_functionality: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "Required release functionality is missing"},
+    )
+    invalid_app_panel: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "The app panel is invalid"},
+    )
+    unreleased_post_run_capsule: Optional[bool] = dataclass_field(
+        default=None,
+        metadata={"description": "The post-run capsule is not released"},
     )
 
 
