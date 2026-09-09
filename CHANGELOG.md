@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.17.0 (2026-09-09)
+- [#75](https://github.com/codeocean/codeocean-sdk-python/pull/75) feat: add public release capsule/pipeline API
+- **Minimum Code Ocean platform version updated to `4.8.0`.**
+
 ## 0.16.0 (2026-06-08)
 - [#71](https://github.com/codeocean/codeocean-sdk-python/pull/71) feat: add Git sync support for capsules and pipelines
 - **Minimum Code Ocean platform version updated to `4.6.0`.**
