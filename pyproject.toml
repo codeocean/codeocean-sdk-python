@@ -51,3 +51,10 @@ test = "python -m unittest -v"
 
 [[tool.hatch.envs.test.matrix]]
 python = ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
+[tool.codespell]
+# Ref: https://github.com/codespell-project/codespell#using-a-config-file
+skip = '.git,.gitignore,.gitattributes'
+check-hidden = true
+# ignore-regex = ''
+# ignore-words-list = ''
