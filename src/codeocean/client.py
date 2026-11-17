@@ -30,12 +30,15 @@ class CodeOcean:
                 (number of retries) or a urllib3.util.Retry object for advanced
                 retry configuration. Defaults to 0 (no retries)
         agent_id: Optional agent identifier for tracking AI agent API usage on behalf of users
+        agent_session_id: Optional agent session identifier for tagging resources an AI agent
+                creates during a session
     """
 
     domain: str
     token: str
     retries: Optional[Retry | int] = 0
     agent_id: Optional[str] = None
+    agent_session_id: Optional[str] = None
 
     # Minimum server version required by this SDK
     MIN_SERVER_VERSION = "4.8.0"
@@ -49,6 +52,8 @@ class CodeOcean:
         })
         if self.agent_id:
             self.session.headers.update({"Agent-Id": self.agent_id})
+        if self.agent_session_id:
+            self.session.headers.update({"Agent-Session-Id": self.agent_session_id})
         self.session.hooks["response"] = [self._error_handler]
         self.session.mount(self.domain, TCPKeepAliveAdapter(max_retries=self.retries))
 
