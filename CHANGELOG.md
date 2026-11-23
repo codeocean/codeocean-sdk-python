@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+## 0.18.0 (2026-11-23)
+- [#81](https://github.com/codeocean/codeocean-sdk-python/pull/81) feat: add agent_session_id to send Agent-Session-Id header
+
 ## 0.17.0 (2026-09-09)
 - [#75](https://github.com/codeocean/codeocean-sdk-python/pull/75) feat: add public release capsule/pipeline API
 - **Minimum Code Ocean platform version updated to `4.8.0`.**
