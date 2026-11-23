@@ -13,6 +13,7 @@ class TestClient(unittest.TestCase):
         self.test_domain = "https://codeocean.acme.com"
         self.test_token = "test_token_123"
         self.test_agent_id = "test_agent_456"
+        self.test_agent_session_id = "6f1c2a3e-8b4d-4e5f-9a6b-7c8d9e0f1a2b"
 
     def test_basic_init(self):
         """Test a basic client initialization."""
@@ -81,3 +82,28 @@ class TestClient(unittest.TestCase):
         # Verify the session headers are correctly configured
         headers = client.session.headers
         self.assertNotIn("Agent-Id", headers)
+
+    def test_agent_session_id_header_set_when_provided(self):
+        """Test that Agent-Session-Id header is set when agent_session_id is provided."""
+        client = CodeOcean(
+            domain=self.test_domain,
+            token=self.test_token,
+            agent_session_id=self.test_agent_session_id,
+        )
+
+        # Verify the session headers are correctly configured
+        headers = client.session.headers
+        self.assertIn("Agent-Session-Id", headers)
+        self.assertEqual(headers["Agent-Session-Id"], self.test_agent_session_id)
+
+    def test_agent_session_id_header_not_set_when_none(self):
+        """Test that Agent-Session-Id header is not set when agent_session_id is None."""
+        client = CodeOcean(
+            domain=self.test_domain,
+            token=self.test_token,
+            agent_session_id=None,
+        )
+
+        # Verify the session headers are correctly configured
+        headers = client.session.headers
+        self.assertNotIn("Agent-Session-Id", headers)
